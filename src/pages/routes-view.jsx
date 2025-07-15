@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Clock, Zap, DollarSign, Users } from "lucide-react";
 
-const RoutesView = ({ setCurrentView, searchQuery, setSelectedRoute }) => {
+const RoutesView = ({
+  setCurrentView,
+  searchQuery,
+  setSelectedRoute,
+  searchResults,
+}) => {
   const [savedRoutes, setSavedRoutes] = useState([]);
 
   const handleLocationRequest = () => {
-    setUserLocation({ lat: -1.2921, lng: 36.8219 }); // Nairobi CBD
     setCurrentView("stages");
   };
 
@@ -19,58 +23,6 @@ const RoutesView = ({ setCurrentView, searchQuery, setSelectedRoute }) => {
     alert("Route saved for offline access!");
   };
 
-  const routes = [
-    {
-      id: 1,
-      name: "Route 17B",
-      destination: "Kasarani",
-      departure: "Kencom",
-      fare: 60,
-      type: "Regular",
-      duration: "45 mins",
-      frequency: "Every 10 mins",
-      payment: ["Cash", "M-Pesa"],
-      dropoffs: ["Kasarani Stadium", "Kasarani Market", "Kasarani Mall"],
-      matatus: [
-        { name: "City Hopper", fare: 60, type: "Regular", rating: 4.2 },
-        { name: "Quick Shuttle", fare: 80, type: "Express", rating: 4.5 },
-        { name: "Comfort Line", fare: 70, type: "Regular", rating: 4.0 },
-      ],
-    },
-    {
-      id: 2,
-      name: "Route 45A",
-      destination: "Kasarani",
-      departure: "Odeon",
-      fare: 55,
-      type: "Regular",
-      duration: "40 mins",
-      frequency: "Every 15 mins",
-      payment: ["Cash", "M-Pesa", "Card"],
-      dropoffs: ["Kasarani Sports Complex", "Kasarani Shopping Center"],
-      matatus: [
-        { name: "Express Metro", fare: 55, type: "Regular", rating: 3.8 },
-        { name: "Fast Track", fare: 75, type: "Express", rating: 4.3 },
-      ],
-    },
-    {
-      id: 3,
-      name: "Route 33C",
-      destination: "Kasarani",
-      departure: "Railways",
-      fare: 65,
-      type: "Express",
-      duration: "35 mins",
-      frequency: "Every 20 mins",
-      payment: ["Cash", "M-Pesa"],
-      dropoffs: ["Kasarani Junction", "Kasarani Estate"],
-      matatus: [
-        { name: "Speed Line", fare: 65, type: "Express", rating: 4.4 },
-        { name: "City Express", fare: 70, type: "Express", rating: 4.1 },
-      ],
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 py-8">
@@ -78,11 +30,11 @@ const RoutesView = ({ setCurrentView, searchQuery, setSelectedRoute }) => {
           <h2 className="text-3xl font-bold text-gray-800 mb-2">
             Routes to {searchQuery}
           </h2>
-          <p className="text-gray-600">{routes.length} routes found</p>
+          <p className="text-gray-600">{searchResults.length} routes found</p>
         </div>
 
         <div className="grid gap-6">
-          {routes.map((route) => (
+          {searchResults.map((route) => (
             <div
               key={route.id}
               className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow"

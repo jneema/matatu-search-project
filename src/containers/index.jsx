@@ -13,6 +13,8 @@ const MatatuRouteFinder = () => {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [savedRoutes, setSavedRoutes] = useState([]);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const renderCurrentView = () => {
     switch (currentView) {
@@ -22,6 +24,7 @@ const MatatuRouteFinder = () => {
             setCurrentView={setCurrentView}
             searchQuery={searchQuery}
             setSelectedRoute={setSelectedRoute}
+            searchResults={searchResults}
           />
         );
       case "comparison":
@@ -41,6 +44,8 @@ const MatatuRouteFinder = () => {
             setCurrentView={setCurrentView}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            setSearchResults={setSearchResults}
+            setHasSearched={setHasSearched}
           />
         );
     }
