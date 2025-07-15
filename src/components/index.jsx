@@ -178,65 +178,37 @@ const Header = ({
         </div>
 
         {/* Progress Tabs - Mobile */}
+        {/* Progress Tabs - Mobile */}
         <div className="md:hidden">
-          <div className="flex items-center justify-center">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= 1
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-            >
-              1
-            </div>
+          <div className="flex items-center justify-center space-x-2">
+            {[1, 2, 3, 4].map((step) => {
+              const viewMap = {
+                1: "landing",
+                2: "routes",
+                3: "comparison",
+                4: "stages",
+              };
 
-            <div
-              className={`h-px flex-1 mx-2 ${
-                currentStep >= 2 ? "bg-green-600" : "bg-gray-200"
-              }`}
-            ></div>
+              const isClickable = currentStep >= step;
+              const isActive = currentStep === step;
 
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= 2
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-            >
-              2
-            </div>
-
-            <div
-              className={`h-px flex-1 mx-2 ${
-                currentStep >= 3 ? "bg-green-600" : "bg-gray-200"
-              }`}
-            ></div>
-
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= 3
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-            >
-              3
-            </div>
-
-            <div
-              className={`h-px flex-1 mx-2 ${
-                currentStep >= 4 ? "bg-green-600" : "bg-gray-200"
-              }`}
-            ></div>
-
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= 4
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-            >
-              4
-            </div>
+              return (
+                <button
+                  key={step}
+                  onClick={() => isClickable && setCurrentView(viewMap[step])}
+                  disabled={!isClickable}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors ${
+                    isActive
+                      ? "bg-green-600 text-white"
+                      : isClickable
+                      ? "bg-gray-200 text-green-700 hover:bg-green-100"
+                      : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  }`}
+                >
+                  {step}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
