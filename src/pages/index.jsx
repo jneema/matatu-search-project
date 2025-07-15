@@ -166,26 +166,38 @@ const LandingView = ({
 
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
           <div className="relative">
-            <Search className="absolute left-4 top-4 h-6 w-6 text-gray-400" />
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center">
+              <Search className="h-5 w-5 text-gray-400" />
+            </div>
             <input
               type="text"
-              placeholder="Where do you want to go?"
+              placeholder="Where to?"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                setSearchQuery(value);
+
+                if (value.trim() === "") {
+                  setShowNoResults(false);
+                  setHasSearched(false);
+                  setSearchResults([]);
+                }
+              }}
               onKeyPress={(e) => e.key === "Enter" && handleSearch(searchQuery)}
-              className="w-full pl-12 pr-4 py-4 text-lg border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none disabled:bg-gray-100"
+              className="w-full pl-12 pr-4 py-4 text-md sm:text-lg border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none disabled:bg-gray-100"
               disabled={isSearching}
             />
+
             {isSearching && (
-              <div className="absolute right-4 top-4">
-                <Loader className="h-6 w-6 text-gray-400 animate-spin" />
+              <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
+                <Loader className="h-5 w-5 text-gray-400 animate-spin" />
               </div>
             )}
           </div>
 
           {/* No Results Fallback */}
           {showNoResults && (
-            <div className="mt-6 p-6 bg-red-50 rounded-xl border border-red-200">
+            <div className="mt-6 p-4 sm:p-6 bg-red-50 rounded-xl border border-red-200">
               <div className="flex items-center space-x-3 mb-4">
                 <AlertCircle className="h-6 w-6 text-red-600" />
                 <h3 className="text-lg font-semibold text-red-800">
@@ -213,7 +225,7 @@ const LandingView = ({
           {/* Popular Destinations - Only show when not showing no results */}
           {!showNoResults && (
             <div className="mt-6">
-              <p className="text-gray-500 mb-3">Popular destinations:</p>
+              <p className="text-gray-500 mb-3 text-left">Popular destinations:</p>
               <div className="flex flex-wrap gap-2">
                 {suggestions.map((suggestion, index) => (
                   <button
@@ -263,7 +275,7 @@ const LandingView = ({
                       <p className="font-semibold text-gray-800 group-hover:text-green-600 transition-colors">
                         {route.from} → {route.to}
                       </p>
-                      <p className="text-sm text-gray-600">Click to search</p>
+                      <p className="text-sm text-gray-600 text-left">Click to search</p>
                     </div>
                     <div className="text-green-600 font-bold">{route.fare}</div>
                   </div>
