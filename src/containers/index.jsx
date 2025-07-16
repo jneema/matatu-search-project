@@ -6,6 +6,7 @@ import StagesView from "../pages/stages-view";
 import SavedRoutesView from "../pages/saved-routes-view";
 import FeedbackModal from "../components/feedback-modal";
 import Header from "../components/index";
+import RoadsView from "../pages/roads-view";
 
 const MatatuRouteFinder = () => {
   const [currentView, setCurrentView] = useState("landing");
@@ -15,9 +16,20 @@ const MatatuRouteFinder = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
+  const [selectedTown, setSelectedTown] = useState(null); 
 
   const renderCurrentView = () => {
     switch (currentView) {
+      case "roads":
+        return (
+          <RoadsView
+            setCurrentView={setCurrentView}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            setSelectedRoad={setSelectedRoute}
+            setHasSearched={setHasSearched}
+          />
+        );
       case "routes":
         return (
           <RoutesView
@@ -45,6 +57,8 @@ const MatatuRouteFinder = () => {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             setSearchResults={setSearchResults}
+            setHasSearched={setHasSearched}
+            setSelectedTown={setSelectedTown}
           />
         );
     }

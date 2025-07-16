@@ -11,7 +11,7 @@ const Header = ({
     switch (currentView) {
       case "landing":
         return 1;
-      case "road":
+      case "roads":
         return 2;
       case "destination":
         return 3;
@@ -83,7 +83,7 @@ const Header = ({
                   : "text-gray-500"
               }`}
             >
-              Town
+              Towns
             </button>
           </div>
 
@@ -104,9 +104,9 @@ const Header = ({
               2
             </div>
             <button
-              onClick={() => currentStep >= 2 && setCurrentView("road")}
+              onClick={() => currentStep >= 2 && setCurrentView("roads")}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "road"
+                currentView === "roads"
                   ? "bg-green-600 text-white"
                   : currentStep >= 2
                   ? "text-green-600 hover:bg-green-50"
@@ -114,7 +114,7 @@ const Header = ({
               }`}
               disabled={currentStep < 2}
             >
-              Road
+              Roads
             </button>
           </div>
 
@@ -246,7 +246,7 @@ const Header = ({
             {[1, 2, 3, 4, 5, 6].map((step) => {
               const viewMap = {
                 1: "landing",
-                2: "road",
+                2: "roads",
                 3: "destination",
                 4: "routes",
                 5: "stages",
