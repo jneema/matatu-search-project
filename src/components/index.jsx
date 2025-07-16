@@ -11,12 +11,16 @@ const Header = ({
     switch (currentView) {
       case "landing":
         return 1;
-      case "routes":
+      case "road":
         return 2;
-      case "comparison":
+      case "destination":
         return 3;
-      case "stages":
+      case "routes":
         return 4;
+      case "comparison":
+        return 5;
+      case "stages":
+        return 6;
       default:
         return 1;
     }
@@ -79,7 +83,7 @@ const Header = ({
                   : "text-gray-500"
               }`}
             >
-              Search Goal
+              Town
             </button>
           </div>
 
@@ -100,9 +104,9 @@ const Header = ({
               2
             </div>
             <button
-              onClick={() => currentStep >= 2 && setCurrentView("routes")}
+              onClick={() => currentStep >= 2 && setCurrentView("road")}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "routes"
+                currentView === "road"
                   ? "bg-green-600 text-white"
                   : currentStep >= 2
                   ? "text-green-600 hover:bg-green-50"
@@ -110,7 +114,7 @@ const Header = ({
               }`}
               disabled={currentStep < 2}
             >
-              Routes
+              Road
             </button>
           </div>
 
@@ -131,9 +135,9 @@ const Header = ({
               3
             </div>
             <button
-              onClick={() => currentStep >= 3 && setCurrentView("comparison")}
+              onClick={() => currentStep >= 3 && setCurrentView("destination")}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "comparison"
+                currentView === "destination"
                   ? "bg-green-600 text-white"
                   : currentStep >= 3
                   ? "text-green-600 hover:bg-green-50"
@@ -141,7 +145,7 @@ const Header = ({
               }`}
               disabled={currentStep < 3}
             >
-              Compare
+              Destination
             </button>
           </div>
 
@@ -162,9 +166,9 @@ const Header = ({
               4
             </div>
             <button
-              onClick={() => currentStep >= 4 && setCurrentView("stages")}
+              onClick={() => currentStep >= 4 && setCurrentView("routes")}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "stages"
+                currentView === "routes"
                   ? "bg-green-600 text-white"
                   : currentStep >= 4
                   ? "text-green-600 hover:bg-green-50"
@@ -172,21 +176,81 @@ const Header = ({
               }`}
               disabled={currentStep < 4}
             >
+              Routes
+            </button>
+          </div>
+          <div
+            className={`h-px flex-1 ${
+              currentStep >= 5 ? "bg-green-600" : "bg-gray-200"
+            }`}
+          ></div>
+
+          <div className="flex items-center space-x-2">
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                currentStep >= 5
+                  ? "bg-green-600 text-white"
+                  : "bg-gray-200 text-gray-600"
+              }`}
+            >
+              5
+            </div>
+            <button
+              onClick={() => currentStep >= 5 && setCurrentView("stages")}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                currentView === "stages"
+                  ? "bg-green-600 text-white"
+                  : currentStep >= 5
+                  ? "text-green-600 hover:bg-green-50"
+                  : "text-gray-500 cursor-not-allowed"
+              }`}
+              disabled={currentStep < 5}
+            >
               Stages
+            </button>
+          </div>
+          <div
+            className={`h-px flex-1 ${
+              currentStep >= 6 ? "bg-green-600" : "bg-gray-200"
+            }`}
+          ></div>
+          <div className="flex items-center space-x-2">
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                currentStep >= 6
+                  ? "bg-green-600 text-white"
+                  : "bg-gray-200 text-gray-600"
+              }`}
+            >
+              6
+            </div>
+            <button
+              onClick={() => currentStep >= 6 && setCurrentView("comparison")}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                currentView === "comparison"
+                  ? "bg-green-600 text-white"
+                  : currentStep >= 6
+                  ? "text-green-600 hover:bg-green-50"
+                  : "text-gray-500 cursor-not-allowed"
+              }`}
+              disabled={currentStep < 6}
+            >
+              Compare
             </button>
           </div>
         </div>
 
         {/* Progress Tabs - Mobile */}
-        {/* Progress Tabs - Mobile */}
         <div className="md:hidden">
           <div className="flex items-center justify-center space-x-2">
-            {[1, 2, 3, 4].map((step) => {
+            {[1, 2, 3, 4, 5, 6].map((step) => {
               const viewMap = {
                 1: "landing",
-                2: "routes",
-                3: "comparison",
-                4: "stages",
+                2: "road",
+                3: "destination",
+                4: "routes",
+                5: "stages",
+                6: "comparison",
               };
 
               const isClickable = currentStep >= step;
