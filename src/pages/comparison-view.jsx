@@ -1,7 +1,16 @@
 import React from "react";
 import { Star } from "lucide-react";
 
-const ComparisonView = ({ setCurrentView, selectedRoute }) => {
+const ComparisonView = ({
+  setCurrentView,
+  selectedRoute,
+  setSelectedMatatu,
+}) => {
+  const handleMatatuSelect = (matatu) => {
+    setSelectedMatatu(matatu);
+    setCurrentView("stages");
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -72,7 +81,10 @@ const ComparisonView = ({ setCurrentView, selectedRoute }) => {
                     </span>
                   ))}
                 </div>
-                <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                <button
+                  onClick={() => handleMatatuSelect(matatu)}
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                >
                   Select This Matatu
                 </button>
               </div>

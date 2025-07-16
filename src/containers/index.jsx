@@ -7,18 +7,19 @@ import SavedRoutesView from "../pages/saved-routes-view";
 import FeedbackModal from "../components/feedback-modal";
 import Header from "../components/index";
 import RoadsView from "../pages/roads-view";
-import DestinationsView from "../pages/destinations-view"; 
+import DestinationsView from "../pages/destinations-view";
 
 const MatatuRouteFinder = () => {
   const [currentView, setCurrentView] = useState("landing");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRoute, setSelectedRoute] = useState(null);
+  const [selectedRoad, setSelectedRoad] = useState(null);
   const [savedRoutes, setSavedRoutes] = useState([]);
   const [showFeedback, setShowFeedback] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [selectedTown, setSelectedTown] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
+  const [selectedRoute, setSelectedRoute] = useState(null);
+  const [selectedMatatu, setSelectedMatatu] = useState(null);
 
   const renderCurrentView = () => {
     switch (currentView) {
@@ -28,7 +29,7 @@ const MatatuRouteFinder = () => {
             setCurrentView={setCurrentView}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            setSelectedRoad={setSelectedRoute} 
+            setSelectedRoad={setSelectedRoad}
             setHasSearched={setHasSearched}
           />
         );
@@ -40,16 +41,20 @@ const MatatuRouteFinder = () => {
             setSearchQuery={setSearchQuery}
             setSelectedDestination={setSelectedDestination}
             setHasSearched={setHasSearched}
-            selectedRoad={selectedRoute} 
+            selectedRoad={selectedRoad}
+            selectedTown={selectedTown}
           />
         );
       case "routes":
         return (
           <RoutesView
             setCurrentView={setCurrentView}
-            searchQuery={searchQuery}
+            selectedDestination={selectedDestination}
+            selectedRoad={selectedRoad}
+            selectedTown={selectedTown}
             setSelectedRoute={setSelectedRoute}
-            searchResults={searchResults}
+            savedRoutes={savedRoutes}
+            setSavedRoutes={setSavedRoutes}
           />
         );
       case "comparison":
@@ -57,10 +62,17 @@ const MatatuRouteFinder = () => {
           <ComparisonView
             setCurrentView={setCurrentView}
             selectedRoute={selectedRoute}
+            setSelectedMatatu={setSelectedMatatu}
           />
         );
       case "stages":
-        return <StagesView />;
+        return (
+          <StagesView
+            setCurrentView={setCurrentView}
+            selectedRoute={selectedRoute}
+            selectedMatatu={selectedMatatu}
+          />
+        );
       case "saved":
         return <SavedRoutesView savedRoutes={savedRoutes} />;
       default:
@@ -69,7 +81,6 @@ const MatatuRouteFinder = () => {
             setCurrentView={setCurrentView}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            setSearchResults={setSearchResults}
             setHasSearched={setHasSearched}
             setSelectedTown={setSelectedTown}
           />

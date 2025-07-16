@@ -8,6 +8,7 @@ const DestinationsView = ({
   setSelectedDestination,
   setHasSearched,
   selectedRoad,
+  selectedTown,
 }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [showNoResults, setShowNoResults] = useState(false);
@@ -166,8 +167,9 @@ const DestinationsView = ({
             Find Destination
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Choose your destination on {selectedRoad?.name} to discover routes,
-            compare fares, and get real-time directions
+            Choose your destination on {selectedRoad?.name} in{" "}
+            {selectedTown?.name} to discover routes, compare fares, and get
+            real-time directions
           </p>
         </div>
 

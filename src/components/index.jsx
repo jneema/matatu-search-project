@@ -185,7 +185,7 @@ const Header = ({
             }`}
           ></div>
 
-          <div className="flex items-center space-x-2">
+           <div className="flex items-center space-x-2">
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                 currentStep >= 5
@@ -196,24 +196,25 @@ const Header = ({
               5
             </div>
             <button
-              onClick={() => currentStep >= 5 && setCurrentView("stages")}
+              onClick={() => currentStep >= 5 && setCurrentView("comparison")}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "stages"
+                currentView === "comparison"
                   ? "bg-green-600 text-white"
-                  : currentStep >= 5
+                  : currentStep >= 6
                   ? "text-green-600 hover:bg-green-50"
                   : "text-gray-500 cursor-not-allowed"
               }`}
               disabled={currentStep < 5}
             >
-              Stages
+              Compare
             </button>
           </div>
-          <div
+           <div
             className={`h-px flex-1 ${
               currentStep >= 6 ? "bg-green-600" : "bg-gray-200"
             }`}
           ></div>
+
           <div className="flex items-center space-x-2">
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
@@ -225,9 +226,9 @@ const Header = ({
               6
             </div>
             <button
-              onClick={() => currentStep >= 6 && setCurrentView("comparison")}
+              onClick={() => currentStep >= 6 && setCurrentView("stages")}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "comparison"
+                currentView === "stages"
                   ? "bg-green-600 text-white"
                   : currentStep >= 6
                   ? "text-green-600 hover:bg-green-50"
@@ -235,9 +236,11 @@ const Header = ({
               }`}
               disabled={currentStep < 6}
             >
-              Compare
+              Stages
             </button>
           </div>
+         
+         
         </div>
 
         {/* Progress Tabs - Mobile */}
@@ -249,8 +252,8 @@ const Header = ({
                 2: "roads",
                 3: "destination",
                 4: "routes",
-                5: "stages",
-                6: "comparison",
+                5: "comparison",
+                6: "stages",
               };
 
               const isClickable = currentStep >= step;
