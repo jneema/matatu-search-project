@@ -20,6 +20,7 @@ const MatatuRouteFinder = () => {
   const [selectedDestination, setSelectedDestination] = useState(null);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [selectedMatatu, setSelectedMatatu] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState("Nairobi CBD");
 
   const renderCurrentView = () => {
     switch (currentView) {
@@ -43,6 +44,7 @@ const MatatuRouteFinder = () => {
             setHasSearched={setHasSearched}
             selectedRoad={selectedRoad}
             selectedTown={selectedTown}
+            setCurrentLocation={setCurrentLocation}
           />
         );
       case "routes":
@@ -55,6 +57,7 @@ const MatatuRouteFinder = () => {
             setSelectedRoute={setSelectedRoute}
             savedRoutes={savedRoutes}
             setSavedRoutes={setSavedRoutes}
+            currentLocation={currentLocation}
           />
         );
       case "comparison":
@@ -71,6 +74,7 @@ const MatatuRouteFinder = () => {
             setCurrentView={setCurrentView}
             selectedRoute={selectedRoute}
             selectedMatatu={selectedMatatu}
+            userLocation={currentLocation}
           />
         );
       case "saved":
