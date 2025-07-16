@@ -6,101 +6,68 @@ import {
   BookOpen,
   AlertCircle,
   Loader,
+  ArrowRight,
 } from "lucide-react";
 
 const LandingView = ({
   setCurrentView,
   searchQuery,
   setSearchQuery,
-  setSearchResults,
+  setSelectedTown,
   setHasSearched,
 }) => {
   const [showNoResults, setShowNoResults] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
 
-  const allRoutes = [
+  const towns = [
     {
       id: 1,
-      name: "Route 17B",
-      destination: "Kasarani",
-      departure: "Kencom",
-      fare: 60,
-      type: "Regular",
-      duration: "45 mins",
-      frequency: "Every 10 mins",
-      payment: ["Cash", "M-Pesa"],
-      dropoffs: ["Kasarani Stadium", "Kasarani Market", "Kasarani Mall"],
-      matatus: [
-        { name: "City Hopper", fare: 60, type: "Regular", rating: 4.2 },
-        { name: "Quick Shuttle", fare: 80, type: "Express", rating: 4.5 },
-        { name: "Comfort Line", fare: 70, type: "Regular", rating: 4.0 },
-      ],
+      name: "Nairobi",
+      description: "Capital city with extensive matatu network",
+      routes: 45,
+      icon: "🏙️",
     },
     {
       id: 2,
-      name: "Route 45A",
-      destination: "Kasarani",
-      departure: "Odeon",
-      fare: 55,
-      type: "Regular",
-      duration: "40 mins",
-      frequency: "Every 15 mins",
-      payment: ["Cash", "M-Pesa", "Card"],
-      dropoffs: ["Kasarani Sports Complex", "Kasarani Shopping Center"],
-      matatus: [
-        { name: "Express Metro", fare: 55, type: "Regular", rating: 3.8 },
-        { name: "Fast Track", fare: 75, type: "Express", rating: 4.3 },
-      ],
+      name: "Mombasa",
+      description: "Coastal city transport hub",
+      routes: 28,
+      icon: "🌊",
     },
     {
       id: 3,
-      name: "Route 33C",
-      destination: "Kasarani",
-      departure: "Railways",
-      fare: 65,
-      type: "Express",
-      duration: "35 mins",
-      frequency: "Every 20 mins",
-      payment: ["Cash", "M-Pesa"],
-      dropoffs: ["Kasarani Junction", "Kasarani Estate"],
-      matatus: [
-        { name: "Speed Line", fare: 65, type: "Express", rating: 4.4 },
-        { name: "City Express", fare: 70, type: "Express", rating: 4.1 },
-      ],
+      name: "Kisumu",
+      description: "Lake region transport center",
+      routes: 22,
+      icon: "🏞️",
     },
     {
       id: 4,
-      name: "Route 12A",
-      destination: "Westlands",
-      departure: "Kencom",
-      fare: 40,
-      type: "Regular",
-      duration: "25 mins",
-      frequency: "Every 8 mins",
-      payment: ["Cash", "M-Pesa"],
-      dropoffs: ["Westlands Mall", "Sarit Centre", "ABC Place"],
-      matatus: [
-        { name: "Metro Express", fare: 40, type: "Regular", rating: 4.1 },
-        { name: "City Runner", fare: 45, type: "Regular", rating: 3.9 },
-      ],
+      name: "Nakuru",
+      description: "Rift Valley transport junction",
+      routes: 18,
+      icon: "🏔️",
     },
     {
       id: 5,
-      name: "Route 8B",
-      destination: "Ngong",
-      departure: "Kencom",
-      fare: 80,
-      type: "Regular",
-      duration: "60 mins",
-      frequency: "Every 12 mins",
-      payment: ["Cash", "M-Pesa"],
-      dropoffs: ["Ngong Town", "Ngong Hills", "Karen"],
-      matatus: [
-        { name: "Ngong Express", fare: 80, type: "Regular", rating: 4.0 },
-        { name: "Hill Cruiser", fare: 85, type: "Regular", rating: 3.9 },
-      ],
+      name: "Eldoret",
+      description: "North Rift transport hub",
+      routes: 15,
+      icon: "🌾",
+    },
+    {
+      id: 6,
+      name: "Thika",
+      description: "Industrial town with good connectivity",
+      routes: 12,
+      icon: "🏭",
     },
   ];
+
+  const handleTownSelect = (town) => {
+    setSelectedTown(town);
+    setCurrentView("roads");
+  };
 
   const handleSearch = (query) => {
     if (!query.trim()) return;
@@ -111,18 +78,18 @@ const LandingView = ({
 
     // Simulate search delay
     setTimeout(() => {
-      const results = allRoutes.filter(
-        (route) =>
-          route.destination.toLowerCase().includes(query.toLowerCase()) ||
-          route.departure.toLowerCase().includes(query.toLowerCase()) ||
-          route.name.toLowerCase().includes(query.toLowerCase())
+      const results = towns.filter((town) =>
+        town.name.toLowerCase().includes(query.toLowerCase())
       );
 
-      setSearchResults(results);
       setIsSearching(false);
 
       if (results.length > 0) {
-        setCurrentView("routes");
+        if (results.length === 1) {
+          handleTownSelect(results[0]);
+        } else {
+          setShowNoResults(false);
+        }
       } else {
         setShowNoResults(true);
       }
@@ -135,21 +102,7 @@ const LandingView = ({
     setHasSearched(false);
   };
 
-  const suggestions = [
-    "Kasarani",
-    "Westlands",
-    "Ngong",
-    "Kikuyu",
-    "Thika",
-    "Kiambu",
-  ];
-
-  const popularRoutes = [
-    { from: "CBD", to: "Westlands", fare: "KES 40" },
-    { from: "Kencom", to: "Kasarani", fare: "KES 60" },
-    { from: "Railways", to: "Ngong", fare: "KES 80" },
-    { from: "Odeon", to: "Thika", fare: "KES 120" },
-  ];
+  const popularTowns = ["Nairobi", "Mombasa", "Kisumu", "Nakuru"];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
@@ -159,8 +112,8 @@ const LandingView = ({
             Find Your Perfect Matatu Route
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Discover routes, compare fares, and get real-time directions in
-            Nairobi
+            Choose your town to discover routes, compare fares, and get
+            real-time directions
           </p>
         </div>
 
@@ -171,7 +124,7 @@ const LandingView = ({
             </div>
             <input
               type="text"
-              placeholder="Where to?"
+              placeholder="Search for your town..."
               value={searchQuery}
               onChange={(e) => {
                 const value = e.target.value;
@@ -180,7 +133,6 @@ const LandingView = ({
                 if (value.trim() === "") {
                   setShowNoResults(false);
                   setHasSearched(false);
-                  setSearchResults([]);
                 }
               }}
               onKeyPress={(e) => e.key === "Enter" && handleSearch(searchQuery)}
@@ -201,17 +153,16 @@ const LandingView = ({
               <div className="flex items-center space-x-3 mb-4">
                 <AlertCircle className="h-6 w-6 text-red-600" />
                 <h3 className="text-lg font-semibold text-red-800">
-                  No routes found for "{searchQuery}"
+                  No towns found for "{searchQuery}"
                 </h3>
               </div>
               <p className="text-red-700 mb-4">
-                We couldn't find any matatu routes to your destination. Try:
+                We couldn't find any towns matching your search. Try:
               </p>
               <ul className="list-disc list-inside text-red-700 mb-4 space-y-1">
                 <li>Checking your spelling</li>
-                <li>Using a different destination name</li>
-                <li>Searching for a nearby area</li>
-                <li>Trying one of our popular destinations below</li>
+                <li>Using a different town name</li>
+                <li>Trying one of our available towns below</li>
               </ul>
               <button
                 onClick={handleTryAgain}
@@ -222,19 +173,19 @@ const LandingView = ({
             </div>
           )}
 
-          {/* Popular Destinations - Only show when not showing no results */}
+          {/* Popular Towns - Only show when not showing no results */}
           {!showNoResults && (
             <div className="mt-6">
-              <p className="text-gray-500 mb-3 text-left">Popular destinations:</p>
+              <p className="text-gray-500 mb-3 text-left">Popular towns:</p>
               <div className="flex flex-wrap gap-2">
-                {suggestions.map((suggestion, index) => (
+                {popularTowns.map((town, index) => (
                   <button
                     key={index}
-                    onClick={() => handleSearch(suggestion)}
+                    onClick={() => handleSearch(town)}
                     className="bg-green-100 text-green-700 px-4 py-2 rounded-full hover:bg-green-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={isSearching}
                   >
-                    {suggestion}
+                    {town}
                   </button>
                 ))}
               </div>
@@ -252,32 +203,41 @@ const LandingView = ({
                 <span>Searching...</span>
               </>
             ) : (
-              <span>Search Routes</span>
+              <span>Search Towns</span>
             )}
           </button>
         </div>
 
-        {/* Popular Routes Section - Only show when not showing no results */}
+        {/* Town Selection Grid - Only show when not showing no results */}
         {!showNoResults && (
           <div className="mb-12">
             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-              Popular Routes
+              Select Your Town
             </h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              {popularRoutes.map((route, index) => (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {towns.map((town) => (
                 <div
-                  key={index}
-                  className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer group"
-                  onClick={() => handleSearch(route.to)}
+                  key={town.id}
+                  className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer group hover:scale-105 border-2 border-transparent hover:border-green-200"
+                  onClick={() => handleTownSelect(town)}
                 >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="font-semibold text-gray-800 group-hover:text-green-600 transition-colors">
-                        {route.from} → {route.to}
-                      </p>
-                      <p className="text-sm text-gray-600 text-left">Click to search</p>
-                    </div>
-                    <div className="text-green-600 font-bold">{route.fare}</div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="text-3xl">{town.icon}</div>
+                    <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-green-600 transition-colors" />
+                  </div>
+                  <h4 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-green-600 transition-colors">
+                    {town.name}
+                  </h4>
+                  <p className="text-gray-600 text-sm mb-3 text-left">
+                    {town.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-500">
+                      {town.routes} routes available
+                    </span>
+                    <span className="text-xs text-green-600 font-medium">
+                      Click to explore
+                    </span>
                   </div>
                 </div>
               ))}

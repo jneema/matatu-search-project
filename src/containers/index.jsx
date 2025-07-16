@@ -45,7 +45,6 @@ const MatatuRouteFinder = () => {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             setSearchResults={setSearchResults}
-            setHasSearched={setHasSearched}
           />
         );
     }
