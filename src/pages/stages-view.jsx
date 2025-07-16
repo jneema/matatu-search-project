@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { MapPin, X, Phone } from "lucide-react";
 
 const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
-  const [selectedStage, setSelectedStage] = useState(null); // State for map
-  const [selectedContactStage, setSelectedContactStage] = useState(null); // State for contacts
+  const [selectedStage, setSelectedStage] = useState(null);
+  const [selectedContactStage, setSelectedContactStage] = useState(null);
 
   const stagesData = {
     "Super Metro": [
@@ -151,41 +151,41 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
   );
 
   const handleGetDirections = (stage) => {
-    setSelectedStage(selectedStage?.name === stage.name ? null : stage); // Toggle map
-    setSelectedContactStage(null); // Hide contacts if map is toggled
+    setSelectedStage(selectedStage?.name === stage.name ? null : stage);
+    setSelectedContactStage(null);
   };
 
   const handleGetContacts = (stage) => {
     setSelectedContactStage(
       selectedContactStage?.name === stage.name ? null : stage
-    ); // Toggle contacts
-    setSelectedStage(null); // Hide map if contacts are toggled
+    );
+    setSelectedStage(null);
   };
 
   const handleCloseMap = () => {
-    setSelectedStage(null); // Reset to default view
+    setSelectedStage(null);
   };
 
   const handleCloseContacts = () => {
-    setSelectedContactStage(null); // Reset to default view
+    setSelectedContactStage(null);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="mb-8">
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
+        <div className="mb-6 sm:mb-8">
           <button
             onClick={() =>
               setCurrentView(selectedMatatu ? "comparison" : "routes")
             }
-            className="text-green-600 hover:text-green-700 mb-4"
+            className="text-green-600 hover:text-green-700 mb-3 sm:mb-4 text-sm sm:text-base cursor-pointer"
           >
             ← Back to {selectedMatatu ? "Comparison" : "Routes"}
           </button>
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
             Nearby Stages
           </h2>
-          <p className="text-gray-600">
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
             Walking directions to matatu stages for{" "}
             {selectedMatatu
               ? selectedMatatu.name
@@ -193,7 +193,7 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {uniqueStages.length > 0 ? (
             uniqueStages
               .filter(
@@ -203,8 +203,11 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
                     (selectedStage?.name || selectedContactStage?.name)
               )
               .map((stage, index) => (
-                <div key={index} className="bg-white rounded-xl shadow-md p-6">
-                  <div className="flex justify-between items-center">
+                <div
+                  key={index}
+                  className="bg-white rounded-xl shadow-md p-4 sm:p-6"
+                >
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
                     <div className="flex flex-col text-left">
                       <h3 className="text-lg font-semibold mb-1">
                         {stage.name}
@@ -214,10 +217,10 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
                       </p>
                     </div>
 
-                    <div className="flex space-x-2">
+                    <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 w-full sm:w-auto">
                       <button
                         onClick={() => handleGetDirections(stage)}
-                        className="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition-colors text-sm cursor-pointer"
+                        className="bg-blue-600 text-white px-4 py-2 sm:px-3 sm:py-1 rounded-lg hover:bg-blue-700 transition-colors text-sm cursor-pointer w-full sm:w-auto"
                       >
                         {selectedStage?.name === stage.name
                           ? "Hide Map"
@@ -225,7 +228,7 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
                       </button>
                       <button
                         onClick={() => handleGetContacts(stage)}
-                        className="border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition-colors text-sm cursor-pointer"
+                        className="border border-gray-300 px-4 py-2 sm:px-3 sm:py-1 rounded-lg hover:bg-gray-50 transition-colors text-sm cursor-pointer w-full sm:w-auto"
                       >
                         {selectedContactStage?.name === stage.name
                           ? "Hide Contacts"
@@ -236,34 +239,36 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
                 </div>
               ))
           ) : (
-            <div className="text-center text-gray-600">
-              No stages found for{" "}
-              {selectedMatatu
-                ? selectedMatatu.name
-                : `${selectedRoute?.name} to ${selectedRoute?.destination}`}
-              .
+            <div className="text-center text-gray-600 px-4 py-8">
+              <p className="text-sm sm:text-base">
+                No stages found for{" "}
+                {selectedMatatu
+                  ? selectedMatatu.name
+                  : `${selectedRoute?.name} to ${selectedRoute?.destination}`}
+                .
+              </p>
             </div>
           )}
         </div>
 
         {selectedStage && (
-          <div className="bg-white rounded-xl shadow-md p-6 mt-6">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mt-4 sm:mt-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0">
               <div className="flex items-center space-x-2">
-                <MapPin className="h-5 w-5 text-green-600" />
-                <span className="text-gray-600">
+                <MapPin className="h-5 w-5 text-green-600 flex-shrink-0" />
+                <span className="text-gray-600 text-sm sm:text-base">
                   Your current location: Nairobi CBD
                 </span>
               </div>
               <button
                 onClick={handleCloseMap}
-                className="text-gray-600 hover:text-gray-800"
+                className="text-gray-600 hover:text-gray-800 self-end sm:self-auto"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
-            <div className="bg-gray-100 h-48 rounded-lg flex items-center justify-center">
-              <p className="text-gray-500">
+            <div className="bg-gray-100 h-40 sm:h-48 rounded-lg flex items-center justify-center">
+              <p className="text-gray-500 text-center text-sm sm:text-base px-4">
                 Interactive map for {selectedStage.name} would be displayed here
               </p>
             </div>
@@ -271,33 +276,36 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
         )}
 
         {selectedContactStage && (
-          <div className="bg-white rounded-xl shadow-md p-6 mt-6">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mt-4 sm:mt-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 space-y-2 sm:space-y-0">
               <div className="flex items-center space-x-2">
-                <Phone className="h-5 w-5 text-green-600" />
-                <span className="text-gray-600">
+                <Phone className="h-5 w-5 text-green-600 flex-shrink-0" />
+                <span className="text-gray-600 text-sm sm:text-base">
                   Contacts for {selectedContactStage.name}
                 </span>
               </div>
               <button
                 onClick={handleCloseContacts}
-                className="text-gray-600 hover:text-gray-800"
+                className="text-gray-600 hover:text-gray-800 self-end sm:self-auto"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
-            <div className="bg-gray-100 rounded-lg p-4">
+            <div className="bg-gray-100 rounded-lg p-3 sm:p-4">
               {selectedContactStage.contacts.length > 0 ? (
                 <ul className="space-y-2 text-gray-600">
                   {selectedContactStage.contacts.map((contact, index) => (
-                    <li key={index} className="flex items-center">
-                      <Phone className="h-4 w-4 mr-2 text-gray-500" />
-                      {contact}
+                    <li
+                      key={index}
+                      className="flex items-center text-sm sm:text-base"
+                    >
+                      <Phone className="h-4 w-4 mr-2 text-gray-500 flex-shrink-0" />
+                      <span className="break-all">{contact}</span>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-gray-500">
+                <p className="text-gray-500 text-sm sm:text-base">
                   No contact information available for{" "}
                   {selectedContactStage.name}.
                 </p>

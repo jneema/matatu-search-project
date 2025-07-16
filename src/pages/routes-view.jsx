@@ -431,7 +431,7 @@ return (
                   <div className="space-y-3">
                     <div className="space-y-2">
                       <div className="flex flex-col sm:flex-row sm:items-center text-sm text-gray-600">
-                        <span className="font-medium mb-1 sm:mb-0 sm:mr-2 whitespace-nowrap">
+                        <span className="font-medium text-left mb-1 sm:mb-0 sm:mr-2 whitespace-nowrap">
                           Payment Methods:
                         </span>
                         <div className="flex flex-wrap gap-1 sm:gap-2">
@@ -446,7 +446,7 @@ return (
                         </div>
                       </div>
                       <div className="flex flex-col sm:flex-row sm:items-center text-sm text-gray-600">
-                        <span className="font-medium mb-1 sm:mb-0 sm:mr-2 whitespace-nowrap">
+                        <span className="font-medium mb-1 sm:mb-0 sm:mr-2 whitespace-nowrap text-left">
                           Drop-off Points:
                         </span>
                         <div className="flex flex-wrap gap-1 sm:gap-2">

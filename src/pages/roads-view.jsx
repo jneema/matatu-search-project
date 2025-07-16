@@ -10,7 +10,7 @@ const RoadsView = ({
 }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [showNoResults, setShowNoResults] = useState(false);
-  const [filteredRoads, setFilteredRoads] = useState([]); // New state for filtered results
+  const [filteredRoads, setFilteredRoads] = useState([]);
 
   const roads = [
     {
@@ -171,7 +171,7 @@ const RoadsView = ({
                 <button
                   key={index}
                   onClick={() => handleSearch(road)}
-                  className="bg-green-100 text-green-700 px-4 py-2 rounded-full hover:bg-green-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-green-100 text-green-700 px-4 py-2 rounded-full hover:bg-green-200 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isSearching}
                 >
                   {road}
@@ -183,7 +183,7 @@ const RoadsView = ({
           <button
             onClick={() => handleSearch(searchQuery)}
             disabled={isSearching || !searchQuery.trim()}
-            className="w-full mt-6 bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="w-full mt-6 bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2 cursor-pointer"
           >
             {isSearching ? (
               <>

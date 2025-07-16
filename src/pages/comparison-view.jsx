@@ -18,7 +18,7 @@ const ComparisonView = ({
         <div className="mb-6 sm:mb-8">
           <button
             onClick={() => setCurrentView("routes")}
-            className="text-green-600 hover:text-green-700 mb-3 sm:mb-4 text-sm sm:text-base"
+            className="text-green-600 hover:text-green-700 mb-3 sm:mb-4 text-sm sm:text-base cursor-pointer"
           >
             ← Back to Routes
           </button>
@@ -110,7 +110,7 @@ const ComparisonView = ({
                 </div>
                 <button
                   onClick={() => handleMatatuSelect(matatu)}
-                  className="bg-green-600 text-white text-xs sm:text-sm px-3 py-2 sm:px-4 rounded-md hover:bg-green-700 transition-colors w-full sm:w-auto"
+                  className="bg-green-600 text-white text-xs sm:text-sm px-3 py-2 sm:px-4 rounded-md hover:bg-green-700 transition-colors w-full sm:w-auto cursor-pointer"
                 >
                   Select This Matatu
                 </button>
