@@ -45,8 +45,8 @@ const ComparisonView = ({
               <p className="font-semibold">{selectedRoute?.duration}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Frequency</p>
-              <p className="font-semibold">{selectedRoute?.frequency}</p>
+              <p className="text-sm text-gray-600">Distance</p>
+              <p className="font-semibold">{selectedRoute?.distance}</p>
             </div>
           </div>
         </div>

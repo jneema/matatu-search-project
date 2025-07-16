@@ -7,6 +7,7 @@ import {
   BookOpen,
   Star,
   ArrowRight,
+  Map,
 } from "lucide-react";
 
 const RoutesView = ({
@@ -30,6 +31,7 @@ const RoutesView = ({
             fare: 100,
             type: "Standard Matatu",
             duration: "45 mins",
+            distance: "12 km", // Added distance
             payment: ["Cash", "M-Pesa"],
             matatus: [
               { name: "Super Metro", fare: 100, type: "Standard", rating: 4.2 },
@@ -45,6 +47,7 @@ const RoutesView = ({
             fare: 120,
             type: "Express Matatu",
             duration: "35 mins",
+            distance: "10 km", // Added distance
             payment: ["Cash", "Card"],
             matatus: [
               {
@@ -66,6 +69,7 @@ const RoutesView = ({
             fare: 150,
             type: "Standard Matatu",
             duration: "60 mins",
+            distance: "20 km", // Added distance
             payment: ["Cash", "M-Pesa"],
             matatus: [
               {
@@ -87,6 +91,7 @@ const RoutesView = ({
             fare: 200,
             type: "Standard Matatu",
             duration: "75 mins",
+            distance: "30 km", // Added distance
             payment: ["Cash"],
             matatus: [
               { name: "Juja Trans", fare: 200, type: "Standard", rating: 3.8 },
@@ -105,6 +110,7 @@ const RoutesView = ({
             fare: 80,
             type: "Standard Matatu",
             duration: "30 mins",
+            distance: "5 km", // Added distance
             payment: ["Cash", "M-Pesa", "Card"],
             matatus: [
               {
@@ -126,6 +132,7 @@ const RoutesView = ({
             fare: 100,
             type: "Standard Matatu",
             duration: "40 mins",
+            distance: "8 km", // Added distance
             payment: ["Cash", "M-Pesa"],
             matatus: [
               { name: "City Hopper", fare: 100, type: "Standard", rating: 4.1 },
@@ -144,6 +151,7 @@ const RoutesView = ({
             fare: 90,
             type: "Standard Matatu",
             duration: "35 mins",
+            distance: "7 km", // Added distance
             payment: ["Cash", "M-Pesa"],
             matatus: [
               {
@@ -165,6 +173,7 @@ const RoutesView = ({
             fare: 110,
             type: "Standard Matatu",
             duration: "50 mins",
+            distance: "15 km", // Added distance
             payment: ["Cash"],
             matatus: [
               {
@@ -188,6 +197,7 @@ const RoutesView = ({
             fare: 130,
             type: "Standard Matatu",
             duration: "55 mins",
+            distance: "18 km", // Added distance
             payment: ["Cash", "M-Pesa"],
             matatus: [
               {
@@ -209,6 +219,7 @@ const RoutesView = ({
             fare: 180,
             type: "Standard Matatu",
             duration: "70 mins",
+            distance: "25 km", // Added distance
             payment: ["Cash"],
             matatus: [
               {
@@ -232,6 +243,7 @@ const RoutesView = ({
             fare: 120,
             type: "Standard Matatu",
             duration: "50 mins",
+            distance: "22 km", // Added distance
             payment: ["Cash", "M-Pesa"],
             matatus: [
               { name: "Ngong Link", fare: 120, type: "Standard", rating: 4.0 },
@@ -248,6 +260,7 @@ const RoutesView = ({
             fare: 100,
             type: "Standard Matatu",
             duration: "40 mins",
+            distance: "15 km", // Added distance
             payment: ["Cash", "M-Pesa", "Card"],
             matatus: [
               {
@@ -271,6 +284,7 @@ const RoutesView = ({
             fare: 140,
             type: "Standard Matatu",
             duration: "60 mins",
+            distance: "25 km", // Added distance
             payment: ["Cash", "M-Pesa"],
             matatus: [
               { name: "Athi Trans", fare: 140, type: "Standard", rating: 4.1 },
@@ -287,6 +301,7 @@ const RoutesView = ({
             fare: 200,
             type: "Standard Matatu",
             duration: "80 mins",
+            distance: "60 km", // Added distance
             payment: ["Cash"],
             matatus: [
               {
@@ -392,6 +407,10 @@ const RoutesView = ({
                       <div className="flex items-center text-sm text-gray-600">
                         <Clock className="h-4 w-4 mr-2 text-gray-500" />
                         <span>Duration: {route.duration}</span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Map className="h-4 w-4 mr-2 text-gray-500" />
+                        <span>Distance: {route.distance}</span>
                       </div>
                       <div className="flex items-center text-sm text-gray-600">
                         <Users className="h-4 w-4 mr-2 text-gray-500" />
