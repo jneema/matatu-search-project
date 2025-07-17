@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { MapPin, X, Phone } from "lucide-react";
 
-const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
+const StagesView = ({
+  setCurrentView,
+  selectedRoute,
+  selectedMatatu,
+  currentLocation,
+}) => {
   const [selectedStage, setSelectedStage] = useState(null);
   const [selectedContactStage, setSelectedContactStage] = useState(null);
 
@@ -140,12 +145,25 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
     ],
   };
 
+  // Determine if Nairobi CBD is the selected destination
+  const isCBDSelected = selectedRoute?.destination
+    .toLowerCase()
+    .includes("cbd");
+
+  // Normalize currentLocation to match routesData keys from RoutesView
+  const normalizedCurrentLocation = currentLocation
+    ? currentLocation.charAt(0).toUpperCase() +
+      currentLocation.slice(1).toLowerCase()
+    : "Your location";
+
+  // Fetch nearby stages based on selectedMatatu or selectedRoute
   const nearbyStages = selectedMatatu
     ? stagesData[selectedMatatu.name] || []
     : selectedRoute
     ? selectedRoute.matatus.flatMap((matatu) => stagesData[matatu.name] || [])
     : [];
 
+  // Remove duplicate stages
   const uniqueStages = Array.from(
     new Map(nearbyStages.map((stage) => [stage.name, stage])).values()
   );
@@ -186,10 +204,17 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
             Nearby Stages
           </h2>
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-            Walking directions to matatu stages for{" "}
-            {selectedMatatu
-              ? selectedMatatu.name
-              : `${selectedRoute?.name} to ${selectedRoute?.destination}`}
+            {isCBDSelected
+              ? `Drop-off points in Nairobi CBD for ${
+                  selectedMatatu
+                    ? selectedMatatu.name
+                    : `${selectedRoute?.name} from ${normalizedCurrentLocation}`
+                }`
+              : `Stages for ${
+                  selectedMatatu
+                    ? selectedMatatu.name
+                    : `${selectedRoute?.name} to ${selectedRoute?.destination}`
+                }`}
           </p>
         </div>
 
@@ -213,7 +238,9 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
                         {stage.name}
                       </h3>
                       <p className="text-sm text-gray-600">
-                        {stage.distance} away • {stage.walkTime} walk
+                        {isCBDSelected
+                          ? `Drop-off: ${stage.distance} from Nairobi CBD • ${stage.walkTime} walk`
+                          : `${stage.distance} away • ${stage.walkTime} walk`}
                       </p>
                     </div>
 
@@ -244,7 +271,11 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
                 No stages found for{" "}
                 {selectedMatatu
                   ? selectedMatatu.name
-                  : `${selectedRoute?.name} to ${selectedRoute?.destination}`}
+                  : `${selectedRoute?.name} ${
+                      isCBDSelected
+                        ? `from ${normalizedCurrentLocation} to Nairobi CBD`
+                        : `to ${selectedRoute?.destination}`
+                    }`}
                 .
               </p>
             </div>
@@ -257,7 +288,9 @@ const StagesView = ({ setCurrentView, selectedRoute, selectedMatatu }) => {
               <div className="flex items-center space-x-2">
                 <MapPin className="h-5 w-5 text-green-600 flex-shrink-0" />
                 <span className="text-gray-600 text-sm sm:text-base">
-                  Your current location: Nairobi CBD
+                  {isCBDSelected
+                    ? `Drop-off point: ${selectedStage.name} in Nairobi CBD`
+                    : `Your current location: Nairobi CBD`}
                 </span>
               </div>
               <button

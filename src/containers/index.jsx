@@ -74,7 +74,7 @@ const MatatuRouteFinder = () => {
             setCurrentView={setCurrentView}
             selectedRoute={selectedRoute}
             selectedMatatu={selectedMatatu}
-            userLocation={currentLocation}
+            currentLocation={currentLocation}
           />
         );
       case "saved":

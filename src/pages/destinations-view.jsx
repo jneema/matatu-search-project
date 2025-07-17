@@ -65,6 +65,11 @@ const DestinationsView = ({
     ? destinationsData[selectedRoad.name] || []
     : [];
 
+  // Get valid current location options (exclude Nairobi CBD)
+  const locationOptions = destinations.filter(
+    (dest) => !dest.name.toLowerCase().includes("cbd")
+  );
+
   const resetSearch = () => {
     setFilteredDestinations([]);
     setShowNoResults(false);
@@ -131,14 +136,9 @@ const DestinationsView = ({
     }, 1000);
   };
 
-  const handleTryAgain = () => {
-    resetSearch();
-    setSearchQuery("");
-  };
-
   const handleLocationSubmit = () => {
-    if (!currentLocation.trim()) {
-      setLocationError("Please enter your current location");
+    if (!currentLocation) {
+      setLocationError("Please select your current location");
       return;
     }
     const cbdDestination = destinations.find((d) =>
@@ -229,31 +229,51 @@ const DestinationsView = ({
             </div>
           )}
 
-          {/* CBD Message and Location Input */}
+          {/* CBD Message and Location Select */}
           {isCBDSelected && (
             <div className="space-y-3">
               <p className="text-base text-gray-600">
-                You're traveling to Nairobi CBD. Please enter your current
+                You're traveling to Nairobi CBD. Please select your current
                 location.
               </p>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
                   <MapPin className="h-5 w-5 text-gray-400" />
                 </div>
-                <input
-                  type="text"
-                  placeholder="Enter your current location..."
+                <select
                   value={currentLocation}
                   onChange={(e) => {
                     setLocalCurrentLocation(e.target.value);
                     setLocationError("");
                   }}
-                  onKeyPress={(e) =>
-                    e.key === "Enter" && handleLocationSubmit()
-                  }
-                  className="w-full pl-10 pr-4 py-3 text-base border-2 border-gray-200 rounded-lg focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
-                  aria-label="Enter current location"
-                />
+                  className="w-full pl-10 pr-4 py-3 text-base border-2 border-gray-200 rounded-lg focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 appearance-none bg-white"
+                  aria-label="Select current location"
+                >
+                  <option value="" disabled>
+                    Select your current location
+                  </option>
+                  {locationOptions.map((option) => (
+                    <option key={option.id} value={option.name}>
+                      {option.name}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                  <svg
+                    className="h-5 w-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </div>
               </div>
               {locationError && (
                 <p className="text-red-600 text-sm">{locationError}</p>
@@ -269,7 +289,7 @@ const DestinationsView = ({
                 </button>
                 <button
                   onClick={handleLocationSubmit}
-                  disabled={isSearching}
+                  disabled={isSearching || !currentLocation}
                   className="w-full sm:w-1/2 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                   aria-label="Find routes to Nairobi CBD"
                 >
