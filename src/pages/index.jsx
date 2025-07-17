@@ -18,7 +18,8 @@ const LandingView = ({
 }) => {
   const [showNoResults, setShowNoResults] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [filteredTowns, setFilteredTowns] = useState([]); 
+  const [filteredTowns, setFilteredTowns] = useState([]);
+  const [nonNairobiTown, setNonNairobiTown] = useState(null);
 
   const towns = [
     {
@@ -72,6 +73,7 @@ const LandingView = ({
     setSearchQuery("");
     setFilteredTowns([]);
     setShowNoResults(false);
+    setNonNairobiTown(null);
   };
 
   const handleSearch = (query) => {
@@ -79,12 +81,14 @@ const LandingView = ({
       setFilteredTowns([]);
       setShowNoResults(false);
       setHasSearched(false);
+      setNonNairobiTown(null);
       return;
     }
 
     setIsSearching(true);
     setHasSearched(true);
     setShowNoResults(false);
+    setNonNairobiTown(null);
 
     setTimeout(() => {
       const results = towns.filter((town) =>
@@ -97,13 +101,19 @@ const LandingView = ({
       if (results.length === 0) {
         setShowNoResults(true);
       } else if (results.length === 1) {
-        handleTownSelect(results[0]);
+        if (results[0].name.toLowerCase() === "nairobi") {
+          handleTownSelect(results[0]);
+        } else {
+          setNonNairobiTown(results[0]);
+          setFilteredTowns([]);
+        }
       }
     }, 1000);
   };
 
   const handleTryAgain = () => {
     setShowNoResults(false);
+    setNonNairobiTown(null);
     setSearchQuery("");
     setHasSearched(false);
     setFilteredTowns([]);
@@ -136,11 +146,10 @@ const LandingView = ({
               onChange={(e) => {
                 const value = e.target.value;
                 setSearchQuery(value);
-                if (value.trim() === "") {
-                  setShowNoResults(false);
-                  setHasSearched(false);
-                  setFilteredTowns([]);
-                }
+                setShowNoResults(false);
+                setHasSearched(false);
+                setFilteredTowns([]);
+                setNonNairobiTown(null); // Reset non-Nairobi town message on input change
               }}
               onKeyPress={(e) => e.key === "Enter" && handleSearch(searchQuery)}
               className="w-full pl-12 pr-4 py-4 text-md sm:text-lg border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none disabled:bg-gray-100"
@@ -177,6 +186,39 @@ const LandingView = ({
               >
                 Try Again
               </button>
+            </div>
+          )}
+
+          {/* Non-Nairobi Town Message */}
+          {nonNairobiTown && (
+            <div className="mt-6 p-4 sm:p-6 bg-yellow-50 rounded-xl border border-yellow-200">
+              <div className="flex items-center space-x-3 mb-4">
+                <AlertCircle className="h-6 w-6 text-yellow-600" />
+                <h3 className="text-lg font-semibold text-yellow-800">
+                  {nonNairobiTown.name} Routes Not Available Yet
+                </h3>
+              </div>
+              <p className="text-yellow-700 mb-4">
+                We're sorry, matatu route details for {nonNairobiTown.name} are
+                not available at this time. Explore routes in Nairobi or check
+                back soon for updates!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() =>
+                    handleTownSelect(towns.find((t) => t.name === "Nairobi"))
+                  }
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  Explore Nairobi Routes
+                </button>
+                <button
+                  onClick={handleTryAgain}
+                  className="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors"
+                >
+                  Try Another Town
+                </button>
+              </div>
             </div>
           )}
 
@@ -219,7 +261,7 @@ const LandingView = ({
             Select Your Town
           </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {(filteredTowns.length > 0 && !showNoResults
+            {(filteredTowns.length > 0 && !showNoResults && !nonNairobiTown
               ? filteredTowns
               : towns
             ).map((town) => (
