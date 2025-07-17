@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, BookOpen, Menu, MapPinPlus, MapPinPlusIcon } from "lucide-react";
+import { Route, BookOpen, MapPinPlusIcon } from "lucide-react";
 import { useNavigate } from "react-router";
 
 const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
@@ -53,6 +53,9 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
               title="Feedback"
             >
+              <span className="absolute right-full top-1/2 transform -translate-y-1/2 mr-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                Feedback
+              </span>
               <MapPinPlusIcon className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
             </button>
           </div>
@@ -72,7 +75,7 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
             </div>
             <button
               onClick={() => setCurrentView("landing")}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer ${
                 currentView === "landing"
                   ? "bg-green-600 text-white"
                   : currentStep >= 1
@@ -106,7 +109,7 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
                 currentView === "roads"
                   ? "bg-green-600 text-white"
                   : currentStep >= 2
-                  ? "text-green-600 hover:bg-green-50"
+                  ? "text-green-600 hover:bg-green-50 cursor-pointer"
                   : "text-gray-500 cursor-not-allowed"
               }`}
               disabled={currentStep < 2}
@@ -137,7 +140,7 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
                 currentView === "destination"
                   ? "bg-green-600 text-white"
                   : currentStep >= 3
-                  ? "text-green-600 hover:bg-green-50"
+                  ? "text-green-600 hover:bg-green-50 cursor-pointer"
                   : "text-gray-500 cursor-not-allowed"
               }`}
               disabled={currentStep < 3}
@@ -168,7 +171,7 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
                 currentView === "routes"
                   ? "bg-green-600 text-white"
                   : currentStep >= 4
-                  ? "text-green-600 hover:bg-green-50"
+                  ? "text-green-600 hover:bg-green-50 cursor-pointer"
                   : "text-gray-500 cursor-not-allowed"
               }`}
               disabled={currentStep < 4}
@@ -197,8 +200,8 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 currentView === "comparison"
                   ? "bg-green-600 text-white"
-                  : currentStep >= 6
-                  ? "text-green-600 hover:bg-green-50"
+                  : currentStep >= 5
+                  ? "text-green-600 hover:bg-green-50 cursor-pointer"
                   : "text-gray-500 cursor-not-allowed"
               }`}
               disabled={currentStep < 5}
@@ -228,7 +231,7 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
                 currentView === "stages"
                   ? "bg-green-600 text-white"
                   : currentStep >= 6
-                  ? "text-green-600 hover:bg-green-50"
+                  ? "text-green-600 hover:bg-green-50 cursor-pointer"
                   : "text-gray-500 cursor-not-allowed"
               }`}
               disabled={currentStep < 6}
@@ -263,7 +266,7 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
                     isActive
                       ? "bg-green-600 text-white"
                       : isClickable
-                      ? "bg-gray-200 text-green-700 hover:bg-green-100"
+                      ? "bg-gray-200 text-green-700 hover:bg-green-100 cursor-pointer"
                       : "bg-gray-100 text-gray-400 cursor-not-allowed"
                   }`}
                 >

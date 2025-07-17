@@ -355,7 +355,7 @@ const Feedback = () => {
                         {formData.matatus.length > 1 && (
                           <button
                             onClick={() => removeMatatu(index)}
-                            className="p-1 sm:p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                            className="p-1 sm:p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors cursor-pointer"
                           >
                             <Trash2 className="h-4 w-4 sm:h-5 sm:w-5" />
                           </button>
@@ -565,7 +565,7 @@ const Feedback = () => {
 
                   <button
                     onClick={addMatatu}
-                    className="w-full flex items-center justify-center px-4 py-2 sm:py-3 text-green-600 border border-green-600 rounded-lg hover:bg-green-50 transition-colors text-sm sm:text-base font-medium"
+                    className="w-full flex items-center justify-center px-4 py-2 sm:py-3 text-green-600 border border-green-600 rounded-lg hover:bg-green-50 transition-colors text-sm sm:text-base font-medium cursor-pointer"
                   >
                     <PlusCircle className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                     Add Another Matatu
