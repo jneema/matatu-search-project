@@ -1,12 +1,9 @@
 import React from "react";
-import { Route, BookOpen, Menu } from "lucide-react";
+import { Route, BookOpen, Menu, MapPinPlus, MapPinPlusIcon } from "lucide-react";
+import { useNavigate } from "react-router";
 
-const Header = ({
-  currentView,
-  setCurrentView,
-  savedRoutes = [],
-  showFeedbackModal,
-}) => {
+const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
+  const navigate = useNavigate();
   const getCurrentStep = () => {
     switch (currentView) {
       case "landing":
@@ -41,7 +38,7 @@ const Header = ({
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setCurrentView("saved")}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative"
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative cursor-pointer"
               title="Saved Routes"
             >
               <BookOpen className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
@@ -52,11 +49,11 @@ const Header = ({
               )}
             </button>
             <button
-              onClick={() => showFeedbackModal()}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              onClick={() => navigate("/feedback")}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
               title="Feedback"
             >
-              <Menu className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
+              <MapPinPlusIcon className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
             </button>
           </div>
         </div>
@@ -185,7 +182,7 @@ const Header = ({
             }`}
           ></div>
 
-           <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
                 currentStep >= 5
@@ -209,7 +206,7 @@ const Header = ({
               Compare
             </button>
           </div>
-           <div
+          <div
             className={`h-px flex-1 ${
               currentStep >= 6 ? "bg-green-600" : "bg-gray-200"
             }`}
@@ -239,8 +236,6 @@ const Header = ({
               Stages
             </button>
           </div>
-         
-         
         </div>
 
         {/* Progress Tabs - Mobile */}

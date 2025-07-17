@@ -4,7 +4,6 @@ import RoutesView from "../pages/routes-view";
 import ComparisonView from "../pages/comparison-view";
 import StagesView from "../pages/stages-view";
 import SavedRoutesView from "../pages/saved-routes-view";
-import FeedbackModal from "../components/feedback-modal";
 import Header from "../components/index";
 import RoadsView from "../pages/roads-view";
 import DestinationsView from "../pages/destinations-view";
@@ -14,7 +13,6 @@ const MatatuRouteFinder = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRoad, setSelectedRoad] = useState(null);
   const [savedRoutes, setSavedRoutes] = useState([]);
-  const [showFeedback, setShowFeedback] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [selectedTown, setSelectedTown] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
@@ -98,10 +96,8 @@ const MatatuRouteFinder = () => {
         currentView={currentView}
         setCurrentView={setCurrentView}
         savedRoutes={savedRoutes}
-        showFeedbackModal={() => setShowFeedback(true)}
       />
       {renderCurrentView()}
-      {showFeedback && <FeedbackModal setShowFeedback={setShowFeedback} />}
     </div>
   );
 };
