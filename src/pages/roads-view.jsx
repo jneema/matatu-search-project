@@ -1,234 +1,200 @@
-import React, { useState } from "react";
-import { Search, AlertCircle, Loader, ArrowRight } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  Search,
+  MapPin,
+  AlertCircle,
+  ArrowRight,
+  X,
+  ChevronRight,
+  Zap,
+} from "lucide-react";
+import { getRoadsByTown } from "../data/routesData";
 
 const RoadsView = ({
   setCurrentView,
   searchQuery,
   setSearchQuery,
   setSelectedRoad,
-  setHasSearched,
 }) => {
-  const [isSearching, setIsSearching] = useState(false);
-  const [showNoResults, setShowNoResults] = useState(false);
-  const [filteredRoads, setFilteredRoads] = useState([]);
+  const road = getRoadsByTown(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [filteredRoads, setFilteredRoads] = useState(road);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target))
+        setIsOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-  const roads = [
-    {
-      id: 1,
-      name: "Thika Road",
-      routes: 45,
-    },
-    {
-      id: 2,
-      name: "Waiyaki Way",
-      routes: 28,
-    },
-    {
-      id: 3,
-      name: "Jogoo Road",
-      routes: 22,
-    },
-    {
-      id: 4,
-      name: "Kiambu Road",
-      routes: 18,
-    },
-    {
-      id: 5,
-      name: "Lang'ata Road",
-      routes: 15,
-    },
-    {
-      id: 6,
-      name: "Mombasa Road",
-      routes: 12,
-    },
-  ];
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!isOpen) return;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((p) => Math.min(p + 1, filteredRoads.length - 1));
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((p) => Math.max(p - 1, 0));
+      }
+      if (e.key === "Enter" && activeIndex >= 0)
+        handleRoadSelect(filteredRoads[activeIndex]);
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, activeIndex, filteredRoads]);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    setActiveIndex(-1);
+    setFilteredRoads(
+      value.trim()
+        ? road.filter((r) => r.name.toLowerCase().includes(value.toLowerCase()))
+        : road,
+    );
+    setIsOpen(true);
+  };
 
   const handleRoadSelect = (road) => {
     setSelectedRoad(road);
     setCurrentView("destination");
-    setHasSearched(false);
     setSearchQuery("");
-    setFilteredRoads([]);
-    setShowNoResults(false);
+    setIsOpen(false);
+    setActiveIndex(-1);
   };
 
-  const handleSearch = (query) => {
-    if (!query.trim()) {
-      setFilteredRoads([]);
-      setShowNoResults(false);
-      setHasSearched(false);
-      return;
-    }
-
-    setIsSearching(true);
-    setHasSearched(true);
-    setShowNoResults(false);
-
-    setTimeout(() => {
-      const results = roads.filter((road) =>
-        road.name.toLowerCase().includes(query.toLowerCase())
-      );
-
-      setIsSearching(false);
-      setFilteredRoads(results);
-
-      if (results.length === 0) {
-        setShowNoResults(true);
-      } else if (results.length === 1) {
-        handleRoadSelect(results[0]);
-      }
-    }, 1000);
-  };
-
-  const handleTryAgain = () => {
-    setShowNoResults(false);
+  const clearSearch = () => {
     setSearchQuery("");
-    setHasSearched(false);
-    setFilteredRoads([]);
+    setFilteredRoads(road);
+    setIsOpen(true);
+    setActiveIndex(-1);
   };
-
-  const popularRoads = [
-    "Thika Road",
-    "Kiambu Road",
-    "Waiyaki Way",
-    "Jogoo Road",
-  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50 font-sans">
       <div className="max-w-4xl mx-auto px-4 py-16">
+        <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-6 overflow-x-auto whitespace-nowrap">
+          <button
+            onClick={() => setCurrentView("landing")}
+            className="hover:text-green-600 cursor-pointer"
+          >
+            Home
+          </button>
+          <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <span className="text-gray-400">Roads</span>
+        </nav>
+
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">Find Road</h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Choose the road you desire to go to to discover routes, compare
-            fares, and get real-time directions
+          <h2 className="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
+            Nairobi Route Finder
+          </h2>
+          <p className="text-lg text-gray-600 max-w-xl mx-auto">
+            Select a major road to see available matatu stages and real-time
+            fare estimates.
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center">
-              <Search className="h-5 w-5 text-gray-400" />
+        <div className="relative max-w-2xl mx-auto mb-20" ref={dropdownRef}>
+          <div className="relative group">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-gray-400 group-focus-within:text-green-600 transition-colors" />
             </div>
             <input
               type="text"
-              placeholder="Search for road..."
+              placeholder="Search for a road (e.g., Thika Road)"
               value={searchQuery}
-              onChange={(e) => {
-                const value = e.target.value;
-                setSearchQuery(value);
-                if (value.trim() === "") {
-                  setShowNoResults(false);
-                  setHasSearched(false);
-                  setFilteredRoads([]);
-                }
+              onChange={handleInputChange}
+              onFocus={() => {
+                if (!searchQuery.trim()) setFilteredRoads(road);
+                setIsOpen(true);
               }}
-              onKeyPress={(e) => e.key === "Enter" && handleSearch(searchQuery)}
-              className="w-full pl-12 pr-4 py-4 text-md sm:text-lg border-2 border-gray-200 rounded-xl focus:border-green-500 focus:outline-none disabled:bg-gray-100"
-              disabled={isSearching}
+              className="w-full pl-12 pr-12 py-5 bg-white text-lg border border-gray-200 rounded-2xl shadow-sm focus:ring-4 focus:ring-green-500/10 focus:border-green-500 outline-none transition-all"
             />
-
-            {isSearching && (
-              <div className="absolute inset-y-0 right-0 pr-4 flex items-center">
-                <Loader className="h-5 w-5 text-gray-400 animate-spin" />
-              </div>
+            {searchQuery && (
+              <button
+                onClick={clearSearch}
+                className="absolute inset-y-0 right-0 pr-4 flex items-center"
+              >
+                <X className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+              </button>
             )}
           </div>
 
-          {/* No Results Fallback */}
-          {showNoResults && (
-            <div className="mt-6 p-4 sm:p-6 bg-red-50 rounded-xl border border-red-200">
-              <div className="flex items-center space-x-3 mb-4">
-                <AlertCircle className="h-6 w-6 text-red-600" />
-                <h3 className="text-lg font-semibold text-red-800">
-                  No roads found for "{searchQuery}"
-                </h3>
-              </div>
-              <p className="text-red-700 mb-4">
-                We couldn't find any roads matching your search. Try:
-              </p>
-              <ul className="list-disc list-inside text-red-700 mb-4 space-y-1">
-                <li>Checking your spelling</li>
-                <li>Using a different road name</li>
-                <li>Trying one of our available roads below</li>
-              </ul>
-              <button
-                onClick={handleTryAgain}
-                className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
-              >
-                Try Again
-              </button>
+          {/* Dropdown */}
+          {isOpen && (
+            <div className="absolute z-50 w-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-2xl overflow-hidden">
+              {filteredRoads.length > 0 ? (
+                <div className="py-2">
+                  <div className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    Available Roads
+                  </div>
+                  {filteredRoads.map((road, index) => (
+                    <button
+                      key={road.id}
+                      onClick={() => handleRoadSelect(road)}
+                      onMouseEnter={() => setActiveIndex(index)}
+                      className={`w-full flex items-center justify-between px-4 py-4 transition-colors group ${activeIndex === index ? "bg-green-50" : "hover:bg-green-50"}`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div
+                          className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${activeIndex === index ? "bg-green-100" : "bg-gray-100 group-hover:bg-green-100"}`}
+                        >
+                          <MapPin
+                            className={`h-5 w-5 ${activeIndex === index ? "text-green-600" : "text-gray-500 group-hover:text-green-600"}`}
+                          />
+                        </div>
+                        <div className="text-left">
+                          <p
+                            className={`font-bold leading-tight ${activeIndex === index ? "text-green-700" : "text-gray-800 group-hover:text-green-700"}`}
+                          >
+                            {road.name}
+                          </p>
+                          <p className="text-xs text-gray-500 line-clamp-1">
+                            {road.description}
+                          </p>
+                        </div>
+                      </div>
+                      <ArrowRight
+                        className={`h-4 w-4 transition-all ${activeIndex === index ? "text-green-600 translate-x-1" : "text-gray-300 group-hover:text-green-600 group-hover:translate-x-1"}`}
+                      />
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-8 text-center">
+                  <AlertCircle className="h-10 w-10 text-gray-300 mx-auto mb-3" />
+                  <p className="text-gray-900 font-medium">No roads found</p>
+                </div>
+              )}
             </div>
           )}
 
-          {/* Popular Roads */}
-          <div className="mt-6">
-            <p className="text-gray-500 mb-3 text-left">Popular roads:</p>
+          {/* Popular Roads Pills */}
+          <div className="mt-5">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="h-3.5 w-3.5 text-green-500" />
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                Popular Roads
+              </span>
+            </div>
             <div className="flex flex-wrap gap-2">
-              {popularRoads.map((road, index) => (
+              {road.map((road) => (
                 <button
-                  key={index}
-                  onClick={() => handleSearch(road)}
-                  className="bg-green-100 text-green-700 px-4 py-2 rounded-full hover:bg-green-200 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                  disabled={isSearching}
+                  key={road.id}
+                  onClick={() => handleRoadSelect(road)}
+                  className="flex items-center gap-1.5 px-3.5 py-2 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600 hover:border-green-400 hover:text-green-700 hover:bg-green-50 transition-all shadow-sm"
                 >
-                  {road}
+                  <MapPin className="h-3 w-3 text-green-500 flex-shrink-0" />
+                  {road.name}
                 </button>
               ))}
             </div>
-          </div>
-
-          <button
-            onClick={() => handleSearch(searchQuery)}
-            disabled={isSearching || !searchQuery.trim()}
-            className="w-full mt-6 bg-green-600 text-white py-4 rounded-xl font-semibold hover:bg-green-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center space-x-2 cursor-pointer"
-          >
-            {isSearching ? (
-              <>
-                <Loader className="h-5 w-5 animate-spin" />
-                <span>Searching...</span>
-              </>
-            ) : (
-              <span>Search Roads</span>
-            )}
-          </button>
-        </div>
-
-        {/* Road Selection Grid */}
-        <div className="mb-12">
-          <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-            Select Your Road
-          </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {(filteredRoads.length > 0 && !showNoResults
-              ? filteredRoads
-              : roads
-            ).map((road) => (
-              <div
-                key={road.id}
-                className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer group hover:scale-105 border-2 border-transparent hover:border-green-200"
-                onClick={() => handleRoadSelect(road)}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="text-3xl">🛣️</div>{" "}
-                  {/* Added icon for consistency */}
-                  <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-green-600 transition-colors" />
-                </div>
-                <h4 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-green-600 transition-colors">
-                  {road.name}
-                </h4>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-500">
-                    {road.routes} routes available
-                  </span>
-                  <span className="text-xs text-green-600 font-medium">
-                    Click to explore
-                  </span>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>

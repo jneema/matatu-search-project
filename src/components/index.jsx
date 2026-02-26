@@ -14,10 +14,8 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
         return 3;
       case "routes":
         return 4;
-      case "comparison":
-        return 5;
       case "stages":
-        return 6;
+        return 5;
       default:
         return 1;
     }
@@ -79,8 +77,8 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
                 currentView === "landing"
                   ? "bg-green-600 text-white"
                   : currentStep >= 1
-                  ? "text-green-600 hover:bg-green-50"
-                  : "text-gray-500"
+                    ? "text-green-600 hover:bg-green-50"
+                    : "text-gray-500"
               }`}
             >
               Towns
@@ -109,8 +107,8 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
                 currentView === "roads"
                   ? "bg-green-600 text-white"
                   : currentStep >= 2
-                  ? "text-green-600 hover:bg-green-50 cursor-pointer"
-                  : "text-gray-500 cursor-not-allowed"
+                    ? "text-green-600 hover:bg-green-50 cursor-pointer"
+                    : "text-gray-500 cursor-not-allowed"
               }`}
               disabled={currentStep < 2}
             >
@@ -140,8 +138,8 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
                 currentView === "destination"
                   ? "bg-green-600 text-white"
                   : currentStep >= 3
-                  ? "text-green-600 hover:bg-green-50 cursor-pointer"
-                  : "text-gray-500 cursor-not-allowed"
+                    ? "text-green-600 hover:bg-green-50 cursor-pointer"
+                    : "text-gray-500 cursor-not-allowed"
               }`}
               disabled={currentStep < 3}
             >
@@ -171,8 +169,8 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
                 currentView === "routes"
                   ? "bg-green-600 text-white"
                   : currentStep >= 4
-                  ? "text-green-600 hover:bg-green-50 cursor-pointer"
-                  : "text-gray-500 cursor-not-allowed"
+                    ? "text-green-600 hover:bg-green-50 cursor-pointer"
+                    : "text-gray-500 cursor-not-allowed"
               }`}
               disabled={currentStep < 4}
             >
@@ -196,45 +194,15 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
               5
             </div>
             <button
-              onClick={() => currentStep >= 5 && setCurrentView("comparison")}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "comparison"
-                  ? "bg-green-600 text-white"
-                  : currentStep >= 5
-                  ? "text-green-600 hover:bg-green-50 cursor-pointer"
-                  : "text-gray-500 cursor-not-allowed"
-              }`}
-              disabled={currentStep < 5}
-            >
-              Compare
-            </button>
-          </div>
-          <div
-            className={`h-px flex-1 ${
-              currentStep >= 6 ? "bg-green-600" : "bg-gray-200"
-            }`}
-          ></div>
-
-          <div className="flex items-center space-x-2">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= 6
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-            >
-              6
-            </div>
-            <button
-              onClick={() => currentStep >= 6 && setCurrentView("stages")}
+              onClick={() => currentStep >= 5 && setCurrentView("stages")}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 currentView === "stages"
                   ? "bg-green-600 text-white"
-                  : currentStep >= 6
-                  ? "text-green-600 hover:bg-green-50 cursor-pointer"
-                  : "text-gray-500 cursor-not-allowed"
+                  : currentStep >= 5
+                    ? "text-green-600 hover:bg-green-50 cursor-pointer"
+                    : "text-gray-500 cursor-not-allowed"
               }`}
-              disabled={currentStep < 6}
+              disabled={currentStep < 5}
             >
               Stages
             </button>
@@ -244,14 +212,13 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
         {/* Progress Tabs - Mobile */}
         <div className="md:hidden">
           <div className="flex items-center justify-center space-x-2">
-            {[1, 2, 3, 4, 5, 6].map((step) => {
+            {[1, 2, 3, 4, 5].map((step) => {
               const viewMap = {
                 1: "landing",
                 2: "roads",
                 3: "destination",
                 4: "routes",
-                5: "comparison",
-                6: "stages",
+                5: "stages",
               };
 
               const isClickable = currentStep >= step;
@@ -266,8 +233,8 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
                     isActive
                       ? "bg-green-600 text-white"
                       : isClickable
-                      ? "bg-gray-200 text-green-700 hover:bg-green-100 cursor-pointer"
-                      : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                        ? "bg-gray-200 text-green-700 hover:bg-green-100 cursor-pointer"
+                        : "bg-gray-100 text-gray-400 cursor-not-allowed"
                   }`}
                 >
                   {step}
