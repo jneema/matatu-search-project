@@ -235,6 +235,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.8,
     reviews: 1240,
+    phone: "+254726174961",
+    whatsapp: null,
   },
   {
     id: 2,
@@ -245,6 +247,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.2,
     reviews: 2100,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 3,
@@ -255,6 +259,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 4.0,
     reviews: 870,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 4,
@@ -265,6 +271,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 4.5,
     reviews: 960,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 5,
@@ -275,6 +283,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 3.9,
     reviews: 540,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 6,
@@ -285,6 +295,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 3.7,
     reviews: 430,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 7,
@@ -295,6 +307,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.6,
     reviews: 1870,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 8,
@@ -305,6 +319,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 4.1,
     reviews: 620,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 9,
@@ -315,6 +331,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.7,
     reviews: 1100,
+    phone: "+254721374310",
+    whatsapp: "+254792657999",
   },
   {
     id: 10,
@@ -325,6 +343,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 4.4,
     reviews: 780,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 11,
@@ -335,6 +355,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 3.8,
     reviews: 310,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 12,
@@ -345,6 +367,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 3.5,
     reviews: 290,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 13,
@@ -355,6 +379,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 3.9,
     reviews: 510,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 14,
@@ -365,6 +391,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.4,
     reviews: 730,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 15,
@@ -375,6 +403,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 4.3,
     reviews: 890,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 16,
@@ -385,6 +415,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.1,
     reviews: 420,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 17,
@@ -395,6 +427,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.2,
     reviews: 560,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 18,
@@ -405,6 +439,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 4.1,
     reviews: 670,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 19,
@@ -415,6 +451,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.2,
     reviews: 810,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 20,
@@ -425,6 +463,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 4.0,
     reviews: 490,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 21,
@@ -435,6 +475,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.4,
     reviews: 920,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 22,
@@ -445,6 +487,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 3.8,
     reviews: 380,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 23,
@@ -455,6 +499,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.5,
     reviews: 1050,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 24,
@@ -465,6 +511,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 4.2,
     reviews: 460,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 25,
@@ -475,6 +523,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 4.0,
     reviews: 340,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 26,
@@ -485,6 +535,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 4.3,
     reviews: 510,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 27,
@@ -495,6 +547,8 @@ export const saccos = [
     payment: ["Cash"],
     rating: 3.9,
     reviews: 280,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 28,
@@ -505,6 +559,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.1,
     reviews: 390,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 29,
@@ -515,6 +571,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.4,
     reviews: 610,
+    phone: null,
+    whatsapp: null,
   },
   {
     id: 30,
@@ -525,6 +583,8 @@ export const saccos = [
     payment: ["M-Pesa", "Cash"],
     rating: 4.3,
     reviews: 720,
+    phone: null,
+    whatsapp: null,
   },
 ];
 
@@ -594,8 +654,6 @@ export const routes = [
     distance: "17 km",
     isExpress: false,
   },
-
-  // --- Thika Superhighway → Ruiru (destinationId: 3) ---
   {
     id: 7,
     destinationId: 3,
@@ -824,62 +882,153 @@ export const routes = [
 // FK: routeId → routes.id, saccoId → saccos.id
 // Replaces the inline `matatus` arrays on each route
 export const routeSaccos = [
-  // Route 17B (routeId: 1)
   {
     routeId: 1,
     saccoId: 1,
     servicedStops: ["CBD", "Pangani", "Muthaiga", "Roysambu", "Kasarani"],
+    isExpress: false,
   },
   {
     routeId: 1,
     saccoId: 2,
     servicedStops: ["CBD", "Pangani", "Muthaiga", "Roysambu", "Kasarani"],
+    isExpress: false,
   },
-  { routeId: 1, saccoId: 3, servicedStops: ["CBD", "Roysambu", "Kasarani"] },
-  { routeId: 1, saccoId: 4, servicedStops: ["CBD", "Kasarani"] },
-  { routeId: 1, saccoId: 5, servicedStops: ["CBD", "Pangani", "Kasarani"] },
-  { routeId: 1, saccoId: 6, servicedStops: ["CBD", "Muthaiga", "Kasarani"] },
+  {
+    routeId: 1,
+    saccoId: 3,
+    servicedStops: ["CBD", "Roysambu", "Kasarani"],
+    isExpress: false,
+  },
+  {
+    routeId: 1,
+    saccoId: 4,
+    servicedStops: ["CBD", "Kasarani"],
+    isExpress: true,
+  },
+  {
+    routeId: 1,
+    saccoId: 5,
+    servicedStops: ["CBD", "Pangani", "Kasarani"],
+    isExpress: false,
+  },
+  {
+    routeId: 1,
+    saccoId: 6,
+    servicedStops: ["CBD", "Muthaiga", "Kasarani"],
+    isExpress: false,
+  },
   {
     routeId: 1,
     saccoId: 7,
     servicedStops: ["CBD", "Pangani", "Muthaiga", "Roysambu", "Kasarani"],
+    isExpress: false,
   },
-  { routeId: 1, saccoId: 8, servicedStops: ["CBD", "Kasarani"] },
-  { routeId: 1, saccoId: 9, servicedStops: ["CBD", "Kasarani"] },
-  { routeId: 1, saccoId: 10, servicedStops: ["CBD", "Pangani", "Kasarani"] },
-  { routeId: 1, saccoId: 11, servicedStops: ["CBD", "Kasarani"] },
-  { routeId: 1, saccoId: 12, servicedStops: ["CBD", "Kasarani"] },
+  {
+    routeId: 1,
+    saccoId: 8,
+    servicedStops: ["CBD", "Kasarani"],
+    isExpress: true,
+  },
+  {
+    routeId: 1,
+    saccoId: 9,
+    servicedStops: ["CBD", "Kasarani"],
+    isExpress: true,
+  },
+  {
+    routeId: 1,
+    saccoId: 10,
+    servicedStops: ["CBD", "Pangani", "Kasarani"],
+    isExpress: false,
+  },
+  {
+    routeId: 1,
+    saccoId: 11,
+    servicedStops: ["CBD", "Kasarani"],
+    isExpress: true,
+  },
+  {
+    routeId: 1,
+    saccoId: 12,
+    servicedStops: ["CBD", "Kasarani"],
+    isExpress: true,
+  },
 
   // Route 237 (routeId: 2)
-  { routeId: 2, saccoId: 1, servicedStops: ["CBD", "Kasarani"] },
+  {
+    routeId: 2,
+    saccoId: 1,
+    servicedStops: ["CBD", "Kasarani"],
+    isExpress: true,
+  },
   {
     routeId: 2,
     saccoId: 4,
     servicedStops: ["CBD", "Allsops", "Survey", "Garden City", "Kasarani"],
+    isExpress: false,
   },
-  { routeId: 2, saccoId: 9, servicedStops: ["CBD", "Kasarani"] },
-  { routeId: 2, saccoId: 7, servicedStops: ["CBD", "Allsops", "Kasarani"] },
+  {
+    routeId: 2,
+    saccoId: 9,
+    servicedStops: ["CBD", "Kasarani"],
+    isExpress: true,
+  },
+  {
+    routeId: 2,
+    saccoId: 7,
+    servicedStops: ["CBD", "Allsops", "Kasarani"],
+    isExpress: false,
+  },
   {
     routeId: 2,
     saccoId: 17,
     servicedStops: ["CBD", "Allsops", "Survey", "Garden City", "Kasarani"],
+    isExpress: false,
   },
-  { routeId: 2, saccoId: 8, servicedStops: ["CBD", "Kasarani"] },
+  {
+    routeId: 2,
+    saccoId: 8,
+    servicedStops: ["CBD", "Kasarani"],
+    isExpress: true,
+  },
 
   // Route 60F (routeId: 3)
   {
     routeId: 3,
     saccoId: 10,
     servicedStops: ["CBD", "Ngara", "Roysambu", "Kasarani"],
+    isExpress: false,
   },
-  { routeId: 3, saccoId: 11, servicedStops: ["CBD", "Kasarani"] },
-  { routeId: 3, saccoId: 5, servicedStops: ["CBD", "Ngara", "Kasarani"] },
-  { routeId: 3, saccoId: 6, servicedStops: ["CBD", "Highridge", "Kasarani"] },
-  { routeId: 3, saccoId: 12, servicedStops: ["CBD", "Kasarani"] },
+  {
+    routeId: 3,
+    saccoId: 11,
+    servicedStops: ["CBD", "Kasarani"],
+    isExpress: true,
+  },
+  {
+    routeId: 3,
+    saccoId: 5,
+    servicedStops: ["CBD", "Ngara", "Kasarani"],
+    isExpress: false,
+  },
+  {
+    routeId: 3,
+    saccoId: 6,
+    servicedStops: ["CBD", "Highridge", "Kasarani"],
+    isExpress: false,
+  },
+  {
+    routeId: 3,
+    saccoId: 12,
+    servicedStops: ["CBD", "Kasarani"],
+    isExpress: true,
+  },
   {
     routeId: 3,
     saccoId: 3,
     servicedStops: ["CBD", "Ngara", "Highridge", "Roysambu", "Kasarani"],
+    isExpress: false,
   },
 
   // Route 45 (routeId: 4)
@@ -887,32 +1036,66 @@ export const routeSaccos = [
     routeId: 4,
     saccoId: 13,
     servicedStops: ["CBD", "Ngara", "Allsops", "Roysambu", "Githurai"],
+    isExpress: false,
   },
-  { routeId: 4, saccoId: 1, servicedStops: ["CBD", "Githurai"] },
-  { routeId: 4, saccoId: 14, servicedStops: ["CBD", "Allsops", "Githurai"] },
+  {
+    routeId: 4,
+    saccoId: 1,
+    servicedStops: ["CBD", "Githurai"],
+    isExpress: true,
+  },
+  {
+    routeId: 4,
+    saccoId: 14,
+    servicedStops: ["CBD", "Allsops", "Githurai"],
+    isExpress: false,
+  },
   {
     routeId: 4,
     saccoId: 7,
     servicedStops: ["CBD", "Ngara", "Allsops", "Roysambu", "Githurai"],
+    isExpress: false,
   },
 
   // Route 45B (routeId: 5)
-  { routeId: 5, saccoId: 8, servicedStops: ["CBD", "Githurai"] },
-  { routeId: 5, saccoId: 9, servicedStops: ["CBD", "Githurai"] },
+  {
+    routeId: 5,
+    saccoId: 8,
+    servicedStops: ["CBD", "Githurai"],
+    isExpress: true,
+  },
+  {
+    routeId: 5,
+    saccoId: 9,
+    servicedStops: ["CBD", "Githurai"],
+    isExpress: true,
+  },
   {
     routeId: 5,
     saccoId: 13,
     servicedStops: ["CBD", "Pangani", "Muthaiga", "Kahawa West", "Githurai"],
+    isExpress: false,
   },
-  { routeId: 5, saccoId: 10, servicedStops: ["CBD", "Pangani", "Githurai"] },
+  {
+    routeId: 5,
+    saccoId: 10,
+    servicedStops: ["CBD", "Pangani", "Githurai"],
+    isExpress: false,
+  },
   {
     routeId: 5,
     saccoId: 2,
     servicedStops: ["CBD", "Pangani", "Muthaiga", "Kahawa West", "Githurai"],
+    isExpress: false,
   },
 
   // Route 100 (routeId: 6)
-  { routeId: 6, saccoId: 1, servicedStops: ["CBD", "Githurai"] },
+  {
+    routeId: 6,
+    saccoId: 1,
+    servicedStops: ["CBD", "Githurai"],
+    isExpress: true,
+  },
   {
     routeId: 6,
     saccoId: 7,
@@ -923,12 +1106,14 @@ export const routeSaccos = [
       "Kenyatta Uni",
       "Githurai",
     ],
+    isExpress: false,
   },
   { routeId: 6, saccoId: 14, servicedStops: ["CBD", "Allsops", "Githurai"] },
   {
     routeId: 6,
     saccoId: 5,
     servicedStops: ["CBD", "Kahawa Sukari", "Githurai"],
+    isExpress: false,
   },
   {
     routeId: 6,
@@ -940,45 +1125,66 @@ export const routeSaccos = [
       "Kenyatta Uni",
       "Githurai",
     ],
+    isExpress: false,
   },
 
   // Route 145 (routeId: 7)
-  { routeId: 7, saccoId: 1, servicedStops: ["CBD", "Ruiru"] },
+  { routeId: 7, saccoId: 1, servicedStops: ["CBD", "Ruiru"], isExpress: true },
   {
     routeId: 7,
     saccoId: 15,
     servicedStops: ["CBD", "Pangani", "Kahawa Sukari", "Kihunguro", "Ruiru"],
+    isExpress: false,
   },
-  { routeId: 7, saccoId: 7, servicedStops: ["CBD", "Kahawa Sukari", "Ruiru"] },
-  { routeId: 7, saccoId: 9, servicedStops: ["CBD", "Ruiru"] },
+  {
+    routeId: 7,
+    saccoId: 7,
+    servicedStops: ["CBD", "Kahawa Sukari", "Ruiru"],
+    isExpress: false,
+  },
+  { routeId: 7, saccoId: 9, servicedStops: ["CBD", "Ruiru"], isExpress: true },
   {
     routeId: 7,
     saccoId: 16,
     servicedStops: ["CBD", "Pangani", "Kahawa Sukari", "Kihunguro", "Ruiru"],
+    isExpress: false,
   },
 
   // Route 145B (routeId: 8)
-  { routeId: 8, saccoId: 8, servicedStops: ["CBD", "Ruiru"] },
-  { routeId: 8, saccoId: 10, servicedStops: ["CBD", "Allsops", "Ruiru"] },
+  { routeId: 8, saccoId: 8, servicedStops: ["CBD", "Ruiru"], isExpress: true },
+  {
+    routeId: 8,
+    saccoId: 10,
+    servicedStops: ["CBD", "Allsops", "Ruiru"],
+    isExpress: false,
+  },
   {
     routeId: 8,
     saccoId: 14,
     servicedStops: ["CBD", "Roysambu", "Githurai", "Ruiru"],
+    isExpress: false,
   },
-  { routeId: 8, saccoId: 6, servicedStops: ["CBD", "Ruiru"] },
+  { routeId: 8, saccoId: 6, servicedStops: ["CBD", "Ruiru"], isExpress: true },
 
   // Route 260 (routeId: 9)
-  { routeId: 9, saccoId: 1, servicedStops: ["CBD", "Ruiru"] },
+  { routeId: 9, saccoId: 1, servicedStops: ["CBD", "Ruiru"], isExpress: true },
   {
     routeId: 9,
     saccoId: 7,
     servicedStops: ["CBD", "Muthaiga", "Kahawa West", "Kenyatta Uni", "Ruiru"],
+    isExpress: false,
   },
-  { routeId: 9, saccoId: 16, servicedStops: ["CBD", "Kenyatta Uni", "Ruiru"] },
+  {
+    routeId: 9,
+    saccoId: 16,
+    servicedStops: ["CBD", "Kenyatta Uni", "Ruiru"],
+    isExpress: false,
+  },
   {
     routeId: 9,
     saccoId: 2,
     servicedStops: ["CBD", "Muthaiga", "Kahawa West", "Kenyatta Uni", "Ruiru"],
+    isExpress: false,
   },
 
   // Route 24 — Karen (routeId: 10)
@@ -992,14 +1198,26 @@ export const routeSaccos = [
       "Karen Hardy",
       "Karen",
     ],
+    isExpress: false,
   },
   {
     routeId: 10,
     saccoId: 30,
     servicedStops: ["Railways", "Karen Hardy", "Karen"],
+    isExpress: false,
   },
-  { routeId: 10, saccoId: 1, servicedStops: ["Railways", "Karen"] },
-  { routeId: 10, saccoId: 24, servicedStops: ["Railways", "Adams", "Karen"] },
+  {
+    routeId: 10,
+    saccoId: 1,
+    servicedStops: ["Railways", "Karen"],
+    isExpress: true,
+  },
+  {
+    routeId: 10,
+    saccoId: 24,
+    servicedStops: ["Railways", "Adams", "Karen"],
+    isExpress: false,
+  },
   {
     routeId: 10,
     saccoId: 29,
@@ -1010,6 +1228,7 @@ export const routeSaccos = [
       "Karen Hardy",
       "Karen",
     ],
+    isExpress: false,
   },
 
   // Route 24B (routeId: 11)
@@ -1017,53 +1236,96 @@ export const routeSaccos = [
     routeId: 11,
     saccoId: 25,
     servicedStops: ["Railways", "Prestige", "Junction", "Karen C", "Karen"],
+    isExpress: false,
   },
-  { routeId: 11, saccoId: 30, servicedStops: ["Railways", "Karen"] },
+  {
+    routeId: 11,
+    saccoId: 30,
+    servicedStops: ["Railways", "Karen"],
+    isExpress: true,
+  },
   {
     routeId: 11,
     saccoId: 26,
     servicedStops: ["Railways", "Junction", "Karen"],
+    isExpress: false,
   },
   {
     routeId: 11,
     saccoId: 28,
     servicedStops: ["Railways", "Prestige", "Karen"],
+    isExpress: false,
   },
 
   // Route 58 — Karen (routeId: 12)
-  { routeId: 12, saccoId: 1, servicedStops: ["CBD", "Karen"] },
+  { routeId: 12, saccoId: 1, servicedStops: ["CBD", "Karen"], isExpress: true },
   {
     routeId: 12,
     saccoId: 23,
     servicedStops: ["CBD", "Bomas", "Hardy", "Karen Crossroads", "Karen"],
+    isExpress: false,
   },
-  { routeId: 12, saccoId: 29, servicedStops: ["CBD", "Hardy", "Karen"] },
+  {
+    routeId: 12,
+    saccoId: 29,
+    servicedStops: ["CBD", "Hardy", "Karen"],
+    isExpress: false,
+  },
   {
     routeId: 12,
     saccoId: 24,
     servicedStops: ["CBD", "Karen Crossroads", "Karen"],
+    isExpress: false,
   },
 
   // Route 111 — Ngong (routeId: 13)
-  { routeId: 13, saccoId: 1, servicedStops: ["Railways", "Ngong"] },
+  {
+    routeId: 13,
+    saccoId: 1,
+    servicedStops: ["Railways", "Ngong"],
+    isExpress: true,
+  },
   {
     routeId: 13,
     saccoId: 24,
     servicedStops: ["Railways", "Adams", "Junction", "Karen", "Ngong"],
+    isExpress: false,
   },
-  { routeId: 13, saccoId: 23, servicedStops: ["Railways", "Adams", "Ngong"] },
-  { routeId: 13, saccoId: 25, servicedStops: ["Railways", "Karen", "Ngong"] },
+  {
+    routeId: 13,
+    saccoId: 23,
+    servicedStops: ["Railways", "Adams", "Ngong"],
+    isExpress: false,
+  },
+  {
+    routeId: 13,
+    saccoId: 25,
+    servicedStops: ["Railways", "Karen", "Ngong"],
+    isExpress: false,
+  },
   {
     routeId: 13,
     saccoId: 26,
     servicedStops: ["Railways", "Adams", "Junction", "Karen", "Ngong"],
+    isExpress: false,
   },
-  { routeId: 13, saccoId: 27, servicedStops: ["Railways", "Ngong"] },
-  { routeId: 13, saccoId: 28, servicedStops: ["Railways", "Karen", "Ngong"] },
+  {
+    routeId: 13,
+    saccoId: 27,
+    servicedStops: ["Railways", "Ngong"],
+    isExpress: true,
+  },
+  {
+    routeId: 13,
+    saccoId: 28,
+    servicedStops: ["Railways", "Karen", "Ngong"],
+    isExpress: false,
+  },
   {
     routeId: 13,
     saccoId: 29,
     servicedStops: ["Railways", "Adams", "Junction", "Karen", "Ngong"],
+    isExpress: false,
   },
 
   // Route 111B (routeId: 14)
@@ -1077,18 +1339,26 @@ export const routeSaccos = [
       "Ngong Rd",
       "Ngong",
     ],
+    isExpress: false,
   },
   {
     routeId: 14,
     saccoId: 24,
     servicedStops: ["Railways", "Prestige", "Ngong"],
+    isExpress: false,
   },
   {
     routeId: 14,
     saccoId: 27,
     servicedStops: ["Railways", "Dagoretti Corner", "Ngong"],
+    isExpress: false,
   },
-  { routeId: 14, saccoId: 23, servicedStops: ["Railways", "Ngong"] },
+  {
+    routeId: 14,
+    saccoId: 23,
+    servicedStops: ["Railways", "Ngong"],
+    isExpress: true,
+  },
   {
     routeId: 14,
     saccoId: 29,
@@ -1099,6 +1369,7 @@ export const routeSaccos = [
       "Ngong Rd",
       "Ngong",
     ],
+    isExpress: false,
   },
 
   // Route 126 (routeId: 15)
@@ -1112,23 +1383,51 @@ export const routeSaccos = [
       "Kibiko",
       "Ngong",
     ],
+    isExpress: false,
   },
-  { routeId: 15, saccoId: 28, servicedStops: ["Railways", "Kibiko", "Ngong"] },
-  { routeId: 15, saccoId: 1, servicedStops: ["Railways", "Ngong"] },
-  { routeId: 15, saccoId: 27, servicedStops: ["Railways", "Bomas", "Ngong"] },
+  {
+    routeId: 15,
+    saccoId: 28,
+    servicedStops: ["Railways", "Kibiko", "Ngong"],
+    isExpress: false,
+  },
+  {
+    routeId: 15,
+    saccoId: 1,
+    servicedStops: ["Railways", "Ngong"],
+    isExpress: false,
+  },
+  {
+    routeId: 15,
+    saccoId: 27,
+    servicedStops: ["Railways", "Bomas", "Ngong"],
+    isExpress: false,
+  },
 
   // Route 35/60 (routeId: 16)
   {
     routeId: 16,
     saccoId: 18,
     servicedStops: ["Muthurwa", "City Stadium", "Makadara", "Donholm", "Umoja"],
+    isExpress: false,
   },
-  { routeId: 16, saccoId: 6, servicedStops: ["Muthurwa", "Makadara", "Umoja"] },
-  { routeId: 16, saccoId: 10, servicedStops: ["Muthurwa", "Donholm", "Umoja"] },
+  {
+    routeId: 16,
+    saccoId: 6,
+    servicedStops: ["Muthurwa", "Makadara", "Umoja"],
+    isExpress: false,
+  },
+  {
+    routeId: 16,
+    saccoId: 10,
+    servicedStops: ["Muthurwa", "Donholm", "Umoja"],
+    isExpress: false,
+  },
   {
     routeId: 16,
     saccoId: 19,
     servicedStops: ["Muthurwa", "City Stadium", "Makadara", "Donholm", "Umoja"],
+    isExpress: false,
   },
 
   // Route 60 (routeId: 17)
@@ -1136,17 +1435,25 @@ export const routeSaccos = [
     routeId: 17,
     saccoId: 10,
     servicedStops: ["Muthurwa", "Jogoo Rd", "Harambee", "Komarock", "Umoja"],
+    isExpress: false,
   },
   {
     routeId: 17,
     saccoId: 19,
     servicedStops: ["Muthurwa", "Harambee", "Umoja"],
+    isExpress: false,
   },
-  { routeId: 17, saccoId: 18, servicedStops: ["Muthurwa", "Umoja"] },
+  {
+    routeId: 17,
+    saccoId: 18,
+    servicedStops: ["Muthurwa", "Umoja"],
+    isExpress: true,
+  },
   {
     routeId: 17,
     saccoId: 20,
     servicedStops: ["Muthurwa", "Jogoo Rd", "Harambee", "Komarock", "Umoja"],
+    isExpress: false,
   },
 
   // Route 35 (routeId: 18)
@@ -1154,17 +1461,25 @@ export const routeSaccos = [
     routeId: 18,
     saccoId: 6,
     servicedStops: ["Muthurwa", "Makadara", "Kayole Jct", "Soweto", "Umoja"],
+    isExpress: false,
   },
   {
     routeId: 18,
     saccoId: 18,
     servicedStops: ["Muthurwa", "Kayole Jct", "Umoja"],
+    isExpress: false,
   },
-  { routeId: 18, saccoId: 19, servicedStops: ["Muthurwa", "Umoja"] },
+  {
+    routeId: 18,
+    saccoId: 19,
+    servicedStops: ["Muthurwa", "Umoja"],
+    isExpress: true,
+  },
   {
     routeId: 18,
     saccoId: 10,
     servicedStops: ["Muthurwa", "Makadara", "Soweto", "Umoja"],
+    isExpress: false,
   },
 
   // Route 58 — Donholm (routeId: 19)
@@ -1172,17 +1487,25 @@ export const routeSaccos = [
     routeId: 19,
     saccoId: 10,
     servicedStops: ["Muthurwa", "City Stadium", "Makadara", "Donholm"],
+    isExpress: false,
   },
   {
     routeId: 19,
     saccoId: 19,
     servicedStops: ["Muthurwa", "Makadara", "Donholm"],
+    isExpress: false,
   },
-  { routeId: 19, saccoId: 20, servicedStops: ["Muthurwa", "Donholm"] },
+  {
+    routeId: 19,
+    saccoId: 20,
+    servicedStops: ["Muthurwa", "Donholm"],
+    isExpress: true,
+  },
   {
     routeId: 19,
     saccoId: 18,
     servicedStops: ["Muthurwa", "City Stadium", "Makadara", "Donholm"],
+    isExpress: false,
   },
 
   // Route 58B (routeId: 20)
@@ -1190,12 +1513,19 @@ export const routeSaccos = [
     routeId: 20,
     saccoId: 19,
     servicedStops: ["Muthurwa", "Jogoo Rd", "Harambee Est", "Donholm"],
+    isExpress: false,
   },
-  { routeId: 20, saccoId: 6, servicedStops: ["Muthurwa", "Donholm"] },
+  {
+    routeId: 20,
+    saccoId: 6,
+    servicedStops: ["Muthurwa", "Donholm"],
+    isExpress: true,
+  },
   {
     routeId: 20,
     saccoId: 10,
     servicedStops: ["Muthurwa", "Harambee Est", "Donholm"],
+    isExpress: false,
   },
 
   // Route 9 (routeId: 21)
@@ -1203,40 +1533,71 @@ export const routeSaccos = [
     routeId: 21,
     saccoId: 20,
     servicedStops: ["CBD", "Jogoo Rd", "Makadara", "Donholm"],
+    isExpress: false,
   },
-  { routeId: 21, saccoId: 18, servicedStops: ["CBD", "Makadara", "Donholm"] },
-  { routeId: 21, saccoId: 10, servicedStops: ["CBD", "Donholm"] },
+  {
+    routeId: 21,
+    saccoId: 18,
+    servicedStops: ["CBD", "Makadara", "Donholm"],
+    isExpress: false,
+  },
+  {
+    routeId: 21,
+    saccoId: 10,
+    servicedStops: ["CBD", "Donholm"],
+    isExpress: true,
+  },
   {
     routeId: 21,
     saccoId: 19,
     servicedStops: ["CBD", "Jogoo Rd", "Makadara", "Donholm"],
+    isExpress: false,
   },
 
   // Route 23 — Westlands (routeId: 22)
-  { routeId: 22, saccoId: 1, servicedStops: ["CBD", "Westlands"] },
+  {
+    routeId: 22,
+    saccoId: 1,
+    servicedStops: ["CBD", "Westlands"],
+    isExpress: true,
+  },
   {
     routeId: 22,
     saccoId: 21,
     servicedStops: ["CBD", "Museum Hill", "Westlands"],
+    isExpress: false,
   },
   {
     routeId: 22,
     saccoId: 7,
     servicedStops: ["CBD", "Museum Hill", "Westlands"],
+    isExpress: false,
   },
-  { routeId: 22, saccoId: 23, servicedStops: ["CBD", "Westlands"] },
+  {
+    routeId: 22,
+    saccoId: 23,
+    servicedStops: ["CBD", "Westlands"],
+    isExpress: true,
+  },
 
   // Route 105 (routeId: 23)
   {
     routeId: 23,
     saccoId: 22,
     servicedStops: ["CBD", "Parklands Jct", "Westlands"],
+    isExpress: false,
   },
-  { routeId: 23, saccoId: 23, servicedStops: ["CBD", "Westlands"] },
+  {
+    routeId: 23,
+    saccoId: 23,
+    servicedStops: ["CBD", "Westlands"],
+    isExpress: true,
+  },
   {
     routeId: 23,
     saccoId: 7,
     servicedStops: ["CBD", "Parklands Jct", "Westlands"],
+    isExpress: false,
   },
 
   // Route 23C (routeId: 24)
@@ -1244,13 +1605,25 @@ export const routeSaccos = [
     routeId: 24,
     saccoId: 21,
     servicedStops: ["CBD", "University Way", "Chiromo", "Westlands"],
+    isExpress: false,
   },
-  { routeId: 24, saccoId: 1, servicedStops: ["CBD", "Westlands"] },
-  { routeId: 24, saccoId: 22, servicedStops: ["CBD", "Chiromo", "Westlands"] },
+  {
+    routeId: 24,
+    saccoId: 1,
+    servicedStops: ["CBD", "Westlands"],
+    isExpress: true,
+  },
+  {
+    routeId: 24,
+    saccoId: 22,
+    servicedStops: ["CBD", "Chiromo", "Westlands"],
+    isExpress: false,
+  },
   {
     routeId: 24,
     saccoId: 7,
     servicedStops: ["CBD", "University Way", "Chiromo", "Westlands"],
+    isExpress: false,
   },
 
   // Route 46 — Kikuyu (routeId: 25)
@@ -1258,32 +1631,71 @@ export const routeSaccos = [
     routeId: 25,
     saccoId: 22,
     servicedStops: ["CBD", "Westlands", "Kangemi", "Kikuyu"],
+    isExpress: false,
   },
-  { routeId: 25, saccoId: 1, servicedStops: ["CBD", "Kikuyu"] },
-  { routeId: 25, saccoId: 7, servicedStops: ["CBD", "Westlands", "Kikuyu"] },
-  { routeId: 25, saccoId: 23, servicedStops: ["CBD", "Kangemi", "Kikuyu"] },
+  {
+    routeId: 25,
+    saccoId: 1,
+    servicedStops: ["CBD", "Kikuyu"],
+    isExpress: true,
+  },
+  {
+    routeId: 25,
+    saccoId: 7,
+    servicedStops: ["CBD", "Westlands", "Kikuyu"],
+    isExpress: false,
+  },
+  {
+    routeId: 25,
+    saccoId: 23,
+    servicedStops: ["CBD", "Kangemi", "Kikuyu"],
+    isExpress: false,
+  },
 
   // Route 46B (routeId: 26)
   {
     routeId: 26,
     saccoId: 22,
     servicedStops: ["CBD", "Waiyaki Way", "Uthiru", "Kikuyu"],
+    isExpress: false,
   },
-  { routeId: 26, saccoId: 7, servicedStops: ["CBD", "Uthiru", "Kikuyu"] },
-  { routeId: 26, saccoId: 23, servicedStops: ["CBD", "Kikuyu"] },
+  {
+    routeId: 26,
+    saccoId: 7,
+    servicedStops: ["CBD", "Uthiru", "Kikuyu"],
+    isExpress: false,
+  },
+  {
+    routeId: 26,
+    saccoId: 23,
+    servicedStops: ["CBD", "Kikuyu"],
+    isExpress: true,
+  },
 
   // Route 102 (routeId: 27)
-  { routeId: 27, saccoId: 1, servicedStops: ["CBD", "Kikuyu"] },
+  {
+    routeId: 27,
+    saccoId: 1,
+    servicedStops: ["CBD", "Kikuyu"],
+    isExpress: true,
+  },
   {
     routeId: 27,
     saccoId: 22,
     servicedStops: ["CBD", "Westlands", "Kabete", "Kikuyu"],
+    isExpress: false,
   },
-  { routeId: 27, saccoId: 7, servicedStops: ["CBD", "Kabete", "Kikuyu"] },
+  {
+    routeId: 27,
+    saccoId: 7,
+    servicedStops: ["CBD", "Kabete", "Kikuyu"],
+    isExpress: false,
+  },
   {
     routeId: 27,
     saccoId: 23,
     servicedStops: ["CBD", "Westlands", "Kabete", "Kikuyu"],
+    isExpress: false,
   },
 ];
 
@@ -1307,6 +1719,7 @@ export const getSaccosByRoute = (routeId) => {
   return entries.map((entry) => ({
     ...saccos.find((s) => s.id === entry.saccoId),
     servicedStops: entry.servicedStops,
+    isExpress: entry.isExpress
   }));
 };
 

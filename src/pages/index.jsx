@@ -104,7 +104,7 @@ const LandingView = ({
         </div>
 
         {/* Search + Popular Routes */}
-        <div className="relative max-w-2xl mx-auto mb-20" ref={dropdownRef}>
+        <div className="relative max-w-2xl mx-auto mb-5" ref={dropdownRef}>
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400 group-focus-within:text-green-600 transition-colors" />
