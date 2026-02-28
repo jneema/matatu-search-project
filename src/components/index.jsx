@@ -6,9 +6,12 @@ import {
   BookmarkPlusIcon,
 } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
-const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
+const Header = ({ currentView, setCurrentView }) => {
   const navigate = useNavigate();
+  const savedRoutes = useSelector((state) => state.savedRoutes.routes);
+
   const getCurrentStep = () => {
     switch (currentView) {
       case "landing":
@@ -40,7 +43,7 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
           </div>
           <div className="flex items-center space-x-2">
             <button
-              onClick={() => setCurrentView("saved")}
+              onClick={() => navigate("/saved-routes")}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative cursor-pointer"
               title="Saved Routes"
             >

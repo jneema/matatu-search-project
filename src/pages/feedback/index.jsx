@@ -10,8 +10,8 @@ import {
   Home,
 } from "lucide-react";
 import { useNavigate } from "react-router";
-import Footer from "./footer";
-import Header from "./header";
+import Footer from "../../components/feedback/footer";
+import Header from "../../components/feedback/header";
 import StepRoute from "./step-route";
 import StepMatatus from "./step-matatus";
 import StepReview from "./step-review";

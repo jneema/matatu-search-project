@@ -12,7 +12,6 @@ const MatatuRouteFinder = () => {
   const [currentView, setCurrentView] = useState("landing");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRoad, setSelectedRoad] = useState(null);
-  const [savedRoutes, setSavedRoutes] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
   const [selectedTown, setSelectedTown] = useState(null);
   const [selectedDestination, setSelectedDestination] = useState(null);
@@ -53,8 +52,6 @@ const MatatuRouteFinder = () => {
             selectedRoad={selectedRoad}
             selectedTown={selectedTown}
             setSelectedRoute={setSelectedRoute}
-            savedRoutes={savedRoutes}
-            setSavedRoutes={setSavedRoutes}
             currentLocation={currentLocation}
           />
         );
@@ -76,7 +73,7 @@ const MatatuRouteFinder = () => {
           />
         );
       case "saved":
-        return <SavedRoutesView savedRoutes={savedRoutes} />;
+        return <SavedRoutesView />;
       default:
         return (
           <LandingView
@@ -92,11 +89,7 @@ const MatatuRouteFinder = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header
-        currentView={currentView}
-        setCurrentView={setCurrentView}
-        savedRoutes={savedRoutes}
-      />
+      <Header currentView={currentView} setCurrentView={setCurrentView} />
       {renderCurrentView()}
     </div>
   );

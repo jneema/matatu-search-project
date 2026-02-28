@@ -15,14 +15,14 @@ import {
   getRoadByName,
   getSaccosByRoute,
 } from "../data/routesData";
+import { useDispatch, useSelector } from "react-redux";
+import { removeRoute, saveRoute } from "../../store/saved-routes";
 
 const RoutesView = ({
   setCurrentView,
   selectedDestination,
   selectedRoad,
   setSelectedRoute,
-  savedRoutes,
-  setSavedRoutes,
 }) => {
   const road = getRoadByName(selectedRoad?.name);
   const dest = road
@@ -33,11 +33,12 @@ const RoutesView = ({
     ...route,
     matatus: getSaccosByRoute(route.id),
   }));
+  const dispatch = useDispatch();
+  const savedRoutes = useSelector((state) => state.savedRoutes.routes);
 
   return (
     <div className="min-h-screen bg-white font-sans pb-20">
       <div className="max-w-2xl mx-auto px-4 py-6">
-
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-6 overflow-x-auto whitespace-nowrap no-scrollbar">
           <button
@@ -74,7 +75,6 @@ const RoutesView = ({
                 className="bg-white border border-gray-200 rounded-lg overflow-hidden"
               >
                 <div className="p-5 sm:p-6">
-
                   {/* Route & Fare Header */}
                   <div className="flex justify-between items-start mb-6">
                     <div className="flex items-center gap-4">
@@ -95,10 +95,14 @@ const RoutesView = ({
                     </div>
 
                     <button
-                      onClick={() =>
-                        !savedRoutes.some((s) => s.id === route.id) &&
-                        setSavedRoutes([...savedRoutes, route])
-                      }
+                      onClick={() => {
+                        const isSaved = savedRoutes.some(
+                          (s) => s.id === route.id,
+                        );
+                        isSaved
+                          ? dispatch(removeRoute(route))
+                          : dispatch(saveRoute(route));
+                      }}
                       className={`p-2.5 rounded-md border transition-colors ${
                         savedRoutes.some((s) => s.id === route.id)
                           ? "bg-green-50 border-green-200 text-green-600"
@@ -213,7 +217,6 @@ const RoutesView = ({
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
