@@ -1,5 +1,10 @@
 import React from "react";
-import { Route, BookOpen, MapPinPlusIcon } from "lucide-react";
+import {
+  Route,
+  BookOpen,
+  MapPinPlusIcon,
+  BookmarkPlusIcon,
+} from "lucide-react";
 import { useNavigate } from "react-router";
 
 const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
@@ -39,7 +44,7 @@ const Header = ({ currentView, setCurrentView, savedRoutes = [] }) => {
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative cursor-pointer"
               title="Saved Routes"
             >
-              <BookOpen className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
+              <BookmarkPlusIcon className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
               {savedRoutes.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 md:h-5 md:w-5 flex items-center justify-center">
                   {savedRoutes.length}

@@ -1,5 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Search, MapPin, ArrowRight, X, ChevronRight, Zap } from "lucide-react";
+import {
+  Search,
+  MapPin,
+  ArrowRight,
+  AlertCircle,
+  X,
+  ChevronRight,
+  Zap,
+} from "lucide-react";
 import { getDestinationsByRoad, getRoadByName } from "../data/routesData";
 
 const DestinationsView = ({
@@ -87,20 +95,20 @@ const DestinationsView = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-green-50 font-sans">
+    <div className="min-h-screen bg-white font-sans">
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-6 overflow-x-auto whitespace-nowrap no-scrollbar">
           <button
             onClick={() => setCurrentView("landing")}
-            className="hover:text-green-600 cursor-pointer"
+            className="hover:text-green-600 cursor-pointer transition-colors"
           >
             Home
           </button>
           <ChevronRight className="h-3 w-3 flex-shrink-0" />
           <button
             onClick={() => setCurrentView("roads")}
-            className="hover:text-green-600 cursor-pointer"
+            className="hover:text-green-600 cursor-pointer transition-colors"
           >
             {selectedRoad?.name}
           </button>
@@ -108,21 +116,24 @@ const DestinationsView = ({
           <span className="text-green-600">Destinations</span>
         </nav>
 
+        {/* Header */}
         <div className="text-center mb-10">
           <h2 className="text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
             Select Destination
           </h2>
-          <p className="text-lg text-gray-600">
-            Available stops along <strong>{selectedRoad?.name}</strong>
+          <p className="text-lg text-gray-500">
+            Available stops along{" "}
+            <strong className="text-gray-700">{selectedRoad?.name}</strong>
           </p>
         </div>
 
-        <div className="relative max-w-2xl mx-auto mb-16" ref={dropdownRef}>
+        <div className="relative max-w-2xl mx-auto mb-5" ref={dropdownRef}>
           {!isCBDSelected ? (
             <>
-              <div className="relative group">
+              {/* Search */}
+              <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Search className="h-5 w-5 text-gray-400 group-focus-within:text-green-600 transition-colors" />
+                  <Search className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
                   type="text"
@@ -133,7 +144,7 @@ const DestinationsView = ({
                     setFilteredDestinations(destinations);
                     setIsOpen(true);
                   }}
-                  className="w-full pl-12 pr-12 py-5 bg-white text-lg border border-gray-200 rounded-2xl shadow-sm focus:ring-4 focus:ring-green-500/10 focus:border-green-500 outline-none transition-all"
+                  className="w-full pl-12 pr-12 py-5 bg-white text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
                 />
                 {searchQuery && (
                   <button
@@ -150,49 +161,80 @@ const DestinationsView = ({
 
               {/* Dropdown */}
               {isOpen && (
-                <div className="absolute z-50 w-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-2xl overflow-hidden">
-                  <div className="py-2">
-                    <p className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                      Suggested Stops
-                    </p>
-                    {filteredDestinations.map((dest, index) => (
-                      <button
-                        key={dest.id}
-                        onClick={() => handleDestinationSelect(dest)}
-                        onMouseEnter={() => setActiveIndex(index)}
-                        className={`w-full flex items-center justify-between px-4 py-4 transition-colors ${activeIndex === index ? "bg-green-50" : "hover:bg-green-50"}`}
-                      >
-                        <div className="flex items-center gap-4">
-                          <div
-                            className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${activeIndex === index ? "bg-green-100 text-green-600" : "bg-gray-100 text-gray-400"}`}
-                          >
-                            <MapPin className="h-5 w-5" />
-                          </div>
-                          <div className="text-left">
-                            <p
-                              className={`font-bold leading-tight ${activeIndex === index ? "text-green-700" : "text-gray-800"}`}
+                <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
+                  {filteredDestinations.length > 0 ? (
+                    <div className="py-1">
+                      <p className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-100">
+                        Suggested Stops
+                      </p>
+                      {filteredDestinations.map((dest, index) => (
+                        <button
+                          key={dest.id}
+                          onClick={() => handleDestinationSelect(dest)}
+                          onMouseEnter={() => setActiveIndex(index)}
+                          className={`w-full flex items-center justify-between px-4 py-3.5 transition-colors ${
+                            activeIndex === index
+                              ? "bg-green-50"
+                              : "hover:bg-gray-50"
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div
+                              className={`w-8 h-8 rounded-md flex items-center justify-center ${
+                                activeIndex === index
+                                  ? "bg-green-100"
+                                  : "bg-gray-100"
+                              }`}
                             >
-                              {dest.name}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {dest.description}
-                            </p>
+                              <MapPin
+                                className={`h-4 w-4 ${
+                                  activeIndex === index
+                                    ? "text-green-700"
+                                    : "text-gray-500"
+                                }`}
+                              />
+                            </div>
+                            <div className="text-left">
+                              <p
+                                className={`font-semibold text-sm ${
+                                  activeIndex === index
+                                    ? "text-green-700"
+                                    : "text-gray-800"
+                                }`}
+                              >
+                                {dest.name}
+                              </p>
+                              <p className="text-xs text-gray-400">
+                                {dest.description}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                        <ArrowRight
-                          className={`h-4 w-4 transition-all ${activeIndex === index ? "text-green-600 translate-x-1" : "text-gray-300"}`}
-                        />
-                      </button>
-                    ))}
-                  </div>
+                          <ArrowRight
+                            className={`h-4 w-4 transition-transform ${
+                              activeIndex === index
+                                ? "text-green-600 translate-x-0.5"
+                                : "text-gray-300"
+                            }`}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="p-8 text-center">
+                      <AlertCircle className="h-8 w-8 text-gray-300 mx-auto mb-2" />
+                      <p className="text-gray-500 text-sm">
+                        No destinations found
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
 
               {/* Popular Destinations Pills */}
               <div className="mt-5">
                 <div className="flex items-center gap-2 mb-3">
-                  <Zap className="h-3.5 w-3.5 text-green-500" />
-                  <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+                  <Zap className="h-3.5 w-3.5 text-green-600" />
+                  <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
                     Popular Destinations
                   </span>
                 </div>
@@ -201,9 +243,9 @@ const DestinationsView = ({
                     <button
                       key={dest.id}
                       onClick={() => handleDestinationSelect(dest)}
-                      className="flex items-center gap-1.5 px-3.5 py-2 bg-white border border-gray-200 rounded-full text-sm font-semibold text-gray-600 hover:border-green-400 hover:text-green-700 hover:bg-green-50 transition-all shadow-sm"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors"
                     >
-                      <MapPin className="h-3 w-3 text-green-500 flex-shrink-0" />
+                      <MapPin className="h-3 w-3 text-green-600 flex-shrink-0" />
                       {dest.name}
                     </button>
                   ))}
@@ -212,24 +254,25 @@ const DestinationsView = ({
             </>
           ) : (
             /* CBD Selection */
-            <div className="bg-white p-8 rounded-2xl shadow-xl border border-green-100">
+            <div className="bg-white border border-gray-200 rounded-lg p-8">
               <div className="flex flex-col items-center text-center gap-3 mb-6">
-                <div className="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center">
-                  <MapPin className="h-7 w-7" />
+                <div className="w-10 h-10 bg-green-600 rounded-md flex items-center justify-center">
+                  <MapPin className="h-5 w-5 text-white" />
                 </div>
                 <div>
                   <p className="text-xl font-bold text-gray-900">
                     Traveling to CBD
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-500 mt-1">
                     Please select your current stage on {selectedRoad?.name}
                   </p>
                 </div>
               </div>
+
               <select
                 value={localStartLocation}
                 onChange={(e) => setLocalStartLocation(e.target.value)}
-                className="w-full p-4 bg-gray-50 border-2 border-gray-100 rounded-xl mb-6 outline-none focus:border-green-500 transition-all appearance-none text-gray-700"
+                className="w-full p-4 bg-white border border-gray-300 rounded-lg mb-5 outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition-all appearance-none text-gray-700"
               >
                 <option value="">Choose starting stage...</option>
                 {nonCBDDestinations.map((opt) => (
@@ -238,17 +281,18 @@ const DestinationsView = ({
                   </option>
                 ))}
               </select>
+
               <div className="flex gap-3">
                 <button
                   onClick={() => setIsCBDSelected(false)}
-                  className="flex-1 py-4 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition-colors"
+                  className="flex-1 py-3.5 bg-white border border-gray-200 text-gray-600 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
                 >
                   Back
                 </button>
                 <button
                   onClick={handleCBDTravelSubmit}
                   disabled={!localStartLocation}
-                  className="flex-[2] py-4 bg-green-600 text-white rounded-xl font-bold hover:bg-green-700 disabled:bg-gray-300 transition-all shadow-md shadow-green-200"
+                  className="flex-[2] py-3.5 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 disabled:bg-gray-200 disabled:text-gray-400 transition-colors"
                 >
                   Find Routes
                 </button>
