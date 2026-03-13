@@ -8,19 +8,36 @@ import {
   ChevronRight,
   Zap,
 } from "lucide-react";
-import { getRoadsByTown } from "../data/routesData";
+import { getRoads } from "../services/roads";
 
 const RoadsView = ({
+  selectedTown,
   setCurrentView,
   searchQuery,
   setSearchQuery,
   setSelectedRoad,
 }) => {
-  const road = getRoadsByTown(1);
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredRoads, setFilteredRoads] = useState(road);
+  const allRoadsRef = useRef([]);
+  const [roads, setRoads] = useState([]);
+  const [popularRoads, setPopularRoads] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const dropdownRef = useRef(null);
+
+  const fetchRoads = async (town) => {
+    try {
+      const data = await getRoads(town);
+      allRoadsRef.current = data;
+      setRoads(data);
+      setPopularRoads(data.slice(0, 3));
+    } catch (error) {
+      console.error("Error fetching roads:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRoads(selectedTown);
+  }, [selectedTown]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -36,28 +53,30 @@ const RoadsView = ({
       if (!isOpen) return;
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        setActiveIndex((p) => Math.min(p + 1, filteredRoads.length - 1));
+        setActiveIndex((p) => Math.min(p + 1, roads.length - 1));
       }
       if (e.key === "ArrowUp") {
         e.preventDefault();
         setActiveIndex((p) => Math.max(p - 1, 0));
       }
       if (e.key === "Enter" && activeIndex >= 0)
-        handleRoadSelect(filteredRoads[activeIndex]);
+        handleRoadSelect(roads[activeIndex]);
       if (e.key === "Escape") setIsOpen(false);
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, activeIndex, filteredRoads]);
+  }, [isOpen, activeIndex, roads]);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
     setActiveIndex(-1);
-    setFilteredRoads(
+    setRoads(
       value.trim()
-        ? road.filter((r) => r.name.toLowerCase().includes(value.toLowerCase()))
-        : road,
+        ? allRoadsRef.current.filter((r) =>
+            r.name.toLowerCase().includes(value.toLowerCase()),
+          )
+        : allRoadsRef.current,
     );
     setIsOpen(true);
   };
@@ -72,7 +91,7 @@ const RoadsView = ({
 
   const clearSearch = () => {
     setSearchQuery("");
-    setFilteredRoads(road);
+    setRoads(allRoadsRef.current);
     setIsOpen(true);
     setActiveIndex(-1);
   };
@@ -115,7 +134,7 @@ const RoadsView = ({
               value={searchQuery}
               onChange={handleInputChange}
               onFocus={() => {
-                if (!searchQuery.trim()) setFilteredRoads(road);
+                if (!searchQuery.trim()) setRoads(allRoadsRef.current);
                 setIsOpen(true);
               }}
               className="w-full pl-12 pr-12 py-4 md:py-5 bg-white text-base md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
@@ -133,62 +152,64 @@ const RoadsView = ({
           {/* Dropdown */}
           {isOpen && (
             <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-              {filteredRoads.length > 0 ? (
+              {roads.length > 0 ? (
                 <div className="py-1">
                   <div className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-100">
                     Available Roads
                   </div>
-                  {filteredRoads.map((road, index) => (
-                    <button
-                      key={road.id}
-                      onClick={() => handleRoadSelect(road)}
-                      onMouseEnter={() => setActiveIndex(index)}
-                      className={`w-full flex items-center justify-between px-4 py-3.5 transition-colors ${
-                        activeIndex === index
-                          ? "bg-green-50"
-                          : "hover:bg-gray-50"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center ${
-                            activeIndex === index
-                              ? "bg-green-100"
-                              : "bg-gray-100"
-                          }`}
-                        >
-                          <MapPin
-                            className={`h-4 w-4 ${
+                  <div className="max-h-64 overflow-y-auto">
+                    {roads.map((road, index) => (
+                      <button
+                        key={road.id}
+                        onClick={() => handleRoadSelect(road)}
+                        onMouseEnter={() => setActiveIndex(index)}
+                        className={`w-full flex items-center justify-between px-4 py-3.5 transition-colors ${
+                          activeIndex === index
+                            ? "bg-green-50"
+                            : "hover:bg-gray-50"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center ${
                               activeIndex === index
-                                ? "text-green-700"
-                                : "text-gray-500"
-                            }`}
-                          />
-                        </div>
-                        <div className="text-left">
-                          <p
-                            className={`font-semibold text-sm ${
-                              activeIndex === index
-                                ? "text-green-700"
-                                : "text-gray-800"
+                                ? "bg-green-100"
+                                : "bg-gray-100"
                             }`}
                           >
-                            {road.name}
-                          </p>
-                          <p className="text-xs text-gray-400 line-clamp-1">
-                            {road.description}
-                          </p>
+                            <MapPin
+                              className={`h-4 w-4 ${
+                                activeIndex === index
+                                  ? "text-green-700"
+                                  : "text-gray-500"
+                              }`}
+                            />
+                          </div>
+                          <div className="text-left">
+                            <p
+                              className={`font-semibold text-sm ${
+                                activeIndex === index
+                                  ? "text-green-700"
+                                  : "text-gray-800"
+                              }`}
+                            >
+                              {road.name}
+                            </p>
+                            <p className="text-xs text-gray-400 line-clamp-1">
+                              {road.description}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <ArrowRight
-                        className={`h-4 w-4 transition-transform ${
-                          activeIndex === index
-                            ? "text-green-600 translate-x-0.5"
-                            : "text-gray-300"
-                        }`}
-                      />
-                    </button>
-                  ))}
+                        <ArrowRight
+                          className={`h-4 w-4 transition-transform ${
+                            activeIndex === index
+                              ? "text-green-600 translate-x-0.5"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      </button>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <div className="p-8 text-center">
@@ -208,7 +229,7 @@ const RoadsView = ({
               </span>
             </div>
             <div className="flex flex-wrap gap-2">
-              {road.map((r) => (
+              {popularRoads.map((r) => (
                 <button
                   key={r.id}
                   onClick={() => handleRoadSelect(r)}

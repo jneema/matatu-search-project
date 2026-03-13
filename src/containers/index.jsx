@@ -24,6 +24,7 @@ const MatatuRouteFinder = () => {
       case "roads":
         return (
           <RoadsView
+            selectedTown={selectedTown}
             setCurrentView={setCurrentView}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}

@@ -18,7 +18,9 @@ const LandingView = ({
   setSelectedTown,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const allTownsRef = useRef([]);
   const [towns, setTowns] = useState([]);
+  const [popularTowns, setPopularTowns] = useState([]);
   const [nonNairobiTown, setNonNairobiTown] = useState(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const dropdownRef = useRef(null);
@@ -26,7 +28,9 @@ const LandingView = ({
   const fetchTowns = async () => {
     try {
       const data = await getTowns();
+      allTownsRef.current = data;
       setTowns(data);
+      setPopularTowns(data.slice(0, 3));
     } catch (error) {
       console.error("Error fetching towns:", error);
     }
@@ -71,10 +75,10 @@ const LandingView = ({
     setActiveIndex(-1);
     setTowns(
       value.trim()
-        ? towns.filter((t) =>
+        ? allTownsRef.current.filter((t) =>
             t.name.toLowerCase().includes(value.toLowerCase()),
           )
-        : towns,
+        : allTownsRef.current,
     );
     setIsOpen(true);
   };
@@ -91,9 +95,10 @@ const LandingView = ({
     setIsOpen(false);
     setActiveIndex(-1);
   };
+
   const clearSearch = () => {
     setSearchQuery("");
-    setTowns(towns);
+    setTowns(allTownsRef.current);
     setIsOpen(true);
     setNonNairobiTown(null);
     setActiveIndex(-1);
@@ -148,37 +153,39 @@ const LandingView = ({
                   <div className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-100">
                     Suggested Locations
                   </div>
-                  {towns.map((town, index) => (
-                    <button
-                      key={town.id}
-                      onClick={() => handleTownSelect(town)}
-                      onMouseEnter={() => setActiveIndex(index)}
-                      className={`w-full flex items-center justify-between px-4 py-3.5 transition-colors ${activeIndex === index ? "bg-green-50" : "hover:bg-gray-50"}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center ${activeIndex === index ? "bg-green-100" : "bg-gray-100"}`}
-                        >
-                          <MapPin
-                            className={`h-4 w-4 ${activeIndex === index ? "text-green-700" : "text-gray-500"}`}
-                          />
-                        </div>
-                        <div className="text-left">
-                          <p
-                            className={`font-semibold text-sm ${activeIndex === index ? "text-green-700" : "text-gray-800"}`}
+                  <div className="max-h-64 overflow-y-auto">
+                    {towns.map((town, index) => (
+                      <button
+                        key={town.id}
+                        onClick={() => handleTownSelect(town)}
+                        onMouseEnter={() => setActiveIndex(index)}
+                        className={`w-full flex items-center justify-between px-4 py-3.5 transition-colors ${activeIndex === index ? "bg-green-50" : "hover:bg-gray-50"}`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center ${activeIndex === index ? "bg-green-100" : "bg-gray-100"}`}
                           >
-                            {town.name}
-                          </p>
-                          <p className="text-xs text-gray-400 line-clamp-1">
-                            {town.description}
-                          </p>
+                            <MapPin
+                              className={`h-4 w-4 ${activeIndex === index ? "text-green-700" : "text-gray-500"}`}
+                            />
+                          </div>
+                          <div className="text-left">
+                            <p
+                              className={`font-semibold text-sm ${activeIndex === index ? "text-green-700" : "text-gray-800"}`}
+                            >
+                              {town.name}
+                            </p>
+                            <p className="text-xs text-gray-400 line-clamp-1">
+                              {town.description}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <ArrowRight
-                        className={`h-4 w-4 flex-shrink-0 transition-transform ${activeIndex === index ? "text-green-600 translate-x-0.5" : "text-gray-300"}`}
-                      />
-                    </button>
-                  ))}
+                        <ArrowRight
+                          className={`h-4 w-4 flex-shrink-0 transition-transform ${activeIndex === index ? "text-green-600 translate-x-0.5" : "text-gray-300"}`}
+                        />
+                      </button>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <div className="p-8 text-center">
@@ -215,7 +222,7 @@ const LandingView = ({
             </div>
           )}
 
-          {/* Popular Towns Pills — unchanged */}
+          {/* Popular Towns Pills  */}
           {!nonNairobiTown && (
             <div className="mt-5">
               <div className="flex items-center gap-2 mb-3">
@@ -225,7 +232,7 @@ const LandingView = ({
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">
-                {towns.map((town) => (
+                {popularTowns.map((town) => (
                   <button
                     key={town.id}
                     onClick={() => handleTownSelect(town)}
