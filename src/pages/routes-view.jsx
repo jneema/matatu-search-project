@@ -16,7 +16,7 @@ import {
   getSaccosByRoute,
 } from "../data/routesData";
 import { useDispatch, useSelector } from "react-redux";
-import { removeRoute, saveRoute } from "../../store/saved-routes";
+import { removeRoute, saveRoute } from "../store/saved-routes";
 
 const RoutesView = ({
   setCurrentView,

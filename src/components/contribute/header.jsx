@@ -1,39 +1,57 @@
 import React from "react";
-import { Route, CheckCircle, X } from "lucide-react";
+import { Route, CheckCircle, ArrowLeft, X } from "lucide-react";
 import { useNavigate } from "react-router";
 
-function Header({ submitted, STEPS, step }) {
+function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
   const navigate = useNavigate();
+
+  const subtitle = {
+    route: "Full route + matatus",
+    destination: "Destination only",
+    sacco: "Sacco + fleet",
+    matatu: "Single matatu",
+    road: "Add a road",
+    "bulk-roads": "Bulk roads",
+    "bulk-destinations": "Bulk destinations",
+    town: "Add a town",
+    "bulk-towns": "Bulk towns",
+  };
 
   return (
     <header className="bg-white border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-4 py-4">
-        {/* Top row — logo + close */}
+        {/* Top row */}
         <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
+          <button
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          >
             <Route className="h-6 w-6 md:h-8 md:w-8 text-green-600" />
             <div>
               <h1 className="text-lg md:text-xl font-bold text-gray-800 leading-none">
-                Matatu Finder
+                Contribute
               </h1>
               <p className="text-xs text-gray-400 mt-0.5 hidden sm:block">
-                Submit Route Info
+                {mode ? subtitle[mode] : "Choose what to add"}
               </p>
             </div>
-          </div>
-          <button
-            onClick={() => navigate("/")}
-            className="p-2 hover:bg-gray-100 rounded-md transition-colors"
-            title="Back to app"
-          >
-            <X className="h-5 w-5 text-gray-500" />
           </button>
+
+          <div className="flex items-center gap-1">
+            <button
+              onClick={mode && !submitted ? onBack : () => navigate("/")}
+              className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+              title={mode && !submitted ? "Back to mode select" : "Back to app"}
+            >
+              <X className="h-5 w-5 text-gray-500" />
+            </button>
+          </div>
         </div>
 
-        {/* Step indicator */}
-        {!submitted && (
+        {/* Step indicator — only for multi-step route mode */}
+        {!submitted && STEPS.length > 0 && (
           <>
-            {/* Desktop — labeled steps */}
+            {/* Desktop */}
             <div className="hidden md:flex items-center">
               {STEPS.map((s, i) => (
                 <React.Fragment key={s.id}>
@@ -70,7 +88,7 @@ function Header({ submitted, STEPS, step }) {
               ))}
             </div>
 
-            {/* Mobile — dot steps */}
+            {/* Mobile */}
             <div className="md:hidden flex items-center justify-center gap-2">
               {STEPS.map((s, i) => (
                 <React.Fragment key={s.id}>
@@ -100,4 +118,4 @@ function Header({ submitted, STEPS, step }) {
   );
 }
 
-export default Header;
+export default ContributeHeader;

@@ -16,7 +16,6 @@ const DestinationsView = ({
   setSearchQuery,
   setSelectedDestination,
   selectedRoad,
-  selectedTown,
   setCurrentLocation,
 }) => {
   const road = getRoadByName(selectedRoad?.name);

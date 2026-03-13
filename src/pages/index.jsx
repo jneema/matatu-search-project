@@ -16,8 +16,6 @@ const LandingView = ({
   searchQuery,
   setSearchQuery,
   setSelectedTown,
-  setSelectedRoad,
-  setSelectedDestination,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [filteredTowns, setFilteredTowns] = useState(towns);

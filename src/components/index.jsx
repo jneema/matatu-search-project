@@ -4,6 +4,12 @@ import {
   BookOpen,
   MapPinPlusIcon,
   BookmarkPlusIcon,
+  User2Icon,
+  User2,
+  UserCheck,
+  UserRound,
+  PlusCircle,
+  Bookmark,
 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
@@ -47,7 +53,7 @@ const Header = ({ currentView, setCurrentView }) => {
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative cursor-pointer"
               title="Saved Routes"
             >
-              <BookmarkPlusIcon className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
+              <Bookmark className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
               {savedRoutes.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 md:h-5 md:w-5 flex items-center justify-center">
                   {savedRoutes.length}
@@ -55,14 +61,24 @@ const Header = ({ currentView, setCurrentView }) => {
               )}
             </button>
             <button
-              onClick={() => navigate("/feedback")}
+              onClick={() => navigate("/contribute")}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
-              title="Feedback"
+              title="Contribute"
             >
               <span className="absolute right-full top-1/2 transform -translate-y-1/2 mr-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                Feedback
+                Contribute
               </span>
-              <MapPinPlusIcon className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
+              <PlusCircle className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
+            </button>
+            <button
+              onClick={() => console.log("Clicked!")}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+              title="Account"
+            >
+              <span className="absolute right-full top-1/2 transform -translate-y-1/2 mr-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                Account
+              </span>
+              <UserRound className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
             </button>
           </div>
         </div>

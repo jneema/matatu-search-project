@@ -1,6 +1,6 @@
 import React from "react";
 
-function Footer() {
+function ContributeFooter() {
   return (
     <footer className="border-t border-gray-200 py-4 px-4">
       <div className="max-w-3xl mx-auto text-center">
@@ -12,4 +12,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default ContributeFooter;

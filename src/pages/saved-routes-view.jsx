@@ -12,7 +12,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeRoute } from "../../store/saved-routes";
+import { removeRoute } from "../store/saved-routes";
 
 const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
   const savedRoutes = useSelector((state) => state.savedRoutes.routes);
