@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import {
   Search,
   MapPin,
@@ -18,27 +19,26 @@ const RoadsView = ({
   setSelectedRoad,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const allRoadsRef = useRef([]);
   const [roads, setRoads] = useState([]);
   const [popularRoads, setPopularRoads] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const dropdownRef = useRef(null);
 
-  const fetchRoads = async (town) => {
+  const fetchRoads = async (town, search = "") => {
     try {
-      const data = await getRoads(town);
-      allRoadsRef.current = data;
+      const data = await getRoads(town, search);
       setRoads(data);
-      setPopularRoads(data.slice(0, 3));
+      if (!search) {
+        allRoadsRef.current = data;
+        setPopularRoads(data.slice(0, 3));
+      }
     } catch (error) {
       console.error("Error fetching roads:", error);
     }
   };
 
   useEffect(() => {
-    if (selectedTown?.name) {
-      fetchRoads(selectedTown.name);
-    }
+    if (selectedTown?.name) fetchRoads(selectedTown.name);
   }, [selectedTown]);
 
   useEffect(() => {
@@ -69,18 +69,16 @@ const RoadsView = ({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, activeIndex, roads]);
 
+  const debouncedSearch = useDebouncedCallback((value) => {
+    fetchRoads(selectedTown?.name, value);
+  }, 300);
+
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
     setActiveIndex(-1);
-    setRoads(
-      value.trim()
-        ? allRoadsRef.current.filter((r) =>
-            r.name.toLowerCase().includes(value.toLowerCase()),
-          )
-        : allRoadsRef.current,
-    );
     setIsOpen(true);
+    debouncedSearch(value);
   };
 
   const handleRoadSelect = (road) => {
@@ -93,9 +91,8 @@ const RoadsView = ({
 
   const clearSearch = () => {
     setSearchQuery("");
-    setRoads(allRoadsRef.current);
-    setIsOpen(true);
     setActiveIndex(-1);
+    fetchRoads(selectedTown?.name);
   };
 
   return (
@@ -136,8 +133,14 @@ const RoadsView = ({
               value={searchQuery}
               onChange={handleInputChange}
               onFocus={() => {
-                if (!searchQuery.trim()) setRoads(allRoadsRef.current);
                 setIsOpen(true);
+                if (!searchQuery.trim()) {
+                  if (allRoadsRef.current.length > 0) {
+                    setRoads(allRoadsRef.current);
+                  } else {
+                    fetchRoads(selectedTown?.name);
+                  }
+                }
               }}
               className="w-full pl-12 pr-12 py-4 md:py-5 bg-white text-base md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
             />
@@ -223,26 +226,28 @@ const RoadsView = ({
           )}
 
           {/* Popular Roads Pills */}
-          <div className="mt-5">
-            <div className="flex items-center gap-2 mb-3">
-              <Zap className="h-3.5 w-3.5 text-green-600" />
-              <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
-                Popular Roads
-              </span>
+          {!searchQuery && popularRoads.length > 0 && (
+            <div className="mt-5">
+              <div className="flex items-center gap-2 mb-3">
+                <Zap className="h-3.5 w-3.5 text-green-600" />
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                  Popular Roads
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {popularRoads.map((r) => (
+                  <button
+                    key={r.id}
+                    onClick={() => handleRoadSelect(r)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors"
+                  >
+                    <MapPin className="h-3 w-3 text-green-600 flex-shrink-0" />
+                    {r.name}
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {popularRoads.map((r) => (
-                <button
-                  key={r.id}
-                  onClick={() => handleRoadSelect(r)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors"
-                >
-                  <MapPin className="h-3 w-3 text-green-600 flex-shrink-0" />
-                  {r.name}
-                </button>
-              ))}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
