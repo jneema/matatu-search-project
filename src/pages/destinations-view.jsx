@@ -17,6 +17,7 @@ const DestinationsView = ({
   setSearchQuery,
   setSelectedDestination,
   selectedRoad,
+  selectedTown,
   setCurrentLocation,
 }) => {
   const [destinations, setDestinations] = useState([]);
@@ -127,6 +128,13 @@ const DestinationsView = ({
             className="hover:text-green-600 cursor-pointer transition-colors"
           >
             Home
+          </button>
+          <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <button
+            onClick={() => setCurrentView("roads")}
+            className="hover:text-green-600 cursor-pointer transition-colors"
+          >
+            {selectedTown?.name}
           </button>
           <ChevronRight className="h-3 w-3 flex-shrink-0" />
           <button

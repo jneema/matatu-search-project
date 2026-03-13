@@ -108,13 +108,15 @@ const RoadsView = ({
             Home
           </button>
           <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <span className="text-gray-400">{selectedTown?.name}</span>
+          <ChevronRight className="h-3 w-3 flex-shrink-0" />
           <span className="text-gray-400">Roads</span>
         </nav>
 
         {/* Header */}
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3 md:mb-4 tracking-tight">
-            Nairobi Route Finder
+            {selectedTown?.name} Route Finder{" "}
           </h2>
           <p className="text-base md:text-lg text-gray-500 max-w-xl mx-auto">
             Select a major road to see available matatu stages and real-time
