@@ -74,21 +74,21 @@ const RoutesView = ({
                 key={route.id}
                 className="bg-white border border-gray-200 rounded-lg overflow-hidden"
               >
-                <div className="p-5 sm:p-6">
+                <div className="p-4 sm:p-6">
                   {/* Route & Fare Header */}
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-11 h-11 bg-gray-900 text-white rounded-md flex items-center justify-center font-black text-lg">
+                  <div className="flex justify-between items-start mb-5">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 bg-gray-900 text-white rounded-md flex items-center justify-center font-black text-base sm:text-lg shrink-0">
                         {route.routeNumber}
                       </div>
                       <div>
-                        <div className="flex items-center gap-1.5 text-green-600 mb-0.5">
+                        <div className="flex items-center gap-1 text-green-600 mb-0.5">
                           <TrendingUp className="h-3 w-3" />
                           <span className="text-[9px] font-black uppercase tracking-widest">
                             Est. Fare
                           </span>
                         </div>
-                        <span className="text-xl font-black text-gray-900">
+                        <span className="text-lg sm:text-xl font-black text-gray-900">
                           KSh {route.fare}
                         </span>
                       </div>
@@ -103,44 +103,48 @@ const RoutesView = ({
                           ? dispatch(removeRoute(route))
                           : dispatch(saveRoute(route));
                       }}
-                      className={`p-2.5 rounded-md border transition-colors ${
+                      className={`p-2 sm:p-2.5 rounded-md border transition-colors shrink-0 ${
                         savedRoutes.some((s) => s.id === route.id)
                           ? "bg-green-50 border-green-200 text-green-600"
                           : "bg-white border-gray-200 text-gray-300 hover:border-gray-300 hover:text-gray-400"
                       }`}
                     >
-                      <BookmarkPlus className="h-5 w-5" />
+                      <BookmarkPlus className="h-4 w-4 sm:h-5 sm:w-5" />
                     </button>
                   </div>
 
-                  {/* Journey Timeline */}
-                  <div className="relative mb-6 px-1">
-                    <div className="absolute top-[8px] left-0 right-0 h-px bg-gray-200" />
-                    <div className="relative flex justify-between items-center">
-                      {route.path.map((stop, index) => (
-                        <div
-                          key={index}
-                          className="flex flex-col items-center gap-2 max-w-[60px]"
-                        >
-                          <div
-                            className={`w-4 h-4 rounded-full border-2 border-white shadow-sm z-10 ${
-                              index === 0
-                                ? "bg-green-600"
-                                : index === route.path.length - 1
-                                  ? "bg-gray-900"
-                                  : "bg-gray-300"
-                            }`}
-                          />
-                          <span className="text-[8px] sm:text-[9px] font-bold text-gray-500 text-center uppercase tracking-tighter line-clamp-1">
-                            {stop}
-                          </span>
+                  {/* Journey Timeline — scrollable on mobile */}
+                  <div className="mb-5 -mx-4 sm:mx-0 px-4 sm:px-0">
+                    <div className="overflow-x-auto no-scrollbar">
+                      <div className="relative min-w-max sm:min-w-0 pr-4 sm:pr-0">
+                        <div className="absolute top-[8px] left-0 right-0 h-px bg-gray-200" />
+                        <div className="relative flex justify-between items-start gap-6 sm:gap-0 sm:justify-between">
+                          {route.path.map((stop, index) => (
+                            <div
+                              key={index}
+                              className="flex flex-col items-center gap-2 sm:max-w-[60px]"
+                            >
+                              <div
+                                className={`w-4 h-4 rounded-full border-2 border-white shadow-sm z-10 shrink-0 ${
+                                  index === 0
+                                    ? "bg-green-600"
+                                    : index === route.path.length - 1
+                                      ? "bg-gray-900"
+                                      : "bg-gray-300"
+                                }`}
+                              />
+                              <span className="text-[8px] sm:text-[9px] font-bold text-gray-500 text-center uppercase tracking-tighter whitespace-nowrap sm:whitespace-normal sm:line-clamp-1">
+                                {stop}
+                              </span>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      </div>
                     </div>
                   </div>
 
                   {/* SACCO Operators */}
-                  <div className="mb-5">
+                  <div className="mb-4">
                     <div className="flex justify-between items-center mb-2.5">
                       <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
                         SACCO Operators
@@ -157,7 +161,7 @@ const RoutesView = ({
                             key={i}
                             className="snap-center flex-shrink-0 flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-md border border-gray-200"
                           >
-                            <Bus className="h-3 w-3 text-gray-400" />
+                            <Bus className="h-3 w-3 text-gray-400 shrink-0" />
                             <span className="text-[11px] font-bold text-gray-700 whitespace-nowrap">
                               {sacco.name}
                             </span>
@@ -167,14 +171,14 @@ const RoutesView = ({
                           </div>
                         ))}
                       </div>
-                      <div className="absolute right-0 top-0 bottom-2 w-10 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+                      <div className="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none" />
                     </div>
                   </div>
 
                   {/* Stats + CTA */}
-                  <div className="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-gray-100 gap-4">
-                    <div className="flex justify-around w-full sm:w-auto sm:gap-6">
-                      <div className="flex flex-col items-center sm:items-start">
+                  <div className="flex flex-col pt-4 border-t border-gray-100 gap-3">
+                    <div className="flex gap-4 sm:gap-6">
+                      <div className="flex flex-col items-start">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">
                           Time
                         </span>
@@ -183,7 +187,7 @@ const RoutesView = ({
                           {route.duration}
                         </div>
                       </div>
-                      <div className="flex flex-col items-center sm:items-start">
+                      <div className="flex flex-col items-start">
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-1">
                           Distance
                         </span>
@@ -199,7 +203,7 @@ const RoutesView = ({
                         setSelectedRoute(route);
                         setCurrentView("stages");
                       }}
-                      className="w-full sm:w-auto bg-gray-900 text-white px-6 py-3 rounded-md font-semibold text-sm hover:bg-black flex items-center justify-center gap-2 group transition-colors"
+                      className="w-full bg-gray-900 text-white px-4 py-2.5 rounded-md font-semibold text-sm hover:bg-black flex items-center justify-center gap-2 group transition-colors"
                     >
                       Boarding Stages
                       <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
