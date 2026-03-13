@@ -4,7 +4,7 @@ import ContributeFooter from "../../components/contribute/footer";
 import ContributeHeader from "../../components/contribute/header";
 import ContributeSuccess from "../../components/success";
 import ModeSelector from "./mode-selector";
-import { useContribute } from "../../hooks/use-contribute";
+import { useContribute } from "../../hooks/useContribute";
 import { submitContribution } from "../../hooks/submit";
 import { ROUTE_STEPS } from "../../constants";
 

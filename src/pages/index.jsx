@@ -229,21 +229,40 @@ const LandingView = ({
         </div>
 
         {/* Feature Grid */}
-       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-5">
-  {[
-    { icon: MapPin,     title: "Smart Routing",  desc: "Find the fastest matatu stages based on your current location." },
-    { icon: DollarSign, title: "Fare Estimates", desc: "Know the price before you board. Compare peak and off-peak rates." },
-    { icon: Route,      title: "Saved Routes",   desc: "Access your daily commute routes even without an internet connection." },
-  ].map((feature, i) => (
-    <div key={i} className="p-4 md:p-6 bg-white border border-gray-200 rounded-lg flex flex-col items-center text-center">
-      <div className="w-10 h-10 bg-green-600 rounded-md flex items-center justify-center mb-4">
-        <feature.icon className="h-5 w-5 text-white" />
-      </div>
-      <h3 className="text-base font-bold text-gray-900 mb-1.5">{feature.title}</h3>
-      <p className="text-sm text-gray-500 leading-relaxed">{feature.desc}</p>
-    </div>
-  ))}
-</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-5">
+          {[
+            {
+              icon: MapPin,
+              title: "Smart Routing",
+              desc: "Find the fastest matatu stages based on your current location.",
+            },
+            {
+              icon: DollarSign,
+              title: "Fare Estimates",
+              desc: "Know the price before you board. Compare peak and off-peak rates.",
+            },
+            {
+              icon: Route,
+              title: "Saved Routes",
+              desc: "Access your daily commute routes even without an internet connection.",
+            },
+          ].map((feature, i) => (
+            <div
+              key={i}
+              className="p-4 md:p-6 bg-white border border-gray-200 rounded-lg flex flex-col items-center text-center"
+            >
+              <div className="w-10 h-10 bg-green-600 rounded-md flex items-center justify-center mb-4">
+                <feature.icon className="h-5 w-5 text-white" />
+              </div>
+              <h3 className="text-base font-bold text-gray-900 mb-1.5">
+                {feature.title}
+              </h3>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                {feature.desc}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
