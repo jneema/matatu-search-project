@@ -8,7 +8,7 @@ import {
   ChevronRight,
   Zap,
 } from "lucide-react";
-import { getDestinationsByRoad, getRoadByName } from "../data/routesData";
+import { getDestinationsByRoad } from "../services/destinations";
 
 const DestinationsView = ({
   setCurrentView,
@@ -18,33 +18,52 @@ const DestinationsView = ({
   selectedRoad,
   setCurrentLocation,
 }) => {
-  const road = getRoadByName(selectedRoad?.name);
-  const destinations = road ? getDestinationsByRoad(road.id) : [];
-
-  const nonCBDDestinations = destinations.filter(
-    (d) => !d.name.toLowerCase().includes("cbd"),
-  );
-
+  const [destinations, setDestinations] = useState([]);
+  const [filteredDestinations, setFilteredDestinations] = useState([]);
+  const [popularDestinations, setPopularDestinations] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredDestinations, setFilteredDestinations] =
-    useState(destinations);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isCBDSelected, setIsCBDSelected] = useState(false);
   const [localStartLocation, setLocalStartLocation] = useState("");
+  const allDestinationsRef = useRef([]);
   const dropdownRef = useRef(null);
 
+  const fetchDestinations = async (roadName) => {
+    if (!roadName) return;
+    try {
+      const data = await getDestinationsByRoad(roadName);
+      allDestinationsRef.current = data;
+      setDestinations(data);
+      setFilteredDestinations(data);
+      setPopularDestinations(data.slice(0, 3));
+    } catch (error) {
+      console.error("Error fetching destinations:", error);
+      setDestinations([]);
+      setFilteredDestinations([]);
+      setPopularDestinations([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchDestinations(selectedRoad?.name);
+  }, [selectedRoad]);
+
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target))
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!isOpen || isCBDSelected) return;
+
       if (e.key === "ArrowDown") {
         e.preventDefault();
         setActiveIndex((p) => Math.min(p + 1, filteredDestinations.length - 1));
@@ -57,22 +76,31 @@ const DestinationsView = ({
         handleDestinationSelect(filteredDestinations[activeIndex]);
       if (e.key === "Escape") setIsOpen(false);
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, activeIndex, filteredDestinations, isCBDSelected]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const value = e.target.value;
     setSearchQuery(value);
     setActiveIndex(-1);
-    setFilteredDestinations(
-      value.trim()
-        ? destinations.filter((d) =>
-            d.name.toLowerCase().includes(value.toLowerCase()),
-          )
-        : destinations,
-    );
-    setIsOpen(true);
+
+    if (!selectedRoad?.name) return;
+
+    try {
+      const data = await getDestinationsByRoad(
+        selectedRoad.name + (value ? `&search=${value}` : "")
+      );
+      allDestinationsRef.current = data;
+      setDestinations(data);
+      setFilteredDestinations(data);
+      setIsOpen(true);
+    } catch (error) {
+      console.error("Error fetching filtered destinations:", error);
+      setDestinations([]);
+      setFilteredDestinations([]);
+    }
   };
 
   const handleDestinationSelect = (dest) => {
@@ -88,10 +116,17 @@ const DestinationsView = ({
 
   const handleCBDTravelSubmit = () => {
     if (!localStartLocation) return;
-    setSelectedDestination(destinations.find((d) => d.name.includes("CBD")));
+    const cbdDestination = destinations.find((d) =>
+      d.name.toLowerCase().includes("cbd")
+    );
+    if (cbdDestination) setSelectedDestination(cbdDestination);
     setCurrentLocation(localStartLocation);
     setCurrentView("routes");
   };
+
+  const nonCBDDestinations = destinations.filter(
+    (d) => !d.name.toLowerCase().includes("cbd")
+  );
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -238,7 +273,7 @@ const DestinationsView = ({
                   </span>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {destinations.map((dest) => (
+                  {popularDestinations.map((dest) => (
                     <button
                       key={dest.id}
                       onClick={() => handleDestinationSelect(dest)}

@@ -36,7 +36,9 @@ const RoadsView = ({
   };
 
   useEffect(() => {
-    fetchRoads(selectedTown);
+    if (selectedTown?.name) {
+      fetchRoads(selectedTown.name);
+    }
   }, [selectedTown]);
 
   useEffect(() => {
