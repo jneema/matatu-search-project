@@ -59,27 +59,25 @@ const ContributeSuccess = ({ mode, formData, onAddAnother, onChangeType }) => {
         <p className="text-sm text-gray-500 max-w-xs mx-auto">{message}</p>
       </div>
       <SuccessPill mode={mode} formData={formData} />
-      <div className="flex flex-col gap-3 w-full max-w-xs">
+      <div className="flex flex-col gap-2 w-full max-w-xs mx-auto">
         <button
           onClick={onAddAnother}
           className="w-full flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-md text-sm font-semibold hover:bg-green-700 transition-colors"
         >
           <PlusCircle className="h-4 w-4" /> Add Another {modeLabels[mode]}
         </button>
-        <div className="flex gap-2">
-          <button
-            onClick={onChangeType}
-            className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium text-gray-500 hover:text-gray-800 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
-          >
-            <SlidersHorizontal className="h-3.5 w-3.5" /> Change type
-          </button>
-          <button
-            onClick={() => navigate("/")}
-            className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-medium text-gray-500 hover:text-gray-800 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
-          >
-            <Home className="h-3.5 w-3.5" /> Go Home
-          </button>
-        </div>
+        <button
+          onClick={onChangeType}
+          className="w-full flex items-center justify-center gap-2 py-2.5 border border-gray-200 rounded-md text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50 transition-colors"
+        >
+          <SlidersHorizontal className="h-3.5 w-3.5" /> Change type
+        </button>
+        <button
+          onClick={() => navigate("/")}
+          className="w-full flex items-center justify-center gap-2 py-2.5 border border-gray-200 rounded-md text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50 transition-colors"
+        >
+          <Home className="h-3.5 w-3.5" /> Go Home
+        </button>
       </div>
     </div>
   );

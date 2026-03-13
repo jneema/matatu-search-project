@@ -59,7 +59,7 @@ const RoutesView = ({
         </nav>
 
         <header className="mb-8">
-          <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight leading-tight">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight leading-tight">
             Available Routes
           </h2>
           <p className="text-gray-500 text-sm mt-1">

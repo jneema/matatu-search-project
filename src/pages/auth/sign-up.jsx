@@ -73,21 +73,13 @@ const SignUp = () => {
           <Route className="h-5 w-5 text-green-600" />
           <span className="font-bold text-sm">Matatu Finder</span>
         </button>
-        <span className="text-sm text-gray-500">
-          Have an account?{" "}
-          <Link
-            to="/sign-in"
-            className="text-green-600 font-semibold hover:underline"
-          >
-            Sign in
-          </Link>
-        </span>
       </div>
 
       {/* card */}
       <div className="flex-grow flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
+            {/* heading */}
             <div className="mb-8">
               <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">
                 Create an account

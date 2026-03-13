@@ -93,11 +93,11 @@ const RoadsView = ({
         </nav>
 
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3 md:mb-4 tracking-tight">
             Nairobi Route Finder
           </h2>
-          <p className="text-lg text-gray-500 max-w-xl mx-auto">
+          <p className="text-base md:text-lg text-gray-500 max-w-xl mx-auto">
             Select a major road to see available matatu stages and real-time
             fare estimates.
           </p>
@@ -111,14 +111,14 @@ const RoadsView = ({
             </div>
             <input
               type="text"
-              placeholder="Search for a road (e.g., Thika Road)"
+              placeholder="e.g. Ngong Road"
               value={searchQuery}
               onChange={handleInputChange}
               onFocus={() => {
                 if (!searchQuery.trim()) setFilteredRoads(road);
                 setIsOpen(true);
               }}
-              className="w-full pl-12 pr-12 py-5 bg-white text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
+              className="w-full pl-12 pr-12 py-4 md:py-5 bg-white text-base md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
             />
             {searchQuery && (
               <button

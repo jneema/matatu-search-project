@@ -116,11 +116,11 @@ const DestinationsView = ({
         </nav>
 
         {/* Header */}
-        <div className="text-center mb-10">
-          <h2 className="text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
+        <div className="text-center mb-8 md:mb-10">
+          <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
             Select Destination
           </h2>
-          <p className="text-lg text-gray-500">
+          <p className="text-base md:text-lg text-gray-500">
             Available stops along{" "}
             <strong className="text-gray-700">{selectedRoad?.name}</strong>
           </p>
@@ -136,14 +136,14 @@ const DestinationsView = ({
                 </div>
                 <input
                   type="text"
-                  placeholder="Where on this road are you going?"
+                  placeholder="Search a destination..."
                   value={searchQuery}
                   onChange={handleInputChange}
                   onFocus={() => {
                     setFilteredDestinations(destinations);
                     setIsOpen(true);
                   }}
-                  className="w-full pl-12 pr-12 py-5 bg-white text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
+                  className="w-full pl-12 pr-12 py-4 md:py-5 bg-white text-base md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
                 />
                 {searchQuery && (
                   <button
