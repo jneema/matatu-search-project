@@ -13,10 +13,12 @@ import {
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeRoute } from "../store/saved-routes";
+import { useNavigate } from "react-router";
 
 const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
   const savedRoutes = useSelector((state) => state.savedRoutes.routes);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-white font-sans flex flex-col">
@@ -34,7 +36,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
             </div>
           </div>
           <button
-            onClick={() => setCurrentView("landing")}
+            onClick={() => navigate("/")}
             className="p-2 hover:bg-gray-100 rounded-md transition-colors"
             title="Back to app"
           >
