@@ -9,6 +9,7 @@ import {
   Zap,
 } from "lucide-react";
 import { getDestinationsByRoad } from "../services/destinations";
+import { useDebouncedCallback } from "use-debounce";
 
 const DestinationsView = ({
   setCurrentView,
@@ -19,8 +20,8 @@ const DestinationsView = ({
   setCurrentLocation,
 }) => {
   const [destinations, setDestinations] = useState([]);
-  const [filteredDestinations, setFilteredDestinations] = useState([]);
   const [popularDestinations, setPopularDestinations] = useState([]);
+  const [nonCBDDestinations, setNonCBDDestinations] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isCBDSelected, setIsCBDSelected] = useState(false);
@@ -28,25 +29,31 @@ const DestinationsView = ({
   const allDestinationsRef = useRef([]);
   const dropdownRef = useRef(null);
 
-  const fetchDestinations = async (roadName) => {
+  const fetchDestinations = async (roadName, search = "") => {
     if (!roadName) return;
     try {
-      const data = await getDestinationsByRoad(roadName);
-      allDestinationsRef.current = data;
+      const data = await getDestinationsByRoad(roadName, search);
       setDestinations(data);
-      setFilteredDestinations(data);
-      setPopularDestinations(data.slice(0, 3));
+      if (!search) {
+        allDestinationsRef.current = data;
+        setPopularDestinations(data.slice(0, 3));
+        setNonCBDDestinations(
+          data.filter((d) => !d.name.toLowerCase().includes("cbd")),
+        );
+      }
     } catch (error) {
       console.error("Error fetching destinations:", error);
       setDestinations([]);
-      setFilteredDestinations([]);
-      setPopularDestinations([]);
     }
   };
 
   useEffect(() => {
     fetchDestinations(selectedRoad?.name);
   }, [selectedRoad]);
+
+  const debouncedSearch = useDebouncedCallback((value) => {
+    fetchDestinations(selectedRoad?.name, value);
+  }, 300);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -66,41 +73,27 @@ const DestinationsView = ({
 
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        setActiveIndex((p) => Math.min(p + 1, filteredDestinations.length - 1));
+        setActiveIndex((p) => Math.min(p + 1, destinations.length - 1));
       }
       if (e.key === "ArrowUp") {
         e.preventDefault();
         setActiveIndex((p) => Math.max(p - 1, 0));
       }
       if (e.key === "Enter" && activeIndex >= 0)
-        handleDestinationSelect(filteredDestinations[activeIndex]);
+        handleDestinationSelect(destinations[activeIndex]);
       if (e.key === "Escape") setIsOpen(false);
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, activeIndex, filteredDestinations, isCBDSelected]);
+  }, [isOpen, activeIndex, destinations, isCBDSelected]);
 
-  const handleInputChange = async (e) => {
+  const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
     setActiveIndex(-1);
-
-    if (!selectedRoad?.name) return;
-
-    try {
-      const data = await getDestinationsByRoad(
-        selectedRoad.name + (value ? `&search=${value}` : "")
-      );
-      allDestinationsRef.current = data;
-      setDestinations(data);
-      setFilteredDestinations(data);
-      setIsOpen(true);
-    } catch (error) {
-      console.error("Error fetching filtered destinations:", error);
-      setDestinations([]);
-      setFilteredDestinations([]);
-    }
+    setIsOpen(true);
+    debouncedSearch(value);
   };
 
   const handleDestinationSelect = (dest) => {
@@ -117,16 +110,12 @@ const DestinationsView = ({
   const handleCBDTravelSubmit = () => {
     if (!localStartLocation) return;
     const cbdDestination = destinations.find((d) =>
-      d.name.toLowerCase().includes("cbd")
+      d.name.toLowerCase().includes("cbd"),
     );
     if (cbdDestination) setSelectedDestination(cbdDestination);
     setCurrentLocation(localStartLocation);
     setCurrentView("routes");
   };
-
-  const nonCBDDestinations = destinations.filter(
-    (d) => !d.name.toLowerCase().includes("cbd")
-  );
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -175,8 +164,14 @@ const DestinationsView = ({
                   value={searchQuery}
                   onChange={handleInputChange}
                   onFocus={() => {
-                    setFilteredDestinations(destinations);
                     setIsOpen(true);
+                    if (!searchQuery.trim()) {
+                      if (allDestinationsRef.current.length > 0) {
+                        setDestinations(allDestinationsRef.current);
+                      } else {
+                        fetchDestinations(selectedRoad?.name);
+                      }
+                    }
                   }}
                   className="w-full pl-12 pr-12 py-4 md:py-5 bg-white text-base md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
                 />
@@ -184,7 +179,8 @@ const DestinationsView = ({
                   <button
                     onClick={() => {
                       setSearchQuery("");
-                      setFilteredDestinations(destinations);
+                      setActiveIndex(-1);
+                      setDestinations(allDestinationsRef.current);
                     }}
                     className="absolute inset-y-0 right-0 pr-4 flex items-center"
                   >
@@ -196,62 +192,64 @@ const DestinationsView = ({
               {/* Dropdown */}
               {isOpen && (
                 <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-                  {filteredDestinations.length > 0 ? (
+                  {destinations.length > 0 ? (
                     <div className="py-1">
                       <p className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-100">
                         Suggested Stops
                       </p>
-                      {filteredDestinations.map((dest, index) => (
-                        <button
-                          key={dest.id}
-                          onClick={() => handleDestinationSelect(dest)}
-                          onMouseEnter={() => setActiveIndex(index)}
-                          className={`w-full flex items-center justify-between px-4 py-3.5 transition-colors ${
-                            activeIndex === index
-                              ? "bg-green-50"
-                              : "hover:bg-gray-50"
-                          }`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <div
-                              className={`w-8 h-8 rounded-md flex items-center justify-center ${
-                                activeIndex === index
-                                  ? "bg-green-100"
-                                  : "bg-gray-100"
-                              }`}
-                            >
-                              <MapPin
-                                className={`h-4 w-4 ${
+                      <div className="max-h-64 overflow-y-auto">
+                        {destinations.map((dest, index) => (
+                          <button
+                            key={dest.id}
+                            onClick={() => handleDestinationSelect(dest)}
+                            onMouseEnter={() => setActiveIndex(index)}
+                            className={`w-full flex items-center justify-between px-4 py-3.5 transition-colors ${
+                              activeIndex === index
+                                ? "bg-green-50"
+                                : "hover:bg-gray-50"
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <div
+                                className={`w-8 h-8 rounded-md flex items-center justify-center ${
                                   activeIndex === index
-                                    ? "text-green-700"
-                                    : "text-gray-500"
-                                }`}
-                              />
-                            </div>
-                            <div className="text-left">
-                              <p
-                                className={`font-semibold text-sm ${
-                                  activeIndex === index
-                                    ? "text-green-700"
-                                    : "text-gray-800"
+                                    ? "bg-green-100"
+                                    : "bg-gray-100"
                                 }`}
                               >
-                                {dest.name}
-                              </p>
-                              <p className="text-xs text-gray-400">
-                                {dest.description}
-                              </p>
+                                <MapPin
+                                  className={`h-4 w-4 ${
+                                    activeIndex === index
+                                      ? "text-green-700"
+                                      : "text-gray-500"
+                                  }`}
+                                />
+                              </div>
+                              <div className="text-left">
+                                <p
+                                  className={`font-semibold text-sm ${
+                                    activeIndex === index
+                                      ? "text-green-700"
+                                      : "text-gray-800"
+                                  }`}
+                                >
+                                  {dest.name}
+                                </p>
+                                <p className="text-xs text-gray-400">
+                                  {dest.description}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                          <ArrowRight
-                            className={`h-4 w-4 transition-transform ${
-                              activeIndex === index
-                                ? "text-green-600 translate-x-0.5"
-                                : "text-gray-300"
-                            }`}
-                          />
-                        </button>
-                      ))}
+                            <ArrowRight
+                              className={`h-4 w-4 transition-transform ${
+                                activeIndex === index
+                                  ? "text-green-600 translate-x-0.5"
+                                  : "text-gray-300"
+                              }`}
+                            />
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   ) : (
                     <div className="p-8 text-center">
@@ -265,26 +263,28 @@ const DestinationsView = ({
               )}
 
               {/* Popular Destinations Pills */}
-              <div className="mt-5">
-                <div className="flex items-center gap-2 mb-3">
-                  <Zap className="h-3.5 w-3.5 text-green-600" />
-                  <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
-                    Popular Destinations
-                  </span>
+              {!searchQuery && popularDestinations.length > 0 && (
+                <div className="mt-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Zap className="h-3.5 w-3.5 text-green-600" />
+                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                      Popular Destinations
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {popularDestinations.map((dest) => (
+                      <button
+                        key={dest.id}
+                        onClick={() => handleDestinationSelect(dest)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors"
+                      >
+                        <MapPin className="h-3 w-3 text-green-600 flex-shrink-0" />
+                        {dest.name}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {popularDestinations.map((dest) => (
-                    <button
-                      key={dest.id}
-                      onClick={() => handleDestinationSelect(dest)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors"
-                    >
-                      <MapPin className="h-3 w-3 text-green-600 flex-shrink-0" />
-                      {dest.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              )}
             </>
           ) : (
             /* CBD Selection */

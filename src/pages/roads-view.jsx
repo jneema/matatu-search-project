@@ -19,6 +19,7 @@ const RoadsView = ({
   setSelectedRoad,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const allRoadsRef = useRef([]);
   const [roads, setRoads] = useState([]);
   const [popularRoads, setPopularRoads] = useState([]);
   const [activeIndex, setActiveIndex] = useState(-1);
