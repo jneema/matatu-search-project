@@ -9,7 +9,7 @@ import {
   Route,
   Zap,
 } from "lucide-react";
-import { towns } from "../data/routesData";
+import { getTowns } from "../services/towns";
 
 const LandingView = ({
   setCurrentView,
@@ -18,10 +18,23 @@ const LandingView = ({
   setSelectedTown,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredTowns, setFilteredTowns] = useState(towns);
+  const [towns, setTowns] = useState([]);
   const [nonNairobiTown, setNonNairobiTown] = useState(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const dropdownRef = useRef(null);
+
+  const fetchTowns = async () => {
+    try {
+      const data = await getTowns();
+      setTowns(data);
+    } catch (error) {
+      console.error("Error fetching towns:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTowns();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -37,26 +50,26 @@ const LandingView = ({
       if (!isOpen) return;
       if (e.key === "ArrowDown") {
         e.preventDefault();
-        setActiveIndex((p) => Math.min(p + 1, filteredTowns.length - 1));
+        setActiveIndex((p) => Math.min(p + 1, towns.length - 1));
       }
       if (e.key === "ArrowUp") {
         e.preventDefault();
         setActiveIndex((p) => Math.max(p - 1, 0));
       }
       if (e.key === "Enter" && activeIndex >= 0)
-        handleTownSelect(filteredTowns[activeIndex]);
+        handleTownSelect(towns[activeIndex]);
       if (e.key === "Escape") setIsOpen(false);
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, activeIndex, filteredTowns]);
+  }, [isOpen, activeIndex, towns]);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchQuery(value);
     setNonNairobiTown(null);
     setActiveIndex(-1);
-    setFilteredTowns(
+    setTowns(
       value.trim()
         ? towns.filter((t) =>
             t.name.toLowerCase().includes(value.toLowerCase()),
@@ -78,10 +91,9 @@ const LandingView = ({
     setIsOpen(false);
     setActiveIndex(-1);
   };
-
   const clearSearch = () => {
     setSearchQuery("");
-    setFilteredTowns(towns);
+    setTowns(towns);
     setIsOpen(true);
     setNonNairobiTown(null);
     setActiveIndex(-1);
@@ -113,7 +125,7 @@ const LandingView = ({
               value={searchQuery}
               onChange={handleInputChange}
               onFocus={() => {
-                if (!searchQuery.trim()) setFilteredTowns(towns);
+                if (!searchQuery.trim()) setTowns(towns);
                 setIsOpen(true);
               }}
               className="w-full pl-12 pr-12 py-4 md:py-5 bg-white text-base md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
@@ -131,12 +143,12 @@ const LandingView = ({
           {/* Dropdown — unchanged */}
           {isOpen && (
             <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
-              {filteredTowns.length > 0 ? (
+              {towns.length > 0 ? (
                 <div className="py-1">
                   <div className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-gray-100">
                     Suggested Locations
                   </div>
-                  {filteredTowns.map((town, index) => (
+                  {towns.map((town, index) => (
                     <button
                       key={town.id}
                       onClick={() => handleTownSelect(town)}
