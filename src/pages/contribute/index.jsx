@@ -6,7 +6,7 @@ import ContributeSuccess from "../../components/success";
 import ModeSelector from "./mode-selector";
 import { useContribute } from "../../hooks/use-contribute";
 import { submitContribution } from "../../hooks/submit";
-import { ROUTE_STEPS } from "../../assets/constants";
+import { ROUTE_STEPS } from "../../constants";
 
 import StepRoute from "./step-route";
 import StepMatatus from "./step-matatus";

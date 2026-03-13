@@ -1,22 +1,96 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Route,
-  BookOpen,
-  MapPinPlusIcon,
-  BookmarkPlusIcon,
-  User2Icon,
-  User2,
-  UserCheck,
-  UserRound,
-  PlusCircle,
   Bookmark,
+  PlusCircle,
+  UserRound,
+  LogIn,
+  LogOut,
+  Settings,
+  ChevronDown,
 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
+const useAuth = () => {
+  const [user] = useState(null);
+  return user;
+};
+
+const UserMenu = ({ user }) => {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const initials = user?.name
+    ? user.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase()
+    : "?";
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen((p) => !p)}
+        className="flex items-center gap-1.5 p-1.5 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+        title="Account"
+      >
+        <div className="w-7 h-7 rounded-full bg-green-600 flex items-center justify-center text-white text-xs font-bold">
+          {initials}
+        </div>
+        <ChevronDown
+          className={`h-3.5 w-3.5 text-gray-500 transition-transform ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg py-1 z-50">
+          <div className="px-4 py-2.5 border-b border-gray-100">
+            <p className="text-sm font-semibold text-gray-900 truncate">
+              {user?.name ?? "User"}
+            </p>
+            <p className="text-xs text-gray-500 truncate">
+              {user?.email ?? ""}
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              setOpen(false);
+              navigate("/account");
+            }}
+            className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            <Settings className="h-4 w-4 text-gray-400" /> Account settings
+          </button>
+          <button
+            onClick={() => {
+              setOpen(false);
+            }}
+            className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+          >
+            <LogOut className="h-4 w-4" /> Sign out
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Header = ({ currentView, setCurrentView }) => {
   const navigate = useNavigate();
   const savedRoutes = useSelector((state) => state.savedRoutes.routes);
+  const user = useAuth();
 
   const getCurrentStep = () => {
     switch (currentView) {
@@ -47,7 +121,9 @@ const Header = ({ currentView, setCurrentView }) => {
               Matatu Finder
             </h1>
           </div>
-          <div className="flex items-center space-x-2">
+
+          <div className="flex items-center space-x-1">
+            {/* saved routes */}
             <button
               onClick={() => navigate("/saved-routes")}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative cursor-pointer"
@@ -60,198 +136,85 @@ const Header = ({ currentView, setCurrentView }) => {
                 </span>
               )}
             </button>
+
+            {/* contribute */}
             <button
               onClick={() => navigate("/contribute")}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
               title="Contribute"
             >
-              <span className="absolute right-full top-1/2 transform -translate-y-1/2 mr-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                Contribute
-              </span>
               <PlusCircle className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
             </button>
-            <button
-              onClick={() => console.log("Clicked!")}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
-              title="Account"
-            >
-              <span className="absolute right-full top-1/2 transform -translate-y-1/2 mr-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                Account
-              </span>
-              <UserRound className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
-            </button>
+
+            {user ? (
+              <UserMenu user={user} />
+            ) : (
+              <button
+                onClick={() => navigate("/sign-in")}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                title="Sign in"
+              >
+                <UserRound className="h-5 w-5 md:h-6 md:w-6 text-gray-600" />
+              </button>
+            )}
           </div>
         </div>
 
         {/* Progress Tabs - Desktop */}
         <div className="hidden md:flex items-center space-x-4 overflow-x-auto">
-          <div className="flex items-center space-x-2">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= 1
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-            >
-              1
-            </div>
-            <button
-              onClick={() => setCurrentView("landing")}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer ${
-                currentView === "landing"
-                  ? "bg-green-600 text-white"
-                  : currentStep >= 1
-                    ? "text-green-600 hover:bg-green-50"
-                    : "text-gray-500"
-              }`}
-            >
-              Towns
-            </button>
-          </div>
-
-          <div
-            className={`h-px flex-1 ${
-              currentStep >= 2 ? "bg-green-600" : "bg-gray-200"
-            }`}
-          ></div>
-
-          <div className="flex items-center space-x-2">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= 2
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-            >
-              2
-            </div>
-            <button
-              onClick={() => currentStep >= 2 && setCurrentView("roads")}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "roads"
-                  ? "bg-green-600 text-white"
-                  : currentStep >= 2
-                    ? "text-green-600 hover:bg-green-50 cursor-pointer"
-                    : "text-gray-500 cursor-not-allowed"
-              }`}
-              disabled={currentStep < 2}
-            >
-              Roads
-            </button>
-          </div>
-
-          <div
-            className={`h-px flex-1 ${
-              currentStep >= 3 ? "bg-green-600" : "bg-gray-200"
-            }`}
-          ></div>
-
-          <div className="flex items-center space-x-2">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= 3
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-            >
-              3
-            </div>
-            <button
-              onClick={() => currentStep >= 3 && setCurrentView("destination")}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "destination"
-                  ? "bg-green-600 text-white"
-                  : currentStep >= 3
-                    ? "text-green-600 hover:bg-green-50 cursor-pointer"
-                    : "text-gray-500 cursor-not-allowed"
-              }`}
-              disabled={currentStep < 3}
-            >
-              Destination
-            </button>
-          </div>
-
-          <div
-            className={`h-px flex-1 ${
-              currentStep >= 4 ? "bg-green-600" : "bg-gray-200"
-            }`}
-          ></div>
-
-          <div className="flex items-center space-x-2">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= 4
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-            >
-              4
-            </div>
-            <button
-              onClick={() => currentStep >= 4 && setCurrentView("routes")}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "routes"
-                  ? "bg-green-600 text-white"
-                  : currentStep >= 4
-                    ? "text-green-600 hover:bg-green-50 cursor-pointer"
-                    : "text-gray-500 cursor-not-allowed"
-              }`}
-              disabled={currentStep < 4}
-            >
-              Routes
-            </button>
-          </div>
-          <div
-            className={`h-px flex-1 ${
-              currentStep >= 5 ? "bg-green-600" : "bg-gray-200"
-            }`}
-          ></div>
-
-          <div className="flex items-center space-x-2">
-            <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                currentStep >= 5
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 text-gray-600"
-              }`}
-            >
-              5
-            </div>
-            <button
-              onClick={() => currentStep >= 5 && setCurrentView("stages")}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentView === "stages"
-                  ? "bg-green-600 text-white"
-                  : currentStep >= 5
-                    ? "text-green-600 hover:bg-green-50 cursor-pointer"
-                    : "text-gray-500 cursor-not-allowed"
-              }`}
-              disabled={currentStep < 5}
-            >
-              Stages
-            </button>
-          </div>
+          {[
+            { step: 1, view: "landing", label: "Towns" },
+            { step: 2, view: "roads", label: "Roads" },
+            { step: 3, view: "destination", label: "Destination" },
+            { step: 4, view: "routes", label: "Routes" },
+            { step: 5, view: "stages", label: "Stages" },
+          ].map(({ step, view, label }, i, arr) => (
+            <React.Fragment key={step}>
+              <div className="flex items-center space-x-2">
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${currentStep >= step ? "bg-green-600 text-white" : "bg-gray-200 text-gray-600"}`}
+                >
+                  {step}
+                </div>
+                <button
+                  onClick={() => currentStep >= step && setCurrentView(view)}
+                  disabled={currentStep < step}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentView === view
+                      ? "bg-green-600 text-white"
+                      : currentStep >= step
+                        ? "text-green-600 hover:bg-green-50 cursor-pointer"
+                        : "text-gray-500 cursor-not-allowed"
+                  }`}
+                >
+                  {label}
+                </button>
+              </div>
+              {i < arr.length - 1 && (
+                <div
+                  className={`h-px flex-1 ${currentStep > step ? "bg-green-600" : "bg-gray-200"}`}
+                />
+              )}
+            </React.Fragment>
+          ))}
         </div>
 
         {/* Progress Tabs - Mobile */}
         <div className="md:hidden">
           <div className="flex items-center justify-center space-x-2">
-            {[1, 2, 3, 4, 5].map((step) => {
-              const viewMap = {
-                1: "landing",
-                2: "roads",
-                3: "destination",
-                4: "routes",
-                5: "stages",
-              };
-
+            {[
+              { step: 1, view: "landing" },
+              { step: 2, view: "roads" },
+              { step: 3, view: "destination" },
+              { step: 4, view: "routes" },
+              { step: 5, view: "stages" },
+            ].map(({ step, view }) => {
               const isClickable = currentStep >= step;
               const isActive = currentStep === step;
-
               return (
                 <button
                   key={step}
-                  onClick={() => isClickable && setCurrentView(viewMap[step])}
+                  onClick={() => isClickable && setCurrentView(view)}
                   disabled={!isClickable}
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-colors ${
                     isActive
@@ -271,4 +234,5 @@ const Header = ({ currentView, setCurrentView }) => {
     </header>
   );
 };
+
 export default Header;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EMPTY_MATATU, EMPTY_ROUTE } from "../assets/constants";
+import { EMPTY_MATATU, EMPTY_ROUTE } from "../constants";
 import { EMPTY_DEST } from "../pages/contribute/step-bulk-destinations";
 import { EMPTY_SACCO_MATATU } from "../pages/contribute/step-sacco";
 

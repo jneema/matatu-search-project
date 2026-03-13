@@ -1,6 +1,6 @@
 import { CheckCircle, PlusCircle, Home, SlidersHorizontal } from "lucide-react";
 import { useNavigate } from "react-router";
-import { modeLabels, modeSuccess } from "../assets/constants";
+import { modeLabels, modeSuccess } from "../constants";
 
 const SuccessPill = ({ mode, formData }) => {
   const detail =
