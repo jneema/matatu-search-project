@@ -10,6 +10,7 @@ import {
   Zap,
 } from "lucide-react";
 import { getTowns } from "../services/towns";
+import { useDebouncedCallback } from "use-debounce";
 
 const LandingView = ({
   setCurrentView,
@@ -25,16 +26,22 @@ const LandingView = ({
   const [activeIndex, setActiveIndex] = useState(-1);
   const dropdownRef = useRef(null);
 
-  const fetchTowns = async () => {
+  const fetchTowns = async (search = "") => {
     try {
-      const data = await getTowns();
-      allTownsRef.current = data;
+      const data = await getTowns(search);
       setTowns(data);
-      setPopularTowns(data.slice(0, 3));
+      if (!search) {
+        allTownsRef.current = data;
+        setPopularTowns(data.slice(0, 5));
+      }
     } catch (error) {
       console.error("Error fetching towns:", error);
     }
   };
+
+  const debouncedSearch = useDebouncedCallback((value) => {
+    fetchTowns(value);
+  }, 300);
 
   useEffect(() => {
     fetchTowns();
@@ -73,14 +80,8 @@ const LandingView = ({
     setSearchQuery(value);
     setNonNairobiTown(null);
     setActiveIndex(-1);
-    setTowns(
-      value.trim()
-        ? allTownsRef.current.filter((t) =>
-            t.name.toLowerCase().includes(value.toLowerCase()),
-          )
-        : allTownsRef.current,
-    );
     setIsOpen(true);
+    debouncedSearch(value);
   };
 
   const handleTownSelect = (town) => {
@@ -130,8 +131,14 @@ const LandingView = ({
               value={searchQuery}
               onChange={handleInputChange}
               onFocus={() => {
-                if (!searchQuery.trim()) setTowns(towns);
                 setIsOpen(true);
+                if (!searchQuery.trim()) {
+                  if (allTownsRef.current.length > 0) {
+                    setTowns(allTownsRef.current);
+                  } else {
+                    fetchTowns();
+                  }
+                }
               }}
               className="w-full pl-12 pr-12 py-4 md:py-5 bg-white text-base md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
             />
@@ -213,7 +220,12 @@ const LandingView = ({
                   </p>
                 </div>
                 <button
-                  onClick={() => handleTownSelect(towns[0])}
+                  onClick={() => {
+                    const nairobi = allTownsRef.current.find(
+                      (t) => t.name === "Nairobi",
+                    );
+                    if (nairobi) handleTownSelect(nairobi);
+                  }}
                   className="text-sm font-semibold text-green-700 hover:underline"
                 >
                   View Nairobi instead →
@@ -223,7 +235,7 @@ const LandingView = ({
           )}
 
           {/* Popular Towns Pills  */}
-          {!nonNairobiTown && (
+          {!nonNairobiTown && !isOpen && !searchQuery && (
             <div className="mt-5">
               <div className="flex items-center gap-2 mb-3">
                 <Zap className="h-3.5 w-3.5 text-green-600" />
