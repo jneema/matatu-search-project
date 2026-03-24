@@ -91,7 +91,7 @@ const LandingView = ({
       return;
     }
     setSelectedTown(town);
-    setCurrentView("roads");
+    setCurrentView("direction");
     setSearchQuery("");
     setIsOpen(false);
     setActiveIndex(-1);
@@ -203,7 +203,7 @@ const LandingView = ({
             </div>
           )}
 
-          {/* Non-Nairobi notice — unchanged */}
+          {/* Non-Nairobi notice */}
           {nonNairobiTown && (
             <div className="mt-3 border border-amber-300 rounded-md overflow-hidden">
               <div className="w-full h-1 bg-amber-400" />

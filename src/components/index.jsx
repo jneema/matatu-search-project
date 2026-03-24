@@ -15,10 +15,11 @@ import useAuth from "../hooks/useAuth";
 
 const steps = [
   { id: 1, view: "landing", label: "Towns" },
-  { id: 2, view: "roads", label: "Roads" },
-  { id: 3, view: "destination", label: "Destination" },
-  { id: 4, view: "routes", label: "Routes" },
-  { id: 5, view: "stages", label: "Stages" },
+  { id: 2, view: "direction", label: "Direction" },
+  { id: 3, view: "starting-point", label: "Starting" },
+  { id: 4, view: "destination", label: "Destination" },
+  { id: 5, view: "routes", label: "Routes" },
+  { id: 6, view: "trip", label: "Trip" },
 ];
 
 const Header = ({ currentView, setCurrentView }) => {

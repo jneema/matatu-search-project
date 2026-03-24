@@ -1,3 +1,9 @@
-import { get, post, put, remove } from "../api/crud";
-
-export const getTowns = (search = "") => get(`/api/towns?search=${search}`);
+export const getTowns = (search = "") => {
+  const towns = [
+    { id: "nairobi", name: "Nairobi", description: "Kenya's capital city" },
+  ];
+  if (!search) return Promise.resolve(towns);
+  return Promise.resolve(
+    towns.filter((t) => t.name.toLowerCase().includes(search.toLowerCase()))
+  );
+};

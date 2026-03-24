@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+.live-trip-map {
+  height: 55vh;
+  width: 100%;
+}
+
+.live-trip-map .leaflet-container {
+  height: 55vh !important;
+  width: 100% !important;
+}
