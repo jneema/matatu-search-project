@@ -66,6 +66,7 @@ const RoutesView = ({
         setLoading(false);
       });
   };
+  console.log(tripData);
 
   useEffect(() => {
     fetchRoutes();
@@ -142,8 +143,8 @@ const RoutesView = ({
           </h2>
           {!loading && !error && (
             <p className="text-gray-500 text-sm mt-1">
-              {allOptions.length}{" "}
-              {allOptions.length === 1 ? "route" : "routes"} found
+              {allOptions.length} {allOptions.length === 1 ? "route" : "routes"}{" "}
+              found
             </p>
           )}
         </header>
@@ -260,7 +261,9 @@ const RoutesView = ({
                                 saveRoute({ id: option.route_id, ...option }),
                               )
                         }
-                        aria-label={isSaved ? "Remove saved route" : "Save route"}
+                        aria-label={
+                          isSaved ? "Remove saved route" : "Save route"
+                        }
                         className={`p-2 rounded-xl border transition-colors shrink-0 ${
                           isSaved
                             ? "bg-green-50 border-green-200 text-green-600"
@@ -294,9 +297,7 @@ const RoutesView = ({
                       <div className="mb-4 px-3 py-2.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-700 font-medium flex items-center gap-2">
                         <Zap className="h-3.5 w-3.5 shrink-0" />
                         Surge pricing active
-                        {option.surge_reason
-                          ? ` — ${option.surge_reason}`
-                          : ""}
+                        {option.surge_reason ? ` — ${option.surge_reason}` : ""}
                       </div>
                     )}
 
@@ -335,8 +336,8 @@ const RoutesView = ({
                           Wait
                         </span>
                         <div className="flex items-center gap-1 text-xs font-bold text-gray-700">
-                          <Clock className="h-3 w-3 text-gray-400 shrink-0" />
-                          ~{option.wait_mins_est} min
+                          <Clock className="h-3 w-3 text-gray-400 shrink-0" />~
+                          {option.wait_mins_est} min
                         </div>
                       </div>
                       {option.safety_rating && (

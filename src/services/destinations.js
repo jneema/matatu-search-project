@@ -8,16 +8,16 @@ const mapStage = (s) => ({
   landmark: s.landmark,
 });
 
-// inbound travel: origin = INBOUND stages, destination = BOTH stages (CBD)
-// outbound travel: origin = BOTH stages (CBD), destination = OUTBOUND stages
+
 export const getOriginStages = (travelDirection = "inbound", search = "") => {
-  const dir = travelDirection === "inbound" ? "INBOUND" : "BOTH";
+  const dir = travelDirection === "inbound" ? "INBOUND" : "OUTBOUND";
   return get(`/api/v1/stages?direction=${dir}&search=${encodeURIComponent(search)}`)
     .then((stages) => stages.map(mapStage));
 };
 
 export const getDestinationStages = (travelDirection = "inbound", search = "") => {
-  const dir = travelDirection === "inbound" ? "BOTH" : "OUTBOUND";
+  const dir = travelDirection === "inbound" ? "OUTBOUND" : "INBOUND";
+
   return get(`/api/v1/stages?direction=${dir}&search=${encodeURIComponent(search)}`)
     .then((stages) => stages.map(mapStage));
 };

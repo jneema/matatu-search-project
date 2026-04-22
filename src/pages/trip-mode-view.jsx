@@ -48,6 +48,7 @@ const TripModeView = ({
     dest_stage,
     tags = [],
   } = selectedRoute || {};
+  console.log(origin_stage, dest_stage)
 
   // Start the countdown immediately when boarding
   const handleBoard = useCallback(() => {
