@@ -30,7 +30,6 @@ const ComparisonView = ({
           </p>
         </div>
 
-        {/* Route Information Card */}
         <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-4 sm:mb-6">
           <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
             Route Information
@@ -65,7 +64,6 @@ const ComparisonView = ({
           </div>
         </div>
 
-        {/* Available Matatus Section */}
         <div className="space-y-3 sm:space-y-4">
           <h3 className="text-lg sm:text-xl font-semibold">
             Available Matatus
@@ -75,7 +73,6 @@ const ComparisonView = ({
               key={index}
               className="bg-white rounded-xl shadow-md p-4 sm:p-6"
             >
-              {/* Matatu Header */}
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 space-y-2 sm:space-y-0">
                 <div className="flex-1">
                   <h4 className="text-left sm:text-lg font-semibold mb-1">
@@ -96,7 +93,6 @@ const ComparisonView = ({
                 </div>
               </div>
 
-              {/* Payment Methods and Select Button */}
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
                 <div className="flex flex-wrap gap-1 sm:gap-2">
                   {selectedRoute?.payment.map((method, i) => (

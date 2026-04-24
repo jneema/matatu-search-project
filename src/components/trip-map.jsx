@@ -60,15 +60,12 @@ function FitBounds({ positions }) {
   return null;
 }
 
-// walkingMode: "to_stage" — show user walking to boarding stage
-// walkingMode: "from_stage" — show alighting stage, user walks to destination
-// default: show origin → dest matatu route
 const TripMap = ({
   originStage,
   destStage,
   height = "280px",
   showRoute = false,
-  walkingMode = null, // "to_stage" | "from_stage" | null
+  walkingMode = null,
 }) => {
   const [userPos, setUserPos] = useState(null);
 
@@ -90,7 +87,6 @@ const TripMap = ({
       ? [destStage.latitude, destStage.longitude]
       : null;
 
-  // walking to stage: user → boarding stage
   if (walkingMode === "to_stage") {
     const positions = userPos ? [userPos, originPos] : [originPos];
     return (
@@ -107,7 +103,6 @@ const TripMap = ({
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <FitBounds positions={positions} />
-          {/* User location */}
           {userPos && (
             <Marker position={userPos} icon={blueIcon}>
               <Popup>
@@ -115,7 +110,6 @@ const TripMap = ({
               </Popup>
             </Marker>
           )}
-          {/* Boarding stage */}
           <Marker position={originPos} icon={greenIcon}>
             <Popup>
               <p style={{ fontWeight: "bold", fontSize: 13 }}>
@@ -127,7 +121,7 @@ const TripMap = ({
                 </p>
               )}
               <p style={{ fontSize: 11, color: "#16a34a", marginTop: 4 }}>
-                📍 Board here
+                Board here
               </p>
             </Popup>
           </Marker>
@@ -146,7 +140,6 @@ const TripMap = ({
     );
   }
 
-  // arrived: show alighting stage — user needs to walk from here
   if (walkingMode === "from_stage") {
     const positions = destPos ? [destPos] : [originPos];
     return (
@@ -163,7 +156,6 @@ const TripMap = ({
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <FitBounds positions={positions} />
-          {/* Alighting stage */}
           {destPos && (
             <Marker position={destPos} icon={blackIcon}>
               <Popup>
@@ -186,7 +178,6 @@ const TripMap = ({
     );
   }
 
-  // default: origin → dest route view
   const positions = destPos ? [originPos, destPos] : [originPos];
   return (
     <div style={{ height, width: "100%" }}>
@@ -213,7 +204,7 @@ const TripMap = ({
               </p>
             )}
             <p style={{ fontSize: 11, color: "#16a34a", marginTop: 4 }}>
-              📍 Board here
+              Board here
             </p>
           </Popup>
         </Marker>
@@ -229,7 +220,7 @@ const TripMap = ({
                 </p>
               )}
               <p style={{ fontSize: 11, color: "#374151", marginTop: 4 }}>
-                🚏 Alight here
+                Alight here
               </p>
             </Popup>
           </Marker>

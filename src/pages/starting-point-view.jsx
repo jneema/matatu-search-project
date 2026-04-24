@@ -44,17 +44,14 @@ const StartingPointView = ({
 
   const copy = DIRECTION_COPY[selectedDirection ?? "inbound"];
 
-  const fetchPoints = async (search = "") => {
+  const fetchPoints = async () => {
     try {
-      const data = await getOriginStages(
-        selectedDirection ?? "inbound",
-        search,
-      );
+      const data = await getOriginStages(selectedDirection ?? "inbound");
       setDestinations(data);
-      if (!search) {
-        allDestinationsRef.current = data;
-        setPopularHubs(data.slice(0, 5));
-      }
+
+      allDestinationsRef.current = data;
+      // setPopularHubs(data.slice(0, 5));
+      setPopularHubs(data);
     } catch (error) {
       console.error("Error fetching starting points:", error);
     }
@@ -93,8 +90,21 @@ const StartingPointView = ({
   }, [isOpen, activeIndex, destinations]);
 
   const debouncedSearch = useDebouncedCallback((value) => {
-    fetchPoints(value);
-  }, 300);
+    const term = value.toLowerCase().trim();
+
+    if (!term) {
+      setDestinations(allDestinationsRef.current);
+      return;
+    }
+
+    const filtered = allDestinationsRef.current.filter(
+      (dest) =>
+        dest.name.toLowerCase().includes(term) ||
+        (dest.landmark && dest.landmark.toLowerCase().includes(term)),
+    );
+
+    setDestinations(filtered);
+  }, 150);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -121,7 +131,6 @@ const StartingPointView = ({
   return (
     <div className="min-h-screen bg-white font-sans">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-6 overflow-x-auto whitespace-nowrap">
           <button
             onClick={() => setCurrentView("landing")}
@@ -140,7 +149,6 @@ const StartingPointView = ({
           <span className="text-green-600">Start Point</span>
         </nav>
 
-        {/* Direction badge */}
         <div className="flex justify-center mb-6">
           <span
             className={`text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full border ${
@@ -163,7 +171,6 @@ const StartingPointView = ({
           </p>
         </div>
 
-        {/* Search + Dropdown */}
         <div className="relative max-w-2xl mx-auto mb-5" ref={dropdownRef}>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -196,7 +203,6 @@ const StartingPointView = ({
             )}
           </div>
 
-          {/* Dropdown */}
           {isOpen && (
             <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
               {destinations.length > 0 ? (
@@ -251,7 +257,6 @@ const StartingPointView = ({
             </div>
           )}
 
-          {/* Popular Hubs Pills */}
           {!searchQuery && popularHubs.length > 0 && (
             <div className="mt-5">
               <div className="flex items-center gap-2 mb-3">

@@ -119,7 +119,6 @@ const LandingView = ({
           </p>
         </div>
 
-        {/* Search + Dropdown */}
         <div className="relative max-w-2xl mx-auto mb-5" ref={dropdownRef}>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -152,7 +151,6 @@ const LandingView = ({
             )}
           </div>
 
-          {/* Dropdown — unchanged */}
           {isOpen && (
             <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
               {towns.length > 0 ? (
@@ -203,7 +201,6 @@ const LandingView = ({
             </div>
           )}
 
-          {/* Non-Nairobi notice */}
           {nonNairobiTown && (
             <div className="mt-3 border border-amber-300 rounded-md overflow-hidden">
               <div className="w-full h-1 bg-amber-400" />
@@ -234,7 +231,6 @@ const LandingView = ({
             </div>
           )}
 
-          {/* Popular Towns Pills  */}
           {!nonNairobiTown && !isOpen && !searchQuery && (
             <div className="mt-5">
               <div className="flex items-center gap-2 mb-3">
@@ -259,7 +255,6 @@ const LandingView = ({
           )}
         </div>
 
-        {/* Feature Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-5">
           {[
             {

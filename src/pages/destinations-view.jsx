@@ -47,17 +47,25 @@ const DestinationsView = ({
 
   const copy = DIRECTION_COPY[selectedDirection ?? "inbound"];
 
-  const fetchDestinations = async (search = "") => {
+  const fetchDestinations = async () => {
     try {
-      const data = await getDestinationStages(
+      const allStages = await getDestinationStages(
         selectedDirection ?? "inbound",
-        search,
       );
-      setDestinations(data);
-      if (!search) {
-        allDestinationsRef.current = data;
-        setPopularDestinations(data.slice(0, 3));
+
+      let filteredData = allStages;
+      console.log(filteredData);
+
+      if (selectedStartingPoint) {
+        filteredData = allStages.filter(
+          (stage) => stage.id !== selectedStartingPoint.id,
+        );
       }
+
+      setDestinations(filteredData);
+      allDestinationsRef.current = filteredData;
+      // setPopularDestinations(data.slice(0, 3));
+      setPopularDestinations(filteredData);
     } catch (error) {
       setDestinations([]);
     }
@@ -96,8 +104,21 @@ const DestinationsView = ({
   }, [isOpen, activeIndex, destinations]);
 
   const debouncedSearch = useDebouncedCallback((value) => {
-    fetchDestinations(value);
-  }, 300);
+    const term = value.toLowerCase().trim();
+
+    if (!term) {
+      setDestinations(allDestinationsRef.current);
+      return;
+    }
+
+    const filtered = allDestinationsRef.current.filter(
+      (dest) =>
+        dest.name.toLowerCase().includes(term) ||
+        (dest.landmark && dest.landmark.toLowerCase().includes(term)),
+    );
+
+    setDestinations(filtered);
+  }, 150);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -117,7 +138,6 @@ const DestinationsView = ({
   return (
     <div className="min-h-screen bg-white font-sans">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-6 overflow-x-auto whitespace-nowrap no-scrollbar">
           <button
             onClick={() => setCurrentView("landing")}
@@ -143,7 +163,6 @@ const DestinationsView = ({
           <span className="text-green-600">Destination</span>
         </nav>
 
-        {/* Direction badge */}
         <div className="flex justify-center mb-6">
           <span
             className={`text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full border ${
@@ -159,21 +178,18 @@ const DestinationsView = ({
         {/* Header */}
         <div className="text-center mb-8 md:mb-10">
           <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
-            {copy.heading}
+            {selectedStartingPoint
+              ? `Heading from ${selectedStartingPoint.name}?`
+              : copy.heading}{" "}
           </h2>
           <p className="text-base md:text-lg text-gray-500">
-            {copy.subheading}
-            {selectedStartingPoint && (
-              <span className="text-gray-700 font-semibold">
-                {" "}
-                From {selectedStartingPoint.name}.
-              </span>
-            )}
+            {selectedStartingPoint
+              ? "Select your drop-off point along this route."
+              : copy.subheading}
           </p>
         </div>
 
         <div className="relative max-w-2xl mx-auto mb-5" ref={dropdownRef}>
-          {/* Search */}
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
@@ -209,7 +225,6 @@ const DestinationsView = ({
             )}
           </div>
 
-          {/* Dropdown */}
           {isOpen && (
             <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
               {destinations.length > 0 ? (
@@ -274,7 +289,6 @@ const DestinationsView = ({
             </div>
           )}
 
-          {/* Popular Destinations Pills */}
           {!searchQuery && popularDestinations.length > 0 && (
             <div className="mt-5">
               <div className="flex items-center gap-2 mb-3">

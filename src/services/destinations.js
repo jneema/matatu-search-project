@@ -1,6 +1,7 @@
 import { get } from "../api/crud";
 
 const mapStage = (s) => ({
+  ...s,                
   id: s.id,
   name: s.name,
   area: s.area,
@@ -8,17 +9,16 @@ const mapStage = (s) => ({
   landmark: s.landmark,
 });
 
-
-export const getOriginStages = (travelDirection = "inbound", search = "") => {
-  const dir = travelDirection === "inbound" ? "INBOUND" : "OUTBOUND";
-  return get(`/api/v1/stages?direction=${dir}&search=${encodeURIComponent(search)}`)
+export const getOriginStages = (travelDirection = "inbound") => {
+  const dir = travelDirection === "inbound" ? "inbound" : "outbound";
+  return get(`/api/v1/stages?direction=${dir}`)
     .then((stages) => stages.map(mapStage));
 };
 
-export const getDestinationStages = (travelDirection = "inbound", search = "") => {
-  const dir = travelDirection === "inbound" ? "OUTBOUND" : "INBOUND";
+export const getDestinationStages = (travelDirection = "inbound") => {
+  const dir = travelDirection === "inbound" ? "outbound" : "inbound";
 
-  return get(`/api/v1/stages?direction=${dir}&search=${encodeURIComponent(search)}`)
+  return get(`/api/v1/stages?direction=${dir}`)
     .then((stages) => stages.map(mapStage));
 };
 

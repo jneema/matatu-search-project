@@ -224,6 +224,5 @@ export function useContribute() {
   };
 
   function validate() {
-    /* move full validate() block here unchanged */
   }
 }

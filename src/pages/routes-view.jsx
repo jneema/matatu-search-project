@@ -56,9 +56,30 @@ const RoutesView = ({
     if (!selectedStartingPoint?.name || !selectedDestination?.name) return;
     setLoading(true);
     setError(null);
+
     getRoutes(selectedStartingPoint.name, selectedDestination.name)
       .then((data) => {
-        setTripData(data);
+        const enrichedOptions = data.all_options.map((option) => ({
+          ...option,
+          origin_stage: selectedStartingPoint,
+          dest_stage: selectedDestination,
+        }));
+
+        const enrichedScenarios = {};
+        Object.keys(data.scenarios).forEach((key) => {
+          enrichedScenarios[key] = data.scenarios[key].map((option) => ({
+            ...option,
+            origin_stage: selectedStartingPoint,
+            dest_stage: selectedDestination,
+          }));
+        });
+
+        setTripData({
+          ...data,
+          all_options: enrichedOptions,
+          scenarios: enrichedScenarios,
+        });
+        console.log(tripData);
         setLoading(false);
       })
       .catch((err) => {
@@ -66,7 +87,6 @@ const RoutesView = ({
         setLoading(false);
       });
   };
-  console.log(tripData);
 
   useEffect(() => {
     fetchRoutes();
@@ -123,7 +143,6 @@ const RoutesView = ({
           <span className="text-green-600">Routes</span>
         </nav>
 
-        {/* Header */}
         <header className="mb-6">
           <div className="flex items-center gap-2 mb-1">
             <span
@@ -149,7 +168,6 @@ const RoutesView = ({
           )}
         </header>
 
-        {/* Scenario Tabs */}
         {!loading && !error && availableTabs.length > 1 && (
           <div className="relative mb-5">
             <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1 pr-6">
@@ -174,12 +192,10 @@ const RoutesView = ({
                 </button>
               ))}
             </div>
-            {/* Fade hint for scrollable tabs */}
             <div className="pointer-events-none absolute right-0 top-0 bottom-1 w-8 bg-gradient-to-l from-gray-50 to-transparent" />
           </div>
         )}
 
-        {/* Content */}
         <div className="space-y-4">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-24 gap-3 min-h-[320px]">
@@ -205,7 +221,6 @@ const RoutesView = ({
           ) : visibleOptions.length > 0 ? (
             visibleOptions.map((option) => {
               const isSaved = savedRoutes.some((s) => s.id === option.route_id);
-              // Don't show the inline "data unverified" warning if the tag is already visible
               const showDataWarning =
                 option.data_confidence === "low" &&
                 !option.tags?.includes("data_unverified");
@@ -216,7 +231,6 @@ const RoutesView = ({
                   className="bg-white border border-gray-200 rounded-2xl overflow-hidden"
                 >
                   <div className="p-4 sm:p-5">
-                    {/* Tags */}
                     {option.tags?.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-4">
                         {option.tags.map((tag) => (
@@ -230,7 +244,6 @@ const RoutesView = ({
                       </div>
                     )}
 
-                    {/* Fare + Bookmark */}
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-gray-900 text-white rounded-xl flex items-center justify-center shrink-0">
@@ -278,7 +291,6 @@ const RoutesView = ({
                       </button>
                     </div>
 
-                    {/* Sacco + Via */}
                     <div className="mb-4">
                       <p className="text-sm font-bold text-gray-800">
                         {option.sacco}
@@ -292,7 +304,6 @@ const RoutesView = ({
                       </p>
                     </div>
 
-                    {/* Surge warning */}
                     {option.surge_active && (
                       <div className="mb-4 px-3 py-2.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-700 font-medium flex items-center gap-2">
                         <Zap className="h-3.5 w-3.5 shrink-0" />
@@ -301,7 +312,6 @@ const RoutesView = ({
                       </div>
                     )}
 
-                    {/* Alerts */}
                     {option.active_alerts?.map((alert, i) => (
                       <div
                         key={i}
@@ -312,7 +322,6 @@ const RoutesView = ({
                       </div>
                     ))}
 
-                    {/* Data confidence warning (only when tag not already shown) */}
                     {showDataWarning && (
                       <div className="mb-4 px-3 py-2.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-700 font-medium flex items-center gap-2">
                         <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
@@ -320,7 +329,6 @@ const RoutesView = ({
                       </div>
                     )}
 
-                    {/* Stats */}
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-3 pt-4 border-t border-gray-100 mb-4">
                       <div>
                         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest block mb-1">
@@ -371,15 +379,6 @@ const RoutesView = ({
                       >
                         Start Trip
                         <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-                      </button>
-                      <button
-                        onClick={() => {
-                          setSelectedRoute(option);
-                          setCurrentView("stages");
-                        }}
-                        className="px-4 py-3 rounded-xl font-bold text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
-                      >
-                        Stages
                       </button>
                     </div>
                   </div>

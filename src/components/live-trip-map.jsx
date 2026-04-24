@@ -149,7 +149,6 @@ const LiveTripMap = ({
         },
       );
     } else {
-      // Real GPS — also fetch road route to show ahead of user
       if (originStage?.latitude && destStage?.latitude) {
         const mode = simulationPhase === "walking" ? "walking" : "driving";
         fetchRoadRoute(
@@ -190,7 +189,6 @@ const LiveTripMap = ({
       ? [destStage.latitude, destStage.longitude]
       : null;
 
-  // Slice route from closest point to user onwards — the "ahead" portion
   const remainingRoute = (() => {
     if (!userPos || routeCoords.length < 2) return [];
     let closestIdx = 0;
@@ -223,7 +221,6 @@ const LiveTripMap = ({
 
         {userPos && <NavigationController userPos={userPos} zoom={NAV_ZOOM} />}
 
-        {/* Full route — very faint background showing entire journey */}
         {routeCoords.length > 1 && (
           <Polyline
             positions={routeCoords}
@@ -233,7 +230,6 @@ const LiveTripMap = ({
           />
         )}
 
-        {/* Remaining route ahead — prominent */}
         {remainingRoute.length > 1 && (
           <Polyline
             positions={remainingRoute}
@@ -243,7 +239,6 @@ const LiveTripMap = ({
           />
         )}
 
-        {/* Trail behind — solid, shows where user has been */}
         {trailPositions.length > 1 && (
           <Polyline
             positions={trailPositions}
@@ -253,7 +248,6 @@ const LiveTripMap = ({
           />
         )}
 
-        {/* User position dot */}
         {userPos && (
           <>
             <Circle
@@ -279,7 +273,6 @@ const LiveTripMap = ({
           </>
         )}
 
-        {/* Walking — boarding stage as target */}
         {simulationPhase === "walking" && (
           <Marker position={originPos} icon={greenIcon}>
             <Popup>
@@ -292,13 +285,12 @@ const LiveTripMap = ({
                 </p>
               )}
               <p style={{ fontSize: 11, color: "#16a34a", marginTop: 4 }}>
-                📍 Board here
+                Board here
               </p>
             </Popup>
           </Marker>
         )}
 
-        {/* Boarded — alighting stage as target */}
         {simulationPhase === "boarded" && destPos && (
           <Marker position={destPos} icon={blackIcon}>
             <Popup>
@@ -311,7 +303,7 @@ const LiveTripMap = ({
                 </p>
               )}
               <p style={{ fontSize: 11, color: "#374151", marginTop: 4 }}>
-                🚏 Alight here
+                Alight here
               </p>
             </Popup>
           </Marker>

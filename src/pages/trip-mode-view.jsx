@@ -48,9 +48,23 @@ const TripModeView = ({
     dest_stage,
     tags = [],
   } = selectedRoute || {};
-  console.log(origin_stage, dest_stage)
+  console.log(selectedRoute);
 
-  // Start the countdown immediately when boarding
+  const origin = useMemo(() => {
+    if (typeof selectedRoute?.origin_stage === "string") {
+      return { name: selectedRoute.origin_stage };
+    }
+    return selectedRoute?.origin_stage || { name: "Unknown Origin" };
+  }, [selectedRoute]);
+
+  const destination = useMemo(() => {
+    if (typeof selectedRoute?.dest_stage === "string") {
+      return { name: selectedRoute.dest_stage };
+    }
+    return selectedRoute?.dest_stage || { name: "Unknown Destination" };
+  }, [selectedRoute]);
+  console.log(origin.name, destination.name);
+
   const handleBoard = useCallback(() => {
     const now = new Date();
     setBoardedAt(now);
@@ -58,7 +72,6 @@ const TripModeView = ({
     setStep(STEPS.BOARDED);
   }, [duration_mins]);
 
-  // Tick the timer
   useEffect(() => {
     if (step !== STEPS.BOARDED || secondsLeft === null) return;
     if (secondsLeft <= 0) {
@@ -77,7 +90,6 @@ const TripModeView = ({
     return `${m}:${rem.toString().padStart(2, "0")}`;
   };
 
-  // Memoize arrival time so it doesn't recalculate every second
   const arrivalTimeStr = useMemo(() => {
     if (!boardedAt || !duration_mins) return null;
     const arr = new Date(boardedAt.getTime() + duration_mins * 60000);
@@ -98,7 +110,6 @@ const TripModeView = ({
       ? "Out of CBD → board on the outbound side"
       : "← Into CBD · board on the inbound side";
 
-  // ARRIVED
   if (step === STEPS.ARRIVED) {
     return (
       <div className="min-h-screen bg-white font-sans pb-10">
@@ -118,12 +129,12 @@ const TripModeView = ({
             <p className="text-gray-500">
               at{" "}
               <span className="font-bold text-gray-800">
-                {dest_stage?.name}
+                {destination?.name}
               </span>
             </p>
-            {dest_stage?.landmark && (
+            {destination?.landmark && (
               <p className="text-sm text-gray-400 mt-1">
-                {dest_stage.landmark}
+                {destination.landmark}
               </p>
             )}
           </div>
@@ -135,12 +146,12 @@ const TripModeView = ({
                   You are here
                 </p>
                 <p className="text-sm font-bold text-gray-700 mt-0.5">
-                  {dest_stage?.name}
+                  {destination.name}
                 </p>
               </div>
               <TripMap
-                originStage={origin_stage}
-                destStage={dest_stage}
+                originStage={origin.name}
+                destStage={destination.name}
                 height="260px"
                 walkingMode="from_stage"
               />
@@ -148,7 +159,6 @@ const TripModeView = ({
 
             <button
               onClick={() => {
-                // Clear selected route so RoutesView resets cleanly
                 if (setSelectedRoute) setSelectedRoute(null);
                 setCurrentView("routes");
               }}
@@ -169,7 +179,6 @@ const TripModeView = ({
     );
   }
 
-  // BOARDED
   if (step === STEPS.BOARDED) {
     return (
       <div className="min-h-screen bg-gray-950 font-sans flex flex-col">
@@ -178,13 +187,12 @@ const TripModeView = ({
           style={{ minHeight: 320 }}
         >
           <LiveTripMap
-            originStage={origin_stage}
-            destStage={dest_stage}
+            originStage={origin}
+            destStage={destination}
             demoMode={demoMode}
             simulationPhase="boarded"
           />
 
-          {/* Top bar */}
           <div className="absolute top-0 left-0 right-0 z-[1000] px-4 pt-4">
             <div className="bg-white rounded-2xl px-4 py-3 shadow-xl flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -211,7 +219,6 @@ const TripModeView = ({
             </div>
           </div>
 
-          {/* Progress bar */}
           <div className="absolute bottom-0 left-0 right-0 z-[1000]">
             <div className="h-1 bg-white/20">
               <div
@@ -221,7 +228,6 @@ const TripModeView = ({
             </div>
           </div>
 
-          {/* Arrival pill */}
           {arrivalTimeStr && (
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[1000]">
               <div className="bg-gray-950/90 backdrop-blur-sm text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg whitespace-nowrap border border-white/10">
@@ -231,8 +237,7 @@ const TripModeView = ({
           )}
         </div>
 
-        {/* Bottom sheet */}
-        <div className="bg-white rounded-t-3xl px-5 pt-4 pb-8 shadow-2xl flex-1 flex flex-col gap-4 min-h-[280px]">
+        <div className="bg-white px-5 pt-4 pb-8 shadow-2xl flex-1 flex flex-col gap-4 min-h-[280px]">
           <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto" />
 
           <div className="flex items-start gap-3 bg-gray-50 rounded-2xl p-4">
@@ -244,11 +249,11 @@ const TripModeView = ({
                 Alight at
               </p>
               <p className="font-extrabold text-gray-900 text-base leading-tight">
-                {dest_stage?.name}
+                {destination?.name}
               </p>
-              {dest_stage?.landmark && (
+              {destination?.landmark && (
                 <p className="text-sm text-gray-500 mt-0.5">
-                  {dest_stage.landmark}
+                  {destination.landmark}
                 </p>
               )}
             </div>
@@ -316,11 +321,9 @@ const TripModeView = ({
     );
   }
 
-  // WAITING
   return (
     <div className="min-h-screen bg-gray-50 font-sans pb-10">
       <div className="max-w-2xl mx-auto">
-        {/* Header */}
         <div className="bg-white px-4 pt-6 pb-4 sticky top-0 z-10 border-b border-gray-100">
           <div className="flex items-center justify-between">
             <button
@@ -373,7 +376,6 @@ const TripModeView = ({
             </div>
           ))}
 
-          {/* Journey card */}
           <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
             <div className="flex items-stretch gap-4">
               <div className="flex flex-col items-center py-1 gap-1">
@@ -390,11 +392,11 @@ const TripModeView = ({
                     Board here
                   </p>
                   <p className="font-extrabold text-gray-900 text-base leading-tight">
-                    {origin_stage?.name}
+                    {origin?.name}
                   </p>
-                  {origin_stage?.landmark && (
+                  {origin?.landmark && (
                     <p className="text-sm text-gray-500 mt-0.5">
-                      {origin_stage.landmark}
+                      {origin.landmark}
                     </p>
                   )}
                   <p className="text-xs text-gray-400 mt-1 font-medium">
@@ -406,11 +408,11 @@ const TripModeView = ({
                     Alight at
                   </p>
                   <p className="font-extrabold text-gray-900 text-base leading-tight">
-                    {dest_stage?.name}
+                    {destination?.name}
                   </p>
-                  {dest_stage?.landmark && (
+                  {destination?.landmark && (
                     <p className="text-sm text-gray-500 mt-0.5">
-                      {dest_stage.landmark}
+                      {destination.landmark}
                     </p>
                   )}
                 </div>
@@ -418,7 +420,6 @@ const TripModeView = ({
             </div>
           </div>
 
-          {/* Stats */}
           <div className="grid grid-cols-3 gap-2">
             {[
               { icon: Clock, label: "Journey", value: `${duration_mins} min` },
@@ -438,7 +439,6 @@ const TripModeView = ({
             ))}
           </div>
 
-          {/* Sacco */}
           <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm flex items-center gap-3">
             <div className="w-11 h-11 bg-gray-900 rounded-xl flex items-center justify-center shrink-0">
               <Bus className="h-5 w-5 text-white" />
@@ -479,15 +479,14 @@ const TripModeView = ({
             </div>
           </div>
 
-          {/* In-app walking map */}
-          {origin_stage?.latitude && origin_stage?.longitude && (
+          {origin?.latitude && origin?.longitude && (
             <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
               <div className="px-4 pt-4 pb-2">
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
                   Walk to boarding stage
                 </p>
                 <p className="text-sm font-bold text-gray-700 mt-0.5">
-                  {origin_stage.name}
+                  {origin.name}
                 </p>
                 {demoMode && (
                   <p className="text-[10px] text-orange-500 font-bold mt-0.5">
@@ -497,8 +496,8 @@ const TripModeView = ({
               </div>
               <div className="live-trip-map">
                 <LiveTripMap
-                  originStage={origin_stage}
-                  destStage={dest_stage}
+                  originStage={origin}
+                  destStage={destination}
                   demoMode={demoMode}
                   simulationPhase="walking"
                 />
@@ -506,7 +505,6 @@ const TripModeView = ({
             </div>
           )}
 
-          {/* Board CTA */}
           <button
             onClick={handleBoard}
             className="w-full bg-green-600 text-white py-4 rounded-2xl font-extrabold text-base hover:bg-green-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-green-200"

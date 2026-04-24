@@ -86,7 +86,6 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                   className="bg-white border border-gray-200 rounded-lg overflow-hidden"
                 >
                   <div className="p-5 sm:p-6">
-                    {/* Route & Fare Header */}
                     <div className="flex justify-between items-start mb-6">
                       <div className="flex items-center gap-4">
                         <div className="w-11 h-11 bg-gray-900 text-white rounded-md flex items-center justify-center font-black text-lg">
@@ -122,7 +121,6 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                       </button>
                     </div>
 
-                    {/* Journey Timeline */}
                     <div className="relative mb-6 px-1">
                       <div className="absolute top-[8px] left-0 right-0 h-px bg-gray-200" />
                       <div className="relative flex justify-between items-center">
@@ -148,7 +146,6 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                       </div>
                     </div>
 
-                    {/* SACCO Operators */}
                     <div className="mb-5">
                       <div className="flex justify-between items-center mb-2.5">
                         <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
@@ -179,7 +176,6 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                       </div>
                     </div>
 
-                    {/* Stats + CTA */}
                     <div className="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-gray-100 gap-4">
                       <div className="flex justify-around w-full sm:w-auto sm:gap-6">
                         <div className="flex flex-col items-center sm:items-start">
@@ -221,7 +217,6 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-gray-200 py-4 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-xs text-gray-400">

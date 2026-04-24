@@ -48,10 +48,8 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
           </div>
         </div>
 
-        {/* Step indicator — only for multi-step route mode */}
         {!submitted && STEPS.length > 0 && (
           <>
-            {/* Desktop */}
             <div className="hidden md:flex items-center">
               {STEPS.map((s, i) => (
                 <React.Fragment key={s.id}>
@@ -88,7 +86,6 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
               ))}
             </div>
 
-            {/* Mobile */}
             <div className="md:hidden flex items-center justify-center gap-2">
               {STEPS.map((s, i) => (
                 <React.Fragment key={s.id}>

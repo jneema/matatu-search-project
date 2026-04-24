@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import LandingView from "../pages/index";
 import RoutesView from "../pages/routes-view";
 import ComparisonView from "../pages/comparison-view";
-import StagesView from "../pages/stages-view";
 import SavedRoutesView from "../pages/saved-routes-view";
 import Header from "../components/index";
 import DestinationsView from "../pages/destinations-view";
@@ -78,15 +77,7 @@ const MatatuRouteFinder = () => {
             setSelectedMatatu={setSelectedMatatu}
           />
         );
-      case "stages":
-        return (
-          <StagesView
-            setCurrentView={setCurrentView}
-            selectedRoute={selectedRoute}
-            selectedMatatu={selectedMatatu}
-            currentLocation={currentLocation}
-          />
-        );
+
       case "trip":
         return (
           <TripModeView

@@ -31,7 +31,6 @@ const Header = ({ currentView, setCurrentView }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -50,7 +49,6 @@ const Header = ({ currentView, setCurrentView }) => {
   return (
     <header className="bg-white shadow-lg">
       <div className="max-w-6xl mx-auto px-4 py-3 md:py-4">
-        {/* Top bar */}
         <div className="flex items-center justify-between mb-3 md:mb-4">
           <div className="flex items-center space-x-2">
             <Route className="h-6 w-6 md:h-8 md:w-8 text-green-600 shrink-0" />
@@ -79,7 +77,6 @@ const Header = ({ currentView, setCurrentView }) => {
             >
               <PlusCircle className="h-5 w-5 text-gray-600" />
             </button>
-            {/* Account dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen((o) => !o)}
@@ -111,7 +108,6 @@ const Header = ({ currentView, setCurrentView }) => {
                 <div className="absolute right-0 mt-1.5 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-1 z-50">
                   {user ? (
                     <>
-                      {/* User info */}
                       <div className="px-4 py-2.5 border-b border-gray-100 flex flex-col items-start text-left">
                         <p className="text-sm font-semibold text-gray-800 truncate">
                           {user.name}
@@ -158,7 +154,6 @@ const Header = ({ currentView, setCurrentView }) => {
           </div>
         </div>
 
-        {/* Progress Steps — Desktop */}
         <div className="hidden md:flex items-center space-x-1 lg:space-x-4">
           {steps.map((step, index) => (
             <React.Fragment key={step.id}>
@@ -199,7 +194,6 @@ const Header = ({ currentView, setCurrentView }) => {
           ))}
         </div>
 
-        {/* Progress Steps — Mobile */}
         <div className="md:hidden pb-3">
           <div className="flex items-center">
             {steps.map((step, index) => (
