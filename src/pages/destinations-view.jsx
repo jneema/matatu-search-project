@@ -67,6 +67,7 @@ const DestinationsView = ({
       // setPopularDestinations(data.slice(0, 3));
       setPopularDestinations(filteredData);
     } catch (error) {
+      console.error(error);
       setDestinations([]);
     }
   };

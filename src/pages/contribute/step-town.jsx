@@ -5,7 +5,9 @@ const StepTown = ({ formData, onChange, errors }) => (
   <div className="space-y-4">
     <div className="mb-6">
       <h2 className="text-2xl font-extrabold text-gray-900">Add a town</h2>
-      <p className="text-sm text-gray-500 mt-1">Add a new town to the system.</p>
+      <p className="text-sm text-gray-500 mt-1">
+        Add a new town to the system.
+      </p>
     </div>
     <Field label="Town name *" error={errors.name}>
       <input

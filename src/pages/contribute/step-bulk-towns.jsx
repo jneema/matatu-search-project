@@ -2,7 +2,13 @@ import { Trash2, PlusCircle } from "lucide-react";
 import Field from "../../components/field";
 import inputClass from "../../components/input-class";
 
-const StepBulkTowns = ({ formData, onTownChange, onAddTown, onRemoveTown, errors }) => (
+const StepBulkTowns = ({
+  formData,
+  onTownChange,
+  onAddTown,
+  onRemoveTown,
+  errors,
+}) => (
   <div className="space-y-4">
     <div className="mb-6">
       <h2 className="text-2xl font-extrabold text-gray-900">Bulk towns</h2>
@@ -23,7 +29,10 @@ const StepBulkTowns = ({ formData, onTownChange, onAddTown, onRemoveTown, errors
             <p className="text-xs text-red-500 mt-1">{errors.towns[i]}</p>
           )}
           {formData.towns.length > 1 && (
-            <button onClick={() => onRemoveTown(i)} className="p-2 text-gray-400 hover:text-red-500">
+            <button
+              onClick={() => onRemoveTown(i)}
+              className="p-2 text-gray-400 hover:text-red-500"
+            >
               <Trash2 className="h-4 w-4" />
             </button>
           )}

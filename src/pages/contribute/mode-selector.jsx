@@ -67,7 +67,7 @@ const ModeSelector = ({ onSelect }) => (
       </p>
     </div>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      {modes.map(({ id, label, sub, icon: Icon }) => (
+      {modes.map(({ id, label, sub }) => (
         <button
           key={id}
           onClick={() => onSelect(id)}

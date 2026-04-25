@@ -4,17 +4,34 @@ import inputClass from "../../components/input-class";
 
 const towns = ["Nairobi", "Mombasa", "Kisumu", "Nakuru"];
 
-const StepBulkRoads = ({ formData, onChange, onAddRow, onRemoveRow, errors }) => (
+const StepBulkRoads = ({
+  formData,
+  onChange,
+  onAddRow,
+  onRemoveRow,
+  errors,
+}) => (
   <div className="space-y-4">
     <div className="mb-6">
       <h2 className="text-2xl font-extrabold text-gray-900">Bulk roads</h2>
-      <p className="text-sm text-gray-500 mt-1">Add multiple roads to a town at once.</p>
+      <p className="text-sm text-gray-500 mt-1">
+        Add multiple roads to a town at once.
+      </p>
     </div>
 
     <Field label="Town *" error={errors.town}>
-      <select name="town" value={formData.town} onChange={onChange} className={inputClass(errors.town)}>
-        <option value="" disabled>Select town</option>
-        {towns.map(t => <option key={t}>{t}</option>)}
+      <select
+        name="town"
+        value={formData.town}
+        onChange={onChange}
+        className={inputClass(errors.town)}
+      >
+        <option value="" disabled>
+          Select town
+        </option>
+        {towns.map((t) => (
+          <option key={t}>{t}</option>
+        ))}
       </select>
     </Field>
 
@@ -24,12 +41,15 @@ const StepBulkRoads = ({ formData, onChange, onAddRow, onRemoveRow, errors }) =>
           <input
             type="text"
             value={road}
-            onChange={(e) => onAddRow(i, e.target.value)}  
+            onChange={(e) => onAddRow(i, e.target.value)}
             placeholder={`Road ${i + 1} name`}
             className={`flex-1 ${inputClass(errors.roads?.[i])}`}
           />
           {formData.roads.length > 1 && (
-            <button onClick={() => onRemoveRow(i)} className="p-2 text-gray-400 hover:text-red-500">
+            <button
+              onClick={() => onRemoveRow(i)}
+              className="p-2 text-gray-400 hover:text-red-500"
+            >
               <Trash2 className="h-4 w-4" />
             </button>
           )}
@@ -37,8 +57,10 @@ const StepBulkRoads = ({ formData, onChange, onAddRow, onRemoveRow, errors }) =>
       ))}
     </div>
 
-    <button onClick={onAddRow}
-      className="w-full flex items-center justify-center gap-2 py-2.5 border border-dashed border-gray-300 rounded-md text-sm font-medium text-gray-500 hover:border-green-600 hover:text-green-700 transition-colors">
+    <button
+      onClick={onAddRow}
+      className="w-full flex items-center justify-center gap-2 py-2.5 border border-dashed border-gray-300 rounded-md text-sm font-medium text-gray-500 hover:border-green-600 hover:text-green-700 transition-colors"
+    >
       <PlusCircle className="h-4 w-4" /> Add road
     </button>
   </div>

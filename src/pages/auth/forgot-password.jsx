@@ -20,14 +20,13 @@ const ForgotPassword = () => {
       return;
     }
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1000)); // replace with real call
+    await new Promise((r) => setTimeout(r, 1000));
     setLoading(false);
     setSent(true);
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* top bar */}
       <div className="px-6 py-4 flex items-center justify-between">
         <button
           onClick={() => navigate("/")}
@@ -102,7 +101,6 @@ const ForgotPassword = () => {
                 </div>
               </>
             ) : (
-              /* success state */
               <div className="flex flex-col items-center text-center gap-5 py-4">
                 <div className="w-14 h-14 bg-green-600 rounded-md flex items-center justify-center">
                   <MailCheck className="h-7 w-7 text-white" />

@@ -29,7 +29,6 @@ const StepMatatus = ({
           key={index}
           className="border border-gray-200 rounded-lg overflow-hidden"
         >
-          {/* Card header */}
           <div className="flex items-center justify-between px-4 py-3 bg-gray-900">
             <div className="flex items-center gap-2">
               <div className="w-6 h-6 rounded bg-white/10 flex items-center justify-center">

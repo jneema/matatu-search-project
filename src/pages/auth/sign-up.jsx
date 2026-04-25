@@ -46,7 +46,7 @@ const SignUp = () => {
     ev.preventDefault();
     if (!validate()) return;
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1000)); // replace with real call
+    await new Promise((r) => setTimeout(r, 1000));
     setLoading(false);
     navigate("/");
   };
@@ -64,7 +64,6 @@ const SignUp = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* top bar */}
       <div className="px-6 py-4 flex items-center justify-between">
         <button
           onClick={() => navigate("/")}
@@ -109,8 +108,6 @@ const SignUp = () => {
                   <p className="text-xs text-red-500 mt-1">{errors.name}</p>
                 )}
               </div>
-
-              {/* email */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="block text-sm font-medium text-gray-700">
@@ -130,7 +127,6 @@ const SignUp = () => {
                 )}
               </div>
 
-              {/* password */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="block text-sm font-medium text-gray-700">
@@ -161,7 +157,6 @@ const SignUp = () => {
                 {errors.password && (
                   <p className="text-xs text-red-500 mt-1">{errors.password}</p>
                 )}
-                {/* password strength hints */}
                 {form.password && (
                   <div className="mt-2 space-y-1">
                     {requirements.map(({ label, test }) => (
@@ -188,7 +183,6 @@ const SignUp = () => {
                 )}
               </div>
 
-              {/* confirm */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="block text-sm font-medium text-gray-700">
