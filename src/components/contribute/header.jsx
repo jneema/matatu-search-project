@@ -6,15 +6,9 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
   const navigate = useNavigate();
 
   const subtitle = {
-    route: "Full route + matatus",
-    destination: "Destination only",
-    sacco: "Sacco + fleet",
-    matatu: "Single matatu",
-    road: "Add a road",
-    "bulk-roads": "Bulk roads",
-    "bulk-destinations": "Bulk destinations",
-    town: "Add a town",
-    "bulk-towns": "Bulk towns",
+    route: "Full route",
+    sacco: "Sacco",
+    stages: "Stages"
   };
 
   return (

@@ -6,6 +6,8 @@ import {
   MapPin,
   Bus,
   Route,
+  X,
+  Shield,
 } from "lucide-react";
 import { get, post } from "../../api/crud";
 import Table from "../../components/table";
@@ -14,6 +16,7 @@ import { Badge } from "../../components/badge";
 import StagesTable from "./stages-table";
 import SaccosTable from "./sacco-table";
 import RoutesTable from "./routes-table";
+import { useNavigate } from "react-router";
 
 const TABS = ["pending", "all"];
 
@@ -24,6 +27,7 @@ const SECTIONS = [
 ];
 
 const Admin = () => {
+  const navigate = useNavigate();
   const [section, setSection] = useState("stages");
   const [tab, setTab] = useState("pending");
 
@@ -32,8 +36,24 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
       <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-        <h1 className="text-lg font-extrabold text-gray-900">Admin</h1>
-        <span className="text-xs text-gray-400">Matatu Data Review</span>
+        <div className="flex items-center gap-2">
+          <Shield className="h-6 w-6 text-green-600" />
+
+          <div>
+            <h1 className="text-lg font-extrabold text-gray-900 leading-none">
+              Admin
+            </h1>
+            <p className="text-xs text-gray-400 mt-0.5">Matatu Data Review</p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => navigate("/")}
+          className="p-2 rounded-md hover:bg-gray-100 transition-colors"
+          title="Back to home"
+        >
+          <X className="h-5 w-5 text-gray-500" />
+        </button>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
