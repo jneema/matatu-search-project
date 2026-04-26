@@ -44,22 +44,33 @@ const RoutesView = ({
 
     getRoutes(selectedStartingPoint.name, selectedDestination.name)
       .then((data) => {
-        const enrich = (options) =>
+        const enrich = (options = []) =>
           options.map((opt) => ({
             ...opt,
+            sacco: opt.sacco_name,
+            fare: opt.off_peak_fare_kes,
+            duration_mins: opt.avg_duration_mins,
+            peak_fare: opt.peak_fare_kes,
+            off_peak_fare: opt.off_peak_fare_kes,
+            wait_mins_est: opt.departure_frequency_mins,
+
+            vehicle_type: opt.vehicle_type || "14_seater",
+            terminus_area: opt.destination,
+
             origin_stage: selectedStartingPoint,
             dest_stage: selectedDestination,
           }));
 
-        const enrichedScenarios = {};
-        Object.keys(data.scenarios).forEach((key) => {
-          enrichedScenarios[key] = enrich(data.scenarios[key]);
-        });
+        const enrichedOptions = enrich(data.direct_routes || []);
 
         setTripData({
           ...data,
-          all_options: enrich(data.all_options),
-          scenarios: enrichedScenarios,
+          all_options: enrichedOptions,
+          scenarios: {
+            EXPRESS: enrichedOptions.filter((opt) => opt.is_express),
+            PANYA: enrichedOptions.filter((opt) => opt.is_panya),
+            ALL: enrichedOptions,
+          },
         });
         setLoading(false);
       })

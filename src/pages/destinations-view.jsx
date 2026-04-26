@@ -47,30 +47,23 @@ const DestinationsView = ({
 
   const copy = DIRECTION_COPY[selectedDirection ?? "inbound"];
 
-  const fetchDestinations = async () => {
-    try {
-      const allStages = await getDestinationStages(
-        selectedDirection ?? "inbound",
-      );
+const fetchDestinations = async () => {
+  try {
+    
+    const filteredData = await getDestinationStages(
+      selectedDirection ?? "inbound",
+      selectedStartingPoint?.id 
+    );
 
-      let filteredData = allStages;
-      console.log(filteredData);
-
-      if (selectedStartingPoint) {
-        filteredData = allStages.filter(
-          (stage) => stage.id !== selectedStartingPoint.id,
-        );
-      }
-
-      setDestinations(filteredData);
-      allDestinationsRef.current = filteredData;
-      // setPopularDestinations(data.slice(0, 3));
-      setPopularDestinations(filteredData);
-    } catch (error) {
-      console.error(error);
-      setDestinations([]);
-    }
-  };
+    setDestinations(filteredData);
+    allDestinationsRef.current = filteredData;
+    setPopularDestinations(filteredData);
+  } catch (error) {
+    console.error("Error fetching filtered destinations:", error);
+    setDestinations([]);
+  } 
+};
+  
 
   useEffect(() => {
     fetchDestinations();

@@ -193,10 +193,10 @@ export const RouteCard = ({
 
         {expanded && (
           <div className="mt-2.5 bg-gray-50 rounded-lg px-3 py-1">
-            <DetailRow label="Vehicle" value={vehicleLabel} />
+            <DetailRow label="Vehicle Type" value={vehicleLabel} />
             <DetailRow label="Terminus" value={option.terminus_area} />
             <DetailRow label="Via" value={option.via} />
-            <DetailRow
+            {/* <DetailRow
               label="Fare type"
               value={
                 option.fare_type_now === "STANDARD"
@@ -204,7 +204,7 @@ export const RouteCard = ({
                   : option.fare_type_now?.charAt(0) +
                     option.fare_type_now?.slice(1).toLowerCase()
               }
-            />
+            /> */}
             <DetailRow
               label="Off-peak fare"
               value={
@@ -220,7 +220,7 @@ export const RouteCard = ({
               }
             />
             <DetailRow
-              label="Payment"
+              label="Payment Method(s)"
               value={
                 option.payment_methods?.length
                   ? option.payment_methods.join(", ")

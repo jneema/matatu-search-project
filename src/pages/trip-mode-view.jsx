@@ -266,7 +266,7 @@ const TripModeView = ({
                 value: via?.split(" ").slice(-1)[0] ?? "—",
               },
               { icon: Wallet, label: "Fare", value: `KES ${fare}` },
-            ].map(({  label, value }) => (
+            ].map(({ icon: Icon, label, value }) => (
               <div
                 key={label}
                 className="bg-gray-50 rounded-xl p-3 text-center"
@@ -423,7 +423,7 @@ const TripModeView = ({
               { icon: Clock, label: "Journey", value: `${duration_mins} min` },
               { icon: Clock, label: "Wait", value: `~${wait_mins_est} min` },
               { icon: Wallet, label: "Fare", value: `KES ${fare}` },
-            ].map(({ label, value }) => (
+            ].map(({ icon: Icon, label, value }) => (
               <div
                 key={label}
                 className="bg-white border border-gray-100 rounded-2xl p-3 text-center shadow-sm"

@@ -15,11 +15,14 @@ export const getOriginStages = (travelDirection = "inbound") => {
     .then((stages) => stages.map(mapStage));
 };
 
-export const getDestinationStages = (travelDirection = "inbound") => {
-  const dir = travelDirection === "inbound" ? "outbound" : "inbound";
+export const getDestinationStages = (travelDirection = "inbound", fromStageId = null) => {
+  let url = `/stages?`;
 
-  return get(`/stages?direction=${dir}`)
-    .then((stages) => stages.map(mapStage));
+  if (fromStageId) {
+    url += `from_id=${fromStageId}`;
+  }
+
+  return get(url).then((stages) => stages.map(mapStage));
 };
 
 export const getDestinationsByTown = (_town, search = "") =>
