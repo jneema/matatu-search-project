@@ -120,7 +120,7 @@ const AddStage = ({ onSuccess }) => {
         image_url: formData.image_url || "",
         is_active: false,
       });
-      onSuccess?.();
+      onSuccess?.(formData.name.trim());
     } catch (err) {
       console.error("Submission failed", err);
       setErrors((prev) => ({

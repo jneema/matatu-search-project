@@ -13,6 +13,10 @@ export const addStage = (data) => {
   return post("/stages", data);
 };
 
+export const addSacco = (data) => {
+  return post("/saccos", data);
+};
+
 export const getOriginStages = (travelDirection = "inbound") => {
   const dir = travelDirection === "inbound" ? "inbound" : "outbound";
   return get(`/stages?direction=${dir}`).then((stages) => stages.map(mapStage));
