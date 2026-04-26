@@ -6,6 +6,7 @@ import SavedRoutesView from "./pages/saved-routes-view";
 import SignIn from "./pages/auth/sign-in";
 import SignUp from "./pages/auth/sign-up";
 import ForgotPassword from "./pages/auth/forgot-password";
+import Admin from "./pages/admin";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );
