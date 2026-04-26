@@ -17,7 +17,7 @@ const EMPTY = {
   comfort_rating: 5,
   image_url: "",
   is_verified: false,
-  operating_status: "active",
+  operating_status: "inactive",
 };
 
 const AddSacco = ({ onSuccess, onAddStages }) => {

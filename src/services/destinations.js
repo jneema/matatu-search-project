@@ -17,6 +17,14 @@ export const addSacco = (data) => {
   return post("/saccos", data);
 };
 
+export const addRoute = (data) => {
+  return post("/routes", data);
+};
+
+export const getSaccos = () => get("/saccos?limit=200");
+
+export const getStages = () => get("/stages?limit=200");
+
 export const getOriginStages = (travelDirection = "inbound") => {
   const dir = travelDirection === "inbound" ? "inbound" : "outbound";
   return get(`/stages?direction=${dir}`).then((stages) => stages.map(mapStage));
