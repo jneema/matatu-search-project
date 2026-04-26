@@ -5,29 +5,28 @@ const useAuth = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = () => {
-      const mockUser = {
-        id: 1,
-        name: "Admin User",
-        email: "admin@matatufinder.co.ke",
-        role: "admin",
-      };
+    const storedUser = localStorage.getItem("user");
 
-      const isLoggedIn = true;
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      setUser(null);
+    }
 
-      if (isLoggedIn) {
-        setUser(mockUser);
-      } else {
-        setUser(null);
-      }
-      setIsLoading(false);
-    };
-
-    const timer = setTimeout(checkAuth, 500);
-    return () => clearTimeout(timer);
+    setIsLoading(false);
   }, []);
 
-  return { user, isLoading };
+  const logout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
+  const login = (userData) => {
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
+  };
+
+  return { user, isLoading, login, logout };
 };
 
 export default useAuth;

@@ -24,7 +24,7 @@ const SignIn = () => {
     setLoading(true);
     await new Promise((r) => setTimeout(r, 1000));
     setLoading(false);
-    navigate("/");
+    navigate("/admin");
   };
 
   const handleChange = (e) => {

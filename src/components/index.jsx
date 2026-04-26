@@ -23,6 +23,7 @@ const steps = [
 ];
 
 const Header = ({ currentView, setCurrentView }) => {
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const savedRoutes = useSelector((state) => state.savedRoutes.routes);
 
@@ -42,10 +43,10 @@ const Header = ({ currentView, setCurrentView }) => {
   }, []);
 
   const handleSignOut = () => {
+    logout();
     setDropdownOpen(false);
-    navigate("/sign-in");
+    navigate("/");
   };
-
   return (
     <header className="bg-white shadow-lg">
       <div className="max-w-6xl mx-auto px-4 py-3 md:py-4">
@@ -128,7 +129,7 @@ const Header = ({ currentView, setCurrentView }) => {
                     <>
                       <button
                         onClick={() => {
-                          navigate("/signin");
+                          navigate("/sign-in");
                           setDropdownOpen(false);
                         }}
                         className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
@@ -138,7 +139,7 @@ const Header = ({ currentView, setCurrentView }) => {
                       </button>
                       <button
                         onClick={() => {
-                          navigate("/signup");
+                          navigate("/sign-up");
                           setDropdownOpen(false);
                         }}
                         className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"

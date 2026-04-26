@@ -45,8 +45,20 @@ const SignUp = () => {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     if (!validate()) return;
+
     setLoading(true);
+
     await new Promise((r) => setTimeout(r, 1000));
+
+    const mockUser = {
+      id: Date.now(),
+      name: form.name,
+      email: form.email,
+      role: "admin",
+    };
+
+    localStorage.setItem("user", JSON.stringify(mockUser));
+
     setLoading(false);
     navigate("/");
   };
