@@ -1,57 +1,17 @@
-import {
-  MapPin,
-  Bus,
-  Navigation,
-  List,
-  PlusCircle,
-  Layers,
-  Building,
-  Building2,
-} from "lucide-react";
+import { Bus, Navigation, MapPinIcon } from "lucide-react";
 
 const modes = [
   {
     id: "route",
     label: "Full route",
-    sub: "Road + destination + matatus",
+    sub: "Route",
     icon: Navigation,
   },
-  { id: "town", label: "Add a town", sub: "Single new town", icon: Building2 },
-  {
-    id: "bulk-towns",
-    label: "Bulk towns",
-    sub: "Multiple towns at once",
-    icon: Building,
-  },
-  { id: "road", label: "Add a road", sub: "New road to a town", icon: MapPin },
-  {
-    id: "bulk-roads",
-    label: "Bulk roads",
-    sub: "Multiple roads at once",
-    icon: List,
-  },
-  {
-    id: "destination",
-    label: "Destination only",
-    sub: "Single stop, no matatus",
-    icon: MapPin,
-  },
-  {
-    id: "bulk-destinations",
-    label: "Bulk destinations",
-    sub: "Multiple stops at once",
-    icon: PlusCircle,
-  },
+  { id: "stage", label: "Stage", sub: "Stage", icon: MapPinIcon },
   {
     id: "sacco",
-    label: "Sacco + fleet",
-    sub: "Operator and their matatus",
-    icon: Layers,
-  },
-  {
-    id: "matatu",
-    label: "Single matatu",
-    sub: "One vehicle with images",
+    label: "Sacco",
+    sub: "Sacco Operator",
     icon: Bus,
   },
 ];
@@ -67,7 +27,7 @@ const ModeSelector = ({ onSelect }) => (
       </p>
     </div>
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      {modes.map(({ id, label, sub }) => (
+      {modes.map(({ icon: Icon, id, label, sub }) => (
         <button
           key={id}
           onClick={() => onSelect(id)}

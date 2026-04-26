@@ -1,7 +1,5 @@
-import React from "react";
-
-const Field = ({ label, error, children }) => (
-  <div>
+const Field = ({ label, error, disabled, children }) => (
+  <div className={disabled ? "opacity-50" : ""}>
     <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
       {label}
     </label>

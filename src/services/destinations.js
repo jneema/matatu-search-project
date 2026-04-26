@@ -1,7 +1,7 @@
-import { get } from "../api/crud";
+import { get, post } from "../api/crud";
 
 const mapStage = (s) => ({
-  ...s,                
+  ...s,
   id: s.id,
   name: s.name,
   area: s.area,
@@ -9,13 +9,19 @@ const mapStage = (s) => ({
   landmark: s.landmark,
 });
 
-export const getOriginStages = (travelDirection = "inbound") => {
-  const dir = travelDirection === "inbound" ? "inbound" : "outbound";
-  return get(`/stages?direction=${dir}`)
-    .then((stages) => stages.map(mapStage));
+export const addStage = (data) => {
+  return post("/stages", data);
 };
 
-export const getDestinationStages = (travelDirection = "inbound", fromStageId = null) => {
+export const getOriginStages = (travelDirection = "inbound") => {
+  const dir = travelDirection === "inbound" ? "inbound" : "outbound";
+  return get(`/stages?direction=${dir}`).then((stages) => stages.map(mapStage));
+};
+
+export const getDestinationStages = (
+  travelDirection = "inbound",
+  fromStageId = null,
+) => {
   let url = `/stages?`;
 
   if (fromStageId) {
