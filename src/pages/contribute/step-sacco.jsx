@@ -4,22 +4,7 @@ import inputClass from "../../components/input-class";
 
 const paymentOptions = ["Cash", "M-pesa", "Card"];
 
-export const EMPTY_SACCO_MATATU = {
-  matatuName: "",
-  matatuNumber: "",
-  destinationId: "",
-  cbdStage: "",
-  estateStage: "",
-  peakFareInbound: "",
-  peakFareOutbound: "",
-  offPeakFare: "",
-  payment: [],
-  isExpress: false,
-  isElectric: false,
-  rating: "",
-  contacts: "",
-  notes: "",
-};
+
 
 const StepSacco = ({
   formData,

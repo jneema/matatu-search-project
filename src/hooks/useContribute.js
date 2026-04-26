@@ -1,7 +1,10 @@
 import { useState } from "react";
-import { EMPTY_MATATU, EMPTY_ROUTE } from "../constants";
-import { EMPTY_DEST } from "../pages/contribute/step-bulk-destinations";
-import { EMPTY_SACCO_MATATU } from "../pages/contribute/step-sacco";
+import {
+  EMPTY_MATATU,
+  EMPTY_ROUTE,
+  EMPTY_DEST,
+  EMPTY_SACCO_MATATU,
+} from "../constants";
 
 const INIT = {
   town: { name: "" },
@@ -223,6 +226,5 @@ export function useContribute() {
     },
   };
 
-  function validate() {
-  }
+  function validate() {}
 }

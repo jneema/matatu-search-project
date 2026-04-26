@@ -4,6 +4,30 @@ export const ROUTE_STEPS = [
   { id: 3, label: "Review & Submit" },
 ];
 
+export const EMPTY_DEST = {
+  road: "",
+  destination: "",
+  departure: "",
+  distance: "",
+};
+
+export const EMPTY_SACCO_MATATU = {
+  matatuName: "",
+  matatuNumber: "",
+  destinationId: "",
+  cbdStage: "",
+  estateStage: "",
+  peakFareInbound: "",
+  peakFareOutbound: "",
+  offPeakFare: "",
+  payment: [],
+  isExpress: false,
+  isElectric: false,
+  rating: "",
+  contacts: "",
+  notes: "",
+};
+
 export const EMPTY_MATATU = {
   saccoName: "",
   matatuName: "",

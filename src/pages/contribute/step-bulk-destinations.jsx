@@ -11,7 +11,6 @@ const roads = [
   "Mombasa Road",
 ];
 
-const EMPTY_DEST = { road: "", destination: "", departure: "", distance: "" };
 
 const StepBulkDestinations = ({
   formData,
