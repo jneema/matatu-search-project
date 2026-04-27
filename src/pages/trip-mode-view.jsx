@@ -48,20 +48,42 @@ const TripModeView = ({
   } = selectedRoute || {};
   console.log(selectedRoute);
 
-  const origin = useMemo(() => {
-    if (typeof selectedRoute?.origin_stage === "string") {
-      return { name: selectedRoute.origin_stage };
+  const sanitizeCoord = (val) => {
+    if (val === undefined || val === null) return null;
+    const str = String(val);
+    const parts = str.split(".");
+
+    if (parts.length > 2) {
+      return parseFloat(`${parts[0]}.${parts[1]}`);
     }
-    return selectedRoute?.origin_stage || { name: "Unknown Origin" };
+    return parseFloat(str);
+  };
+
+  const origin = useMemo(() => {
+    const base =
+      typeof selectedRoute?.origin_stage === "string"
+        ? { name: selectedRoute.origin_stage }
+        : selectedRoute?.origin_stage || { name: "Unknown Origin" };
+
+    return {
+      ...base,
+      latitude: sanitizeCoord(base.latitude),
+      longitude: sanitizeCoord(base.longitude),
+    };
   }, [selectedRoute]);
 
   const destination = useMemo(() => {
-    if (typeof selectedRoute?.dest_stage === "string") {
-      return { name: selectedRoute.dest_stage };
-    }
-    return selectedRoute?.dest_stage || { name: "Unknown Destination" };
+    const base =
+      typeof selectedRoute?.dest_stage === "string"
+        ? { name: selectedRoute.dest_stage }
+        : selectedRoute?.dest_stage || { name: "Unknown Destination" };
+
+    return {
+      ...base,
+      latitude: sanitizeCoord(base.latitude),
+      longitude: sanitizeCoord(base.longitude),
+    };
   }, [selectedRoute]);
-  console.log(origin.name, destination.name);
 
   const handleBoard = useCallback(() => {
     const now = new Date();
