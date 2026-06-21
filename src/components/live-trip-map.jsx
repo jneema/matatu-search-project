@@ -39,16 +39,30 @@ const greenIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
-function NavigationController({ userPos, zoom }) {
+const orangeIcon = new L.Icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+// Follows the user only while `follow` is true. When false, only sets the
+// initial view once — avoids jitter from GPS micro-updates in real mode.
+function NavigationController({ userPos, zoom, follow }) {
   const map = useMap();
-  const isFirstRender = useRef(true);
+  const initialised = useRef(false);
 
   useEffect(() => {
     if (!userPos) return;
-    if (isFirstRender.current) {
+    if (!initialised.current) {
       map.setView(userPos, zoom);
-      isFirstRender.current = false;
-    } else {
+      initialised.current = true;
+      return;
+    }
+    if (follow) {
       map.panTo(userPos, { animate: true, duration: 0.8, easeLinearity: 0.5 });
     }
   }, [userPos]);
@@ -56,13 +70,17 @@ function NavigationController({ userPos, zoom }) {
   return null;
 }
 
-async function fetchRoadRoute(
-  startLat,
-  startLng,
-  endLat,
-  endLng,
-  mode = "driving",
-) {
+// Fires once on mount — used to zoom to the arrival summary bounds.
+function FitBoundsController({ bounds }) {
+  const map = useMap();
+  useEffect(() => {
+    if (!bounds) return;
+    map.fitBounds(bounds, { padding: [60, 60], maxZoom: 17, animate: true });
+  }, []);
+  return null;
+}
+
+async function fetchRoadRoute(startLat, startLng, endLat, endLng, mode = "driving") {
   const profile = mode === "walking" ? "foot" : "driving";
   const url = `https://router.project-osrm.org/route/v1/${profile}/${startLng},${startLat};${endLng},${endLat}?overview=full&geometries=geojson`;
   try {
@@ -86,11 +104,26 @@ const LiveTripMap = ({
   const [userPos, setUserPos] = useState(null);
   const [trailPositions, setTrailPositions] = useState([]);
   const [routeCoords, setRouteCoords] = useState([]);
+  const [demoArrived, setDemoArrived] = useState(false);
   const watchRef = useRef(null);
   const demoRef = useRef(null);
+  const lastRouteFetchPos = useRef(null);
+  const demoStartPos = useRef(null);
 
   const NAV_ZOOM = simulationPhase === "walking" ? 18 : 16;
   const routeColor = simulationPhase === "walking" ? "#2563eb" : "#16a34a";
+
+  const metersBetween = (a, b) => {
+    const R = 6371000;
+    const dLat = ((b[0] - a[0]) * Math.PI) / 180;
+    const dLng = ((b[1] - a[1]) * Math.PI) / 180;
+    const s =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos((a[0] * Math.PI) / 180) *
+        Math.cos((b[0] * Math.PI) / 180) *
+        Math.sin(dLng / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
+  };
 
   useEffect(() => {
     if (demoRef.current) clearInterval(demoRef.current);
@@ -98,6 +131,13 @@ const LiveTripMap = ({
     setUserPos(null);
     setTrailPositions([]);
     setRouteCoords([]);
+    setDemoArrived(false);
+    lastRouteFetchPos.current = null;
+    demoStartPos.current = null;
+
+    console.log("[LiveTripMap] init — demoMode:", demoMode, "phase:", simulationPhase);
+    console.log("[LiveTripMap] originStage:", originStage);
+    console.log("[LiveTripMap] destStage:", destStage);
 
     if (demoMode) {
       if (!originStage?.latitude || !originStage?.longitude) return;
@@ -119,58 +159,73 @@ const LiveTripMap = ({
         routeMode = "driving";
       }
 
-      fetchRoadRoute(startLat, startLng, endLat, endLng, routeMode).then(
-        (coords) => {
-          const path = coords ?? [
-            [startLat, startLng],
-            [endLat, endLng],
-          ];
-          setRouteCoords(path);
+      fetchRoadRoute(startLat, startLng, endLat, endLng, routeMode).then((coords) => {
+        const path = coords ?? [[startLat, startLng], [endLat, endLng]];
+        setRouteCoords(path);
 
-          let currentStep = 0;
-          const steps = path.length - 1;
+        let currentStep = 0;
+        const steps = path.length - 1;
 
-          const initial = path[0];
-          setUserPos(initial);
-          setTrailPositions([initial]);
-          onLocationUpdate?.(initial);
+        const initial = path[0];
+        demoStartPos.current = initial;
+        setUserPos(initial);
+        setTrailPositions([initial]);
+        onLocationUpdate?.(initial);
 
-          demoRef.current = setInterval(() => {
-            currentStep++;
-            if (currentStep > steps) {
-              clearInterval(demoRef.current);
-              return;
-            }
-            const pos = path[currentStep];
-            setUserPos(pos);
-            setTrailPositions((prev) => [...prev.slice(-50), pos]);
-            onLocationUpdate?.(pos);
-          }, 400);
-        },
-      );
+        demoRef.current = setInterval(() => {
+          currentStep++;
+          if (currentStep > steps) {
+            clearInterval(demoRef.current);
+            setDemoArrived(true);
+            return;
+          }
+          const pos = path[currentStep];
+          setUserPos(pos);
+          setTrailPositions((prev) => [...prev, pos]);
+          onLocationUpdate?.(pos);
+        }, 400);
+      });
     } else {
-      if (originStage?.latitude && destStage?.latitude) {
-        const mode = simulationPhase === "walking" ? "walking" : "driving";
+      if (simulationPhase === "boarded" && originStage?.latitude && destStage?.latitude) {
         fetchRoadRoute(
-          originStage.latitude,
-          originStage.longitude,
-          destStage.latitude,
-          destStage.longitude,
-          mode,
+          originStage.latitude, originStage.longitude,
+          destStage.latitude, destStage.longitude,
+          "driving",
         ).then((coords) => {
           if (coords) setRouteCoords(coords);
         });
       }
 
-      if (!navigator.geolocation) return;
+      if (!navigator.geolocation) {
+        console.warn("[LiveTripMap] geolocation not available");
+        return;
+      }
+      console.log("[LiveTripMap] starting GPS watch — phase:", simulationPhase);
       watchRef.current = navigator.geolocation.watchPosition(
         (pos) => {
           const p = [pos.coords.latitude, pos.coords.longitude];
+          console.log("[LiveTripMap] GPS fix:", p, "accuracy:", pos.coords.accuracy, "m");
           setUserPos(p);
           setTrailPositions((prev) => [...prev.slice(-50), p]);
           onLocationUpdate?.(p);
+
+          if (simulationPhase === "walking" && originStage?.latitude) {
+            const last = lastRouteFetchPos.current;
+            const dist = last ? metersBetween(last, p) : null;
+            const shouldFetch = !last || dist > 30;
+            console.log("[LiveTripMap] walking route check — dist:", dist, "shouldFetch:", shouldFetch);
+            if (shouldFetch) {
+              lastRouteFetchPos.current = p;
+              console.log("[LiveTripMap] fetching walk route:", p, "→", [originStage.latitude, originStage.longitude]);
+              fetchRoadRoute(p[0], p[1], originStage.latitude, originStage.longitude, "walking")
+                .then((coords) => {
+                  console.log("[LiveTripMap] walk route result:", coords ? `${coords.length} points` : "null");
+                  if (coords) setRouteCoords(coords);
+                });
+            }
+          }
         },
-        (err) => console.warn("GPS error:", err),
+        (err) => console.warn("[LiveTripMap] GPS error:", err.code, err.message),
         { enableHighAccuracy: true, maximumAge: 3000, timeout: 10000 },
       );
     }
@@ -182,6 +237,15 @@ const LiveTripMap = ({
   }, [demoMode, simulationPhase]);
 
   if (!originStage?.latitude || !originStage?.longitude) return null;
+
+  if (!demoMode && simulationPhase === "walking" && !userPos) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-2 py-8 text-center">
+        <div className="w-5 h-5 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin" />
+        <p className="text-xs text-gray-400 font-medium">Getting your location…</p>
+      </div>
+    );
+  }
 
   const originPos = [originStage.latitude, originStage.longitude];
   const destPos =
@@ -203,6 +267,20 @@ const LiveTripMap = ({
     return routeCoords.slice(closestIdx);
   })();
 
+  // Bounds for arrival summary zoom
+  const arrivalBounds = (() => {
+    if (!demoArrived || !demoStartPos.current) return null;
+    if (simulationPhase === "walking") {
+      // start of walk → boarding stage
+      return L.latLngBounds([demoStartPos.current, originPos]);
+    }
+    if (simulationPhase === "boarded" && destPos) {
+      // boarding stage → alighting stage
+      return L.latLngBounds([originPos, destPos]);
+    }
+    return null;
+  })();
+
   return (
     <div style={{ height: "100%", width: "100%" }}>
       <MapContainer
@@ -219,18 +297,28 @@ const LiveTripMap = ({
           maxZoom={19}
         />
 
-        {userPos && <NavigationController userPos={userPos} zoom={NAV_ZOOM} />}
+        {/* Follow user during demo; only set initial view for real GPS */}
+        {userPos && !demoArrived && (
+          <NavigationController userPos={userPos} zoom={NAV_ZOOM} follow={demoMode} />
+        )}
 
+        {/* On demo arrival: zoom to show full walk from start to stage */}
+        {demoArrived && arrivalBounds && (
+          <FitBoundsController bounds={arrivalBounds} />
+        )}
+
+        {/* Full planned route (faint) */}
         {routeCoords.length > 1 && (
           <Polyline
             positions={routeCoords}
             color={routeColor}
             weight={6}
-            opacity={0.15}
+            opacity={demoArrived ? 0.7 : 0.15}
           />
         )}
 
-        {remainingRoute.length > 1 && (
+        {/* Remaining route ahead (brighter while navigating) */}
+        {!demoArrived && remainingRoute.length > 1 && (
           <Polyline
             positions={remainingRoute}
             color={routeColor}
@@ -239,6 +327,7 @@ const LiveTripMap = ({
           />
         )}
 
+        {/* Trail walked so far */}
         {trailPositions.length > 1 && (
           <Polyline
             positions={trailPositions}
@@ -248,6 +337,7 @@ const LiveTripMap = ({
           />
         )}
 
+        {/* User position dot — always visible while moving or stationary */}
         {userPos && (
           <>
             <Circle
@@ -273,38 +363,50 @@ const LiveTripMap = ({
           </>
         )}
 
+        {/* Walking phase: stage marker (destination of walk) */}
         {simulationPhase === "walking" && (
           <Marker position={originPos} icon={greenIcon}>
             <Popup>
-              <p style={{ fontWeight: "bold", fontSize: 13 }}>
-                {originStage.name}
-              </p>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>{originStage.name}</p>
               {originStage.landmark && (
-                <p style={{ fontSize: 11, color: "#6b7280" }}>
-                  {originStage.landmark}
-                </p>
+                <p style={{ fontSize: 11, color: "#6b7280" }}>{originStage.landmark}</p>
               )}
-              <p style={{ fontSize: 11, color: "#16a34a", marginTop: 4 }}>
-                Board here
-              </p>
+              <p style={{ fontSize: 11, color: "#16a34a", marginTop: 4 }}>Board here</p>
             </Popup>
           </Marker>
         )}
 
+        {/* Walking arrival: orange pin where the walk started */}
+        {demoArrived && simulationPhase === "walking" && demoStartPos.current && (
+          <Marker position={demoStartPos.current} icon={orangeIcon}>
+            <Popup>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>You started here</p>
+            </Popup>
+          </Marker>
+        )}
+
+        {/* Boarded phase: destination (alight) marker — always visible */}
         {simulationPhase === "boarded" && destPos && (
           <Marker position={destPos} icon={blackIcon}>
             <Popup>
-              <p style={{ fontWeight: "bold", fontSize: 13 }}>
-                {destStage.name}
-              </p>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>{destStage.name}</p>
               {destStage.landmark && (
-                <p style={{ fontSize: 11, color: "#6b7280" }}>
-                  {destStage.landmark}
-                </p>
+                <p style={{ fontSize: 11, color: "#6b7280" }}>{destStage.landmark}</p>
               )}
-              <p style={{ fontSize: 11, color: "#374151", marginTop: 4 }}>
-                Alight here
-              </p>
+              <p style={{ fontSize: 11, color: "#374151", marginTop: 4 }}>Alight here</p>
+            </Popup>
+          </Marker>
+        )}
+
+        {/* Boarded arrival: orange pin at the boarding stage (where they got on) */}
+        {demoArrived && simulationPhase === "boarded" && (
+          <Marker position={originPos} icon={orangeIcon}>
+            <Popup>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>{originStage.name}</p>
+              {originStage.landmark && (
+                <p style={{ fontSize: 11, color: "#6b7280" }}>{originStage.landmark}</p>
+              )}
+              <p style={{ fontSize: 11, color: "#ea580c", marginTop: 4 }}>You boarded here</p>
             </Popup>
           </Marker>
         )}

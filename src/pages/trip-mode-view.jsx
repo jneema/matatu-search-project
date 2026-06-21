@@ -359,23 +359,7 @@ const TripModeView = ({
               </p>
               <p className="text-sm font-extrabold text-gray-900">{sacco}</p>
             </div>
-            {/* Demo mode toggle */}
-            <button
-              onClick={() => setDemoMode((d) => !d)}
-              title={
-                demoMode
-                  ? "Demo mode on — simulated GPS"
-                  : "Enable demo mode with simulated GPS"
-              }
-              className={`flex items-center gap-1 text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg border transition-colors ${
-                demoMode
-                  ? "bg-orange-500 text-white border-orange-500"
-                  : "bg-gray-100 text-gray-400 border-gray-200 hover:border-gray-300"
-              }`}
-            >
-              <IoFlaskOutline className="h-3 w-3" />
-              {demoMode ? "Demo ON" : "Demo"}
-            </button>
+            <div className="w-9" />
           </div>
         </div>
 
@@ -481,18 +465,27 @@ const TripModeView = ({
 
           {origin?.latitude && origin?.longitude && (
             <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-              <div className="px-4 pt-4 pb-2">
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                  Walk to boarding stage
-                </p>
-                <p className="text-sm font-bold text-gray-700 mt-0.5">
-                  {origin.name}
-                </p>
-                {demoMode && (
-                  <p className="text-[10px] text-orange-500 font-bold mt-0.5">
-                    ● Simulating walk to stage
+              <div className="px-4 pt-4 pb-2 flex items-start justify-between gap-2">
+                <div>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                    {demoMode ? "Simulating walk to stage" : "Walk to boarding stage"}
                   </p>
-                )}
+                  <p className="text-sm font-bold text-gray-700 mt-0.5">
+                    {origin.name}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setDemoMode((d) => !d)}
+                  title={demoMode ? "Demo mode on — simulated GPS" : "Enable demo mode with simulated GPS"}
+                  className={`flex items-center gap-1 text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg border transition-colors shrink-0 ${
+                    demoMode
+                      ? "bg-orange-500 text-white border-orange-500"
+                      : "bg-gray-100 text-gray-400 border-gray-200 hover:border-gray-300"
+                  }`}
+                >
+                  <IoFlaskOutline className="h-3 w-3" />
+                  {demoMode ? "Demo ON" : "Demo"}
+                </button>
               </div>
               <div className="live-trip-map">
                 <LiveTripMap
