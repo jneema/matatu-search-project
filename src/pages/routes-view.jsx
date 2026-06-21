@@ -99,7 +99,7 @@ const RoutesView = ({
     const list =
       activeTab === "ALL" ? allOptions : (scenarios[activeTab] ?? []);
 
-    const map = new IoMapOutline();
+    const map = new Map();
 
     list.forEach((opt) => {
       map.set(opt.route_id, opt);
@@ -121,7 +121,7 @@ const RoutesView = ({
             onClick={() => setCurrentView("landing")}
             className="hover:text-green-600 transition-colors flex items-center gap-1"
           >
-            <IoHomeOutline className="h-3 w-3" /> IoHomeOutline
+            <IoHomeOutline className="h-3 w-3" /> Home
           </button>
           <IoChevronForwardOutline className="h-3 w-3 flex-shrink-0" />
           <button
@@ -267,7 +267,7 @@ const RoutesView = ({
                   onClick={() => setCurrentView("landing")}
                   className="px-4 py-2 bg-gray-100 text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2 mx-auto"
                 >
-                  <IoHomeOutline className="h-3.5 w-3.5" /> Go IoHomeOutline
+                  <IoHomeOutline className="h-3.5 w-3.5" /> Go Home
                 </button>
               )}
             </div>
