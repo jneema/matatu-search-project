@@ -1,4 +1,4 @@
-import { MapPin, Bus } from "lucide-react";
+import { IoLocationOutline, IoBusOutline } from "react-icons/io5";
 
 const ReviewRow = ({ label, value }) => (
   <div className="flex justify-between items-start py-2.5 border-b border-gray-100 last:border-0">
@@ -24,9 +24,9 @@ const StepReview = ({ formData }) => (
 
     <div className="border border-gray-200 rounded-lg overflow-hidden">
       <div className="flex items-center gap-2 px-4 py-3 bg-green-600">
-        <MapPin className="h-3.5 w-3.5 text-white" />
+        <IoLocationOutline className="h-3.5 w-3.5 text-white" />
         <span className="text-xs font-bold text-white uppercase tracking-wider">
-          Route
+          IoMapOutline
         </span>
       </div>
       <div className="px-4 pt-1 pb-2">
@@ -44,7 +44,7 @@ const StepReview = ({ formData }) => (
         className="border border-gray-200 rounded-lg overflow-hidden"
       >
         <div className="flex items-center gap-2 px-4 py-3 bg-gray-900">
-          <Bus className="h-3.5 w-3.5 text-white" />
+          <IoBusOutline className="h-3.5 w-3.5 text-white" />
           <span className="text-xs font-bold text-white uppercase tracking-wider">
             Matatu {i + 1}
           </span>

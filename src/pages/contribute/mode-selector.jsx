@@ -1,18 +1,18 @@
-import { Bus, Navigation, MapPinIcon } from "lucide-react";
+import { IoBusOutline, IoNavigateOutline, IoLocationOutline } from "react-icons/io5";
 
 const modes = [
   {
     id: "route",
     label: "Full route",
     sub: "Route",
-    icon: Navigation,
+    icon: IoNavigateOutline,
   },
-  { id: "stage", label: "Stage", sub: "Stage", icon: MapPinIcon },
+  { id: "stage", label: "Stage", sub: "Stage", icon: IoLocationOutline },
   {
     id: "sacco",
     label: "Sacco",
     sub: "Sacco Operator",
-    icon: Bus,
+    icon: IoBusOutline,
   },
 ];
 

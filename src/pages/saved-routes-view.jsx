@@ -1,16 +1,15 @@
 import React from "react";
 import {
-  BookOpen,
-  Clock,
-  Map,
-  TrendingUp,
-  Bus,
-  ArrowRight,
-  Trash2,
-  X,
-  Route,
-  Zap,
-} from "lucide-react";
+  IoBookOutline,
+  IoTimeOutline,
+  IoMapOutline,
+  IoTrendingUpOutline,
+  IoBusOutline,
+  IoArrowForwardOutline,
+  IoTrashOutline,
+  IoCloseOutline,
+  IoFlashOutline,
+} from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { removeRoute } from "../store/saved-routes";
 import { useNavigate } from "react-router";
@@ -25,7 +24,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Route className="h-6 w-6 md:h-8 md:w-8 text-green-600" />
+            <IoMapOutline className="h-6 w-6 md:h-8 md:w-8 text-green-600" />
             <div>
               <h1 className="text-lg md:text-xl font-bold text-gray-800 leading-none">
                 Matatu Finder
@@ -40,7 +39,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
             className="p-2 hover:bg-gray-100 rounded-md transition-colors"
             title="Back to app"
           >
-            <X className="h-5 w-5 text-gray-500" />
+            <IoCloseOutline className="h-5 w-5 text-gray-500" />
           </button>
         </div>
       </header>
@@ -61,7 +60,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
           {savedRoutes.length === 0 ? (
             <div className="border border-gray-200 rounded-lg p-12 flex flex-col items-center text-center gap-4">
               <div className="w-12 h-12 bg-gray-100 rounded-md flex items-center justify-center">
-                <BookOpen className="h-6 w-6 text-gray-400" />
+                <IoBookOutline className="h-6 w-6 text-gray-400" />
               </div>
               <div className="flex flex-col gap-1">
                 <p className="text-base font-semibold text-gray-800">
@@ -93,14 +92,14 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                         </div>
                         <div>
                           <div className="flex items-center gap-1.5 text-green-600 mb-0.5">
-                            <TrendingUp className="h-3 w-3" />
+                            <IoTrendingUpOutline className="h-3 w-3" />
                             <span className="text-[9px] font-black uppercase tracking-widest">
                               Est. Fare
                             </span>
                             {route.isExpress && (
                               <>
                                 <span className="text-gray-300">·</span>
-                                <Zap className="h-3 w-3 text-blue-400 fill-current" />
+                                <IoFlashOutline className="h-3 w-3 text-blue-400 fill-current" />
                                 <span className="text-[9px] font-black uppercase tracking-widest text-blue-400">
                                   Express
                                 </span>
@@ -117,7 +116,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                         onClick={() => dispatch(removeRoute(route.id))}
                         className="p-2.5 rounded-md border border-gray-200 text-gray-300 hover:border-red-200 hover:text-red-400 hover:bg-red-50 transition-colors"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <IoTrashOutline className="h-4 w-4" />
                       </button>
                     </div>
 
@@ -162,7 +161,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                               key={i}
                               className="snap-center flex-shrink-0 flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-md border border-gray-200"
                             >
-                              <Bus className="h-3 w-3 text-gray-400" />
+                              <IoBusOutline className="h-3 w-3 text-gray-400" />
                               <span className="text-[11px] font-bold text-gray-700 whitespace-nowrap">
                                 {sacco.name}
                               </span>
@@ -183,7 +182,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                             Time
                           </span>
                           <div className="flex items-center gap-1 text-xs font-bold text-gray-700">
-                            <Clock className="h-3 w-3 text-gray-400" />
+                            <IoTimeOutline className="h-3 w-3 text-gray-400" />
                             {route.duration}
                           </div>
                         </div>
@@ -192,7 +191,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                             Distance
                           </span>
                           <div className="flex items-center gap-1 text-xs font-bold text-gray-700">
-                            <Map className="h-3 w-3 text-gray-400" />
+                            <IoMapOutline className="h-3 w-3 text-gray-400" />
                             {route.distance}
                           </div>
                         </div>
@@ -206,7 +205,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                         className="w-full sm:w-auto bg-gray-900 text-white px-6 py-3 rounded-md font-semibold text-sm hover:bg-black flex items-center justify-center gap-2 group transition-colors"
                       >
                         Boarding Stages
-                        <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                        <IoArrowForwardOutline className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
                       </button>
                     </div>
                   </div>
@@ -220,7 +219,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
       <footer className="border-t border-gray-200 py-4 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-xs text-gray-400">
-            &copy; {new Date().getFullYear()} Matatu Route Finder
+            &copy; {new Date().getFullYear()} Matatu IoMapOutline Finder
           </p>
         </div>
       </footer>

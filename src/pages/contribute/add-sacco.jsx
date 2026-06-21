@@ -3,7 +3,7 @@ import Field from "../../components/field";
 import inputClass from "../../components/input-class";
 import { addSacco } from "../../services/destinations";
 import { uploadFile } from "../../services/upload";
-import { CheckCircle, PlusCircle, ArrowLeft } from "lucide-react";
+import { IoCheckmarkCircleOutline, IoAddCircleOutline, IoArrowBackOutline } from "react-icons/io5";
 
 const VEHICLE_TYPE_OPTIONS = ["14-seater", "33-seater", "bus"];
 const RATING_OPTIONS = [1, 2, 3, 4, 5];
@@ -83,7 +83,7 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
       <div className="text-center py-16 space-y-6">
         <div className="flex flex-col items-center gap-3">
           <div className="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center">
-            <CheckCircle className="w-7 h-7 text-green-600" />
+            <IoCheckmarkCircleOutline className="w-7 h-7 text-green-600" />
           </div>
           <h2 className="text-2xl font-extrabold text-gray-900">Sacco added!</h2>
           <p className="text-gray-500 text-sm">
@@ -100,13 +100,13 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
             onClick={() => onAddStages?.(createdSacco)}
             className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black"
           >
-            <PlusCircle className="h-4 w-4" /> Add stages for {createdSacco.name}
+            <IoAddCircleOutline className="h-4 w-4" /> Add stages for {createdSacco.name}
           </button>
           <button
             onClick={onSuccess}
             className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md text-sm font-semibold text-gray-600 hover:bg-gray-50"
           >
-            <ArrowLeft className="h-4 w-4" /> No, I'm done
+            <IoArrowBackOutline className="h-4 w-4" /> No, I'm done
           </button>
         </div>
       </div>
@@ -230,7 +230,7 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
           disabled={submitting}
           className="flex items-center gap-1.5 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {submitting ? "Submitting…" : "Submit"} <CheckCircle className="h-4 w-4" />
+          {submitting ? "Submitting…" : "Submit"} <IoCheckmarkCircleOutline className="h-4 w-4" />
         </button>
       </div>
     </div>

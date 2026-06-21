@@ -3,7 +3,7 @@ import Field from "../../components/field";
 import inputClass from "../../components/input-class";
 import { addStage } from "../../services/destinations";
 import { uploadFile } from "../../services/upload";
-import { CheckCircle } from "lucide-react";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
 const STAGE_TYPE_OPTIONS = ["formal", "informal"];
 const DIRECTION_OPTIONS = ["inbound", "outbound"];
@@ -287,7 +287,7 @@ const AddStage = ({ onSuccess }) => {
           className="flex items-center gap-1.5 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {submitting ? "Submitting…" : "Submit"}{" "}
-          <CheckCircle className="h-4 w-4" />
+          <IoCheckmarkCircleOutline className="h-4 w-4" />
         </button>
       </div>
     </div>

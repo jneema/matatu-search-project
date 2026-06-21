@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Field from "../../components/field";
 import inputClass from "../../components/input-class";
 import { getSaccos, getStages, addRoute } from "../../services/destinations";
-import { CheckCircle } from "lucide-react";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
 const EMPTY = {
   sacco_id: "",
@@ -98,7 +98,7 @@ const AddRoute = ({ onSuccess }) => {
   return (
     <div className="space-y-4">
       <div className="mb-6">
-        <h2 className="text-2xl font-extrabold text-gray-900">Add Route</h2>
+        <h2 className="text-2xl font-extrabold text-gray-900">Add IoMapOutline</h2>
         <p className="text-sm text-gray-500 mt-1">
           Link a sacco to its origin and destination stages.
         </p>
@@ -275,7 +275,7 @@ const AddRoute = ({ onSuccess }) => {
           disabled={submitting || stagesLoading}
           className="flex items-center gap-1.5 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {submitting ? "Submitting…" : "Submit"} <CheckCircle className="h-4 w-4" />
+          {submitting ? "Submitting…" : "Submit"} <IoCheckmarkCircleOutline className="h-4 w-4" />
         </button>
       </div>
     </div>

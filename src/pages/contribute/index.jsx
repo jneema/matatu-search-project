@@ -7,7 +7,7 @@ import { ROUTE_STEPS } from "../../constants";
 import AddStage from "./add-stage";
 import AddSacco from "./add-sacco";
 import AddRoute from "./add-route";
-import { CheckCircle, PlusCircle, ArrowLeft } from "lucide-react";
+import { IoCheckmarkCircleOutline, IoAddCircleOutline, IoArrowBackOutline } from "react-icons/io5";
 
 const SUCCESS_CONFIG = {
   stage: {
@@ -56,7 +56,7 @@ const Contribute = () => {
             <div className="text-center py-16 space-y-6">
               <div className="flex flex-col items-center gap-3">
                 <div className="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center">
-                  <CheckCircle className="w-7 h-7 text-green-600" />
+                  <IoCheckmarkCircleOutline className="w-7 h-7 text-green-600" />
                 </div>
                 <h2 className="text-2xl font-extrabold text-gray-900">
                   {config.title}
@@ -78,7 +78,7 @@ const Contribute = () => {
                   }}
                   className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black"
                 >
-                  <PlusCircle className="h-4 w-4" /> {config.cta}
+                  <IoAddCircleOutline className="h-4 w-4" /> {config.cta}
                 </button>
                 <button
                   onClick={() => {
@@ -87,7 +87,7 @@ const Contribute = () => {
                   }}
                   className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md text-sm font-semibold text-gray-600 hover:bg-gray-50"
                 >
-                  <ArrowLeft className="h-4 w-4" /> Back to menu
+                  <IoArrowBackOutline className="h-4 w-4" /> Back to menu
                 </button>
               </div>
             </div>

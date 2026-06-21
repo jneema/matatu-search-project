@@ -1,5 +1,5 @@
 import React from "react";
-import { Star } from "lucide-react";
+import { IoStarOutline } from "react-icons/io5";
 
 const ComparisonView = ({
   setCurrentView,
@@ -32,7 +32,7 @@ const ComparisonView = ({
 
         <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-4 sm:mb-6">
           <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
-            Route Information
+            IoMapOutline Information
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             <div>
@@ -87,7 +87,7 @@ const ComparisonView = ({
                     KES {matatu.fare}
                   </p>
                   <div className="flex items-center space-x-1">
-                    <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                    <IoStarOutline className="h-4 w-4 text-yellow-500 fill-current" />
                     <span className="text-sm">{matatu.rating}</span>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Route, ArrowRight, ArrowLeft, Loader2, MailCheck } from "lucide-react";
+import { IoMapOutline, IoArrowForwardOutline, IoArrowBackOutline, IoRefreshOutline, IoMailOpenOutline } from "react-icons/io5";
 import { useNavigate, Link } from "react-router";
 
 const ForgotPassword = () => {
@@ -32,7 +32,7 @@ const ForgotPassword = () => {
           onClick={() => navigate("/")}
           className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
         >
-          <Route className="h-5 w-5 text-green-600" />
+          <IoMapOutline className="h-5 w-5 text-green-600" />
           <span className="font-bold text-sm">Matatu Finder</span>
         </button>
       </div>
@@ -82,10 +82,10 @@ const ForgotPassword = () => {
                     className="w-full flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {loading ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <IoRefreshOutline className="h-4 w-4 animate-spin" />
                     ) : (
                       <>
-                        Send reset link <ArrowRight className="h-4 w-4" />
+                        Send reset link <IoArrowForwardOutline className="h-4 w-4" />
                       </>
                     )}
                   </button>
@@ -96,14 +96,14 @@ const ForgotPassword = () => {
                     to="/sign-in"
                     className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors"
                   >
-                    <ArrowLeft className="h-3.5 w-3.5" /> Back to sign in
+                    <IoArrowBackOutline className="h-3.5 w-3.5" /> Back to sign in
                   </Link>
                 </div>
               </>
             ) : (
               <div className="flex flex-col items-center text-center gap-5 py-4">
                 <div className="w-14 h-14 bg-green-600 rounded-md flex items-center justify-center">
-                  <MailCheck className="h-7 w-7 text-white" />
+                  <IoMailOpenOutline className="h-7 w-7 text-white" />
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <p className="text-xl font-bold text-gray-900">

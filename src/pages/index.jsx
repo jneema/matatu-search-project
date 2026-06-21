@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-  Search,
-  MapPin,
-  DollarSign,
-  AlertCircle,
-  ArrowRight,
-  X,
-  Route,
-  Zap,
-} from "lucide-react";
+  IoSearchOutline,
+  IoLocationOutline,
+  IoCashOutline,
+  IoAlertCircleOutline,
+  IoArrowForwardOutline,
+  IoCloseOutline,
+  IoMapOutline,
+  IoFlashOutline,
+} from "react-icons/io5";
 import { getTowns } from "../services/towns";
 import { useDebouncedCallback } from "use-debounce";
 
@@ -110,7 +110,7 @@ const LandingView = ({
       <div className="max-w-4xl mx-auto px-4 py-8 md:py-16">
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3 md:mb-4 tracking-tight">
-            Find Your Perfect Matatu Route
+            Find Your Perfect Matatu IoMapOutline
           </h2>
           <p className="text-base md:text-lg text-gray-500 max-w-xl mx-auto">
             Real-time directions and fare comparisons for Kenya's major urban
@@ -121,7 +121,7 @@ const LandingView = ({
         <div className="relative max-w-2xl mx-auto mb-5" ref={dropdownRef}>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-gray-400" />
+              <IoSearchOutline className="h-5 w-5 text-gray-400" />
             </div>
             <input
               type="text"
@@ -145,7 +145,7 @@ const LandingView = ({
                 onClick={clearSearch}
                 className="absolute inset-y-0 right-0 pr-4 flex items-center"
               >
-                <X className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                <IoCloseOutline className="h-5 w-5 text-gray-400 hover:text-gray-600" />
               </button>
             )}
           </div>
@@ -169,7 +169,7 @@ const LandingView = ({
                           <div
                             className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center ${activeIndex === index ? "bg-green-100" : "bg-gray-100"}`}
                           >
-                            <MapPin
+                            <IoLocationOutline
                               className={`h-4 w-4 ${activeIndex === index ? "text-green-700" : "text-gray-500"}`}
                             />
                           </div>
@@ -184,7 +184,7 @@ const LandingView = ({
                             </p>
                           </div>
                         </div>
-                        <ArrowRight
+                        <IoArrowForwardOutline
                           className={`h-4 w-4 flex-shrink-0 transition-transform ${activeIndex === index ? "text-green-600 translate-x-0.5" : "text-gray-300"}`}
                         />
                       </button>
@@ -193,7 +193,7 @@ const LandingView = ({
                 </div>
               ) : (
                 <div className="p-8 text-center">
-                  <AlertCircle className="h-8 w-8 text-gray-300 mx-auto mb-2" />
+                  <IoAlertCircleOutline className="h-8 w-8 text-gray-300 mx-auto mb-2" />
                   <p className="text-gray-500 text-sm">No towns found</p>
                 </div>
               )}
@@ -205,7 +205,7 @@ const LandingView = ({
               <div className="w-full h-1 bg-amber-400" />
               <div className="px-4 py-5 bg-amber-50 flex flex-col items-center gap-3 text-center">
                 <div className="w-9 h-9 rounded-md bg-amber-100 flex items-center justify-center">
-                  <AlertCircle className="h-5 w-5 text-amber-600" />
+                  <IoAlertCircleOutline className="h-5 w-5 text-amber-600" />
                 </div>
                 <div className="flex flex-col gap-1">
                   <p className="text-sm font-semibold text-amber-900">
@@ -233,7 +233,7 @@ const LandingView = ({
           {!nonNairobiTown && !isOpen && !searchQuery && (
             <div className="mt-5">
               <div className="flex items-center gap-2 mb-3">
-                <Zap className="h-3.5 w-3.5 text-green-600" />
+                <IoFlashOutline className="h-3.5 w-3.5 text-green-600" />
                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
                   Popular Towns
                 </span>
@@ -245,7 +245,7 @@ const LandingView = ({
                     onClick={() => handleTownSelect(town)}
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors"
                   >
-                    <MapPin className="h-3 w-3 text-green-600 flex-shrink-0" />
+                    <IoLocationOutline className="h-3 w-3 text-green-600 flex-shrink-0" />
                     {town.name}
                   </button>
                 ))}
@@ -257,17 +257,17 @@ const LandingView = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mt-5">
           {[
             {
-              icon: MapPin,
+              icon: IoLocationOutline,
               title: "Smart Routing",
               desc: "Find the fastest matatu stages based on your current location.",
             },
             {
-              icon: DollarSign,
+              icon: IoCashOutline,
               title: "Fare Estimates",
               desc: "Know the price before you board. Compare peak and off-peak rates.",
             },
             {
-              icon: Route,
+              icon: IoMapOutline,
               title: "Saved Routes",
               desc: "Access your daily commute routes even without an internet connection.",
             },

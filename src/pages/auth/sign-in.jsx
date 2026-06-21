@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Route, Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react";
+import { IoMapOutline, IoEyeOutline, IoEyeOffOutline, IoArrowForwardOutline, IoRefreshOutline } from "react-icons/io5";
 import { useNavigate, Link } from "react-router";
 
 const SignIn = () => {
@@ -40,7 +40,7 @@ const SignIn = () => {
           onClick={() => navigate("/")}
           className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
         >
-          <Route className="h-5 w-5 text-green-600" />
+          <IoMapOutline className="h-5 w-5 text-green-600" />
           <span className="font-bold text-sm">Matatu Finder</span>
         </button>
       </div>
@@ -111,9 +111,9 @@ const SignIn = () => {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
+                      <IoEyeOffOutline className="h-4 w-4" />
                     ) : (
-                      <Eye className="h-4 w-4" />
+                      <IoEyeOutline className="h-4 w-4" />
                     )}
                   </button>
                 </div>
@@ -128,10 +128,10 @@ const SignIn = () => {
                 className="w-full flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-2"
               >
                 {loading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <IoRefreshOutline className="h-4 w-4 animate-spin" />
                 ) : (
                   <>
-                    Sign in <ArrowRight className="h-4 w-4" />
+                    Sign in <IoArrowForwardOutline className="h-4 w-4" />
                   </>
                 )}
               </button>

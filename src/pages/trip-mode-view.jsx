@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import {
-  ArrowLeft,
-  MapPin,
-  Clock,
-  Wallet,
-  CheckCircle,
-  AlertTriangle,
-  Zap,
-  Bus,
-  CreditCard,
-  Navigation,
-  FlaskConical,
-} from "lucide-react";
+  IoArrowBackOutline,
+  IoLocationOutline,
+  IoTimeOutline,
+  IoWalletOutline,
+  IoCheckmarkCircleOutline,
+  IoWarningOutline,
+  IoFlashOutline,
+  IoBusOutline,
+  IoCardOutline,
+  IoNavigateOutline,
+  IoFlaskOutline,
+} from "react-icons/io5";
 import TripMap from "../components/trip-map";
 import LiveTripMap from "../components/live-trip-map";
 
@@ -141,7 +141,7 @@ const TripModeView = ({
                 background: "linear-gradient(135deg, #16a34a, #4ade80)",
               }}
             >
-              <CheckCircle className="h-10 w-10 text-white" />
+              <IoCheckmarkCircleOutline className="h-10 w-10 text-white" />
             </div>
             <h2 className="text-2xl font-extrabold text-gray-900 mb-1 tracking-tight">
               You've arrived!
@@ -184,14 +184,14 @@ const TripModeView = ({
               }}
               className="w-full bg-green-600 text-white py-4 rounded-2xl font-extrabold text-base hover:bg-green-700 active:scale-[0.98] transition-all shadow-lg shadow-green-200"
             >
-              Find Another Route
+              Find Another IoMapOutline
             </button>
 
             <button
               onClick={() => setCurrentView("landing")}
               className="w-full bg-gray-100 text-gray-600 py-3.5 rounded-2xl font-bold hover:bg-gray-200 transition-colors text-center"
             >
-              Go Home
+              Go IoHomeOutline
             </button>
           </div>
         </div>
@@ -217,7 +217,7 @@ const TripModeView = ({
             <div className="bg-white rounded-2xl px-4 py-3 shadow-xl flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 bg-green-600 rounded-lg flex items-center justify-center shrink-0">
-                  <Bus className="h-4 w-4 text-white" />
+                  <IoBusOutline className="h-4 w-4 text-white" />
                 </div>
                 <div>
                   <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-0.5">
@@ -262,7 +262,7 @@ const TripModeView = ({
 
           <div className="flex items-start gap-3 bg-gray-50 rounded-2xl p-4">
             <div className="w-10 h-10 bg-gray-900 rounded-xl flex items-center justify-center shrink-0">
-              <MapPin className="h-5 w-5 text-white" />
+              <IoLocationOutline className="h-5 w-5 text-white" />
             </div>
             <div>
               <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-0.5">
@@ -281,13 +281,13 @@ const TripModeView = ({
 
           <div className="grid grid-cols-3 gap-2">
             {[
-              { icon: Clock, label: "Journey", value: `${duration_mins} min` },
+              { icon: IoTimeOutline, label: "Journey", value: `${duration_mins} min` },
               {
-                icon: Navigation,
+                icon: IoNavigateOutline,
                 label: "Via",
                 value: via?.split(" ").slice(-1)[0] ?? "—",
               },
-              { icon: Wallet, label: "Fare", value: `KES ${fare}` },
+              { icon: IoWalletOutline, label: "Fare", value: `KES ${fare}` },
             ].map(({ icon: Icon, label, value }) => (
               <div
                 key={label}
@@ -306,7 +306,7 @@ const TripModeView = ({
 
           {surge_active && (
             <div className="px-3 py-2.5 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-700 font-medium flex items-center gap-2">
-              <Zap className="h-3.5 w-3.5 shrink-0" />
+              <IoFlashOutline className="h-3.5 w-3.5 shrink-0" />
               Surge pricing active{surge_reason ? ` — ${surge_reason}` : ""}
             </div>
           )}
@@ -315,7 +315,7 @@ const TripModeView = ({
               key={i}
               className="px-3 py-2.5 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 font-medium flex items-center gap-2"
             >
-              <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
+              <IoWarningOutline className="h-3.5 w-3.5 shrink-0" />
               {alert.message}
             </div>
           ))}
@@ -326,7 +326,7 @@ const TripModeView = ({
             onClick={() => setStep(STEPS.ARRIVED)}
             className="w-full bg-green-600 text-white py-4 rounded-2xl font-extrabold text-base hover:bg-green-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
           >
-            <CheckCircle className="h-5 w-5" />
+            <IoCheckmarkCircleOutline className="h-5 w-5" />
             I've Arrived
           </button>
 
@@ -351,7 +351,7 @@ const TripModeView = ({
               className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
               aria-label="Back to routes"
             >
-              <ArrowLeft className="h-5 w-5 text-gray-600" />
+              <IoArrowBackOutline className="h-5 w-5 text-gray-600" />
             </button>
             <div className="text-center">
               <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
@@ -373,7 +373,7 @@ const TripModeView = ({
                   : "bg-gray-100 text-gray-400 border-gray-200 hover:border-gray-300"
               }`}
             >
-              <FlaskConical className="h-3 w-3" />
+              <IoFlaskOutline className="h-3 w-3" />
               {demoMode ? "Demo ON" : "Demo"}
             </button>
           </div>
@@ -382,7 +382,7 @@ const TripModeView = ({
         <div className="px-4 py-5 space-y-3">
           {surge_active && (
             <div className="px-4 py-3 bg-amber-50 border border-amber-200 rounded-2xl text-sm text-amber-700 font-medium flex items-center gap-2">
-              <Zap className="h-4 w-4 shrink-0" />
+              <IoFlashOutline className="h-4 w-4 shrink-0" />
               Surge pricing active{surge_reason ? ` — ${surge_reason}` : ""}
             </div>
           )}
@@ -391,7 +391,7 @@ const TripModeView = ({
               key={i}
               className="px-4 py-3 bg-red-50 border border-red-200 rounded-2xl text-sm text-red-700 font-medium flex items-center gap-2"
             >
-              <AlertTriangle className="h-4 w-4 shrink-0" />
+              <IoWarningOutline className="h-4 w-4 shrink-0" />
               {alert.message}
             </div>
           ))}
@@ -442,9 +442,9 @@ const TripModeView = ({
 
           <div className="grid grid-cols-3 gap-2">
             {[
-              { icon: Clock, label: "Journey", value: `${duration_mins} min` },
-              { icon: Clock, label: "Wait", value: `~${wait_mins_est} min` },
-              { icon: Wallet, label: "Fare", value: `KES ${fare}` },
+              { icon: IoTimeOutline, label: "Journey", value: `${duration_mins} min` },
+              { icon: IoTimeOutline, label: "Wait", value: `~${wait_mins_est} min` },
+              { icon: IoWalletOutline, label: "Fare", value: `KES ${fare}` },
             ].map(({ icon: Icon, label, value }) => (
               <div
                 key={label}
@@ -461,7 +461,7 @@ const TripModeView = ({
 
           <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm flex items-center gap-3">
             <div className="w-11 h-11 bg-gray-900 rounded-xl flex items-center justify-center shrink-0">
-              <Bus className="h-5 w-5 text-white" />
+              <IoBusOutline className="h-5 w-5 text-white" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-extrabold text-gray-900">{sacco}</p>
@@ -480,7 +480,7 @@ const TripModeView = ({
           {/* Payment */}
           <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm flex items-center gap-3">
             <div className="w-11 h-11 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center shrink-0">
-              <CreditCard className="h-5 w-5 text-gray-500" />
+              <IoCardOutline className="h-5 w-5 text-gray-500" />
             </div>
             <div>
               <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-0.5">
@@ -529,7 +529,7 @@ const TripModeView = ({
             onClick={handleBoard}
             className="w-full bg-green-600 text-white py-4 rounded-2xl font-extrabold text-base hover:bg-green-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-green-200"
           >
-            <CheckCircle className="h-5 w-5" />
+            <IoCheckmarkCircleOutline className="h-5 w-5" />
             I've Boarded
           </button>
 

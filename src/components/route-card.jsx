@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { TAG_STYLES } from "../constants";
 import {
-  AlertTriangle,
-  ArrowRight,
-  BookmarkCheck,
-  BookmarkPlus,
-  Bus,
-  ChevronDown,
-  ChevronUp,
-  Clock,
-  Dot,
-  MapPin,
-  Star,
-  Users,
-} from "lucide-react";
+  IoWarningOutline,
+  IoArrowForwardOutline,
+  IoBookmark,
+  IoBookmarkOutline,
+  IoBusOutline,
+  IoChevronDownOutline,
+  IoChevronUpOutline,
+  IoTimeOutline,
+  IoEllipseSharp,
+  IoLocationOutline,
+  IoStarOutline,
+  IoPeopleOutline,
+} from "react-icons/io5";
 import { FareTypePill } from "./fare-type-pill";
 import { DetailRow } from "./detail-row";
 
@@ -62,9 +62,9 @@ export const RouteCard = ({
             }`}
           >
             {isSaved ? (
-              <BookmarkCheck className="h-3.5 w-3.5" />
+              <IoBookmark className="h-3.5 w-3.5" />
             ) : (
-              <BookmarkPlus className="h-3.5 w-3.5" />
+              <IoBookmarkOutline className="h-3.5 w-3.5" />
             )}
           </button>
         </div>
@@ -72,7 +72,7 @@ export const RouteCard = ({
         <div className="grid grid-cols-[auto_1fr] gap-x-2 items-center mb-0.5">
           <div className="flex items-center gap-2 min-w-0">
             <div className="w-6 h-6 bg-gray-900 text-white rounded-md flex items-center justify-center shrink-0">
-              <Bus className="h-3 w-3" />
+              <IoBusOutline className="h-3 w-3" />
             </div>
 
             <p className="text-sm font-extrabold text-gray-900 truncate leading-tight">
@@ -89,16 +89,16 @@ export const RouteCard = ({
           <div className="flex items-center gap-1 min-w-0">
             {vehicleLabel && (
               <span className="flex items-center gap-0.5 text-[10px] text-gray-400 leading-tight">
-                <Users className="h-2.5 w-2.5 shrink-0" />
+                <IoPeopleOutline className="h-2.5 w-2.5 shrink-0" />
                 {vehicleLabel}
               </span>
             )}
 
-            {vehicleLabel && locationHint && <Dot />}
+            {vehicleLabel && locationHint && <IoEllipseSharp />}
 
             {locationHint && (
               <span className="flex items-center gap-0.5 text-[10px] text-gray-400 truncate leading-tight">
-                <MapPin className="h-2.5 w-2.5 shrink-0" />
+                <IoLocationOutline className="h-2.5 w-2.5 shrink-0" />
                 <span className="truncate">{locationHint}</span>
               </span>
             )}
@@ -114,7 +114,7 @@ export const RouteCard = ({
 
         <div className="flex items-center flex-wrap gap-x-1 gap-y-0.5 text-xs text-gray-400">
           <div className="flex items-center gap-1">
-            <Clock className="h-3 w-3" />
+            <IoTimeOutline className="h-3 w-3" />
             <span className="font-semibold text-gray-700">
               {option.duration_mins} min
             </span>
@@ -122,16 +122,16 @@ export const RouteCard = ({
 
           {option.wait_mins_est != null && (
             <>
-              <Dot />
+              <IoEllipseSharp />
               <span>~{option.wait_mins_est} min wait</span>
             </>
           )}
 
           {option.safety_rating != null && (
             <>
-              <Dot />
+              <IoEllipseSharp />
               <span className="flex items-center gap-0.5">
-                <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
+                <IoStarOutline className="h-3 w-3 text-amber-400 fill-amber-400" />
                 <span className="font-bold text-gray-700">
                   {option.safety_rating.toFixed(1)}
                 </span>
@@ -141,7 +141,7 @@ export const RouteCard = ({
 
           {option.comfort_rating != null && (
             <>
-              <Dot />
+              <IoEllipseSharp />
               <span>comfort {option.comfort_rating.toFixed(1)}</span>
             </>
           )}
@@ -149,7 +149,7 @@ export const RouteCard = ({
 
         {option.surge_active && (
           <div className="mb-2.5 px-2.5 py-1.5 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-700 font-medium flex items-center gap-1.5">
-            <Zap className="h-3 w-3 shrink-0" />
+            <IoFlashOutline className="h-3 w-3 shrink-0" />
             Surge pricing active
             {option.surge_reason ? ` — ${option.surge_reason}` : ""}
           </div>
@@ -159,13 +159,13 @@ export const RouteCard = ({
             key={i}
             className="mb-2.5 px-2.5 py-1.5 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700 font-medium flex items-center gap-1.5"
           >
-            <AlertTriangle className="h-3 w-3 shrink-0" />
+            <IoWarningOutline className="h-3 w-3 shrink-0" />
             {alert.message}
           </div>
         ))}
         {showDataWarning && (
           <div className="mb-2.5 px-2.5 py-1.5 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-700 font-medium flex items-center gap-1.5">
-            <AlertTriangle className="h-3 w-3 shrink-0" />
+            <IoWarningOutline className="h-3 w-3 shrink-0" />
             Fare unverified — confirm with conductor
           </div>
         )}
@@ -176,9 +176,9 @@ export const RouteCard = ({
             className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-gray-600 transition-colors"
           >
             {expanded ? (
-              <ChevronUp className="h-3 w-3" />
+              <IoChevronUpOutline className="h-3 w-3" />
             ) : (
-              <ChevronDown className="h-3 w-3" />
+              <IoChevronDownOutline className="h-3 w-3" />
             )}
             <span>{expanded ? "Less" : "Details"}</span>
           </button>
@@ -187,7 +187,7 @@ export const RouteCard = ({
             className="flex items-center gap-1 px-3 py-1.5 border border-green-600 text-green-700 text-xs font-bold rounded-lg hover:bg-green-600 hover:text-white transition-colors group"
           >
             Start Trip
-            <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+            <IoArrowForwardOutline className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
 

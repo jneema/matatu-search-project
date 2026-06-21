@@ -1,4 +1,4 @@
-import { CheckCircle, PlusCircle, Home, SlidersHorizontal } from "lucide-react";
+import { IoCheckmarkCircleOutline, IoAddCircleOutline, IoHomeOutline, IoOptionsOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
 import { modeLabels, modeSuccess } from "../constants";
 
@@ -52,7 +52,7 @@ const ContributeSuccess = ({ mode, formData, onAddAnother, onChangeType }) => {
   return (
     <div className="border border-gray-200 rounded-lg p-12 flex flex-col items-center text-center gap-5">
       <div className="w-14 h-14 bg-green-600 rounded-md flex items-center justify-center">
-        <CheckCircle className="h-7 w-7 text-white" />
+        <IoCheckmarkCircleOutline className="h-7 w-7 text-white" />
       </div>
       <div className="flex flex-col gap-1.5">
         <p className="text-xl font-bold text-gray-900">{title}</p>
@@ -64,19 +64,19 @@ const ContributeSuccess = ({ mode, formData, onAddAnother, onChangeType }) => {
           onClick={onAddAnother}
           className="w-full flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-md text-sm font-semibold hover:bg-green-700 transition-colors"
         >
-          <PlusCircle className="h-4 w-4" /> Add Another {modeLabels[mode]}
+          <IoAddCircleOutline className="h-4 w-4" /> Add Another {modeLabels[mode]}
         </button>
         <button
           onClick={onChangeType}
           className="w-full flex items-center justify-center gap-2 py-2.5 border border-gray-200 rounded-md text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50 transition-colors"
         >
-          <SlidersHorizontal className="h-3.5 w-3.5" /> Change type
+          <IoOptionsOutline className="h-3.5 w-3.5" /> Change type
         </button>
         <button
           onClick={() => navigate("/")}
           className="w-full flex items-center justify-center gap-2 py-2.5 border border-gray-200 rounded-md text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50 transition-colors"
         >
-          <Home className="h-3.5 w-3.5" /> Go Home
+          <IoHomeOutline className="h-3.5 w-3.5" /> Go IoHomeOutline
         </button>
       </div>
     </div>

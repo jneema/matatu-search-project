@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import {
-  Search,
-  MapPin,
-  AlertCircle,
-  ArrowRight,
-  X,
-  ChevronRight,
-  Zap,
-} from "lucide-react";
+  IoSearchOutline,
+  IoLocationOutline,
+  IoAlertCircleOutline,
+  IoArrowForwardOutline,
+  IoCloseOutline,
+  IoChevronForwardOutline,
+  IoFlashOutline,
+} from "react-icons/io5";
 import { getOriginStages } from "../services/destinations";
 
 const DIRECTION_COPY = {
@@ -136,16 +136,16 @@ const StartingPointView = ({
             onClick={() => setCurrentView("landing")}
             className="hover:text-green-600 cursor-pointer transition-colors"
           >
-            Home
+            IoHomeOutline
           </button>
-          <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <IoChevronForwardOutline className="h-3 w-3 flex-shrink-0" />
           <button
             onClick={() => setCurrentView("direction")}
             className="hover:text-green-600 cursor-pointer transition-colors"
           >
             {copy.breadcrumb}
           </button>
-          <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <IoChevronForwardOutline className="h-3 w-3 flex-shrink-0" />
           <span className="text-green-600">Start Point</span>
         </nav>
 
@@ -174,7 +174,7 @@ const StartingPointView = ({
         <div className="relative max-w-2xl mx-auto mb-5" ref={dropdownRef}>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-gray-400" />
+              <IoSearchOutline className="h-5 w-5 text-gray-400" />
             </div>
             <input
               type="text"
@@ -198,7 +198,7 @@ const StartingPointView = ({
                 onClick={clearSearch}
                 className="absolute inset-y-0 right-0 pr-4 flex items-center"
               >
-                <X className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                <IoCloseOutline className="h-5 w-5 text-gray-400 hover:text-gray-600" />
               </button>
             )}
           </div>
@@ -224,7 +224,7 @@ const StartingPointView = ({
                           <div
                             className={`flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center ${activeIndex === index ? "bg-green-100" : "bg-gray-100"}`}
                           >
-                            <MapPin
+                            <IoLocationOutline
                               className={`h-4 w-4 ${activeIndex === index ? "text-green-700" : "text-gray-500"}`}
                             />
                           </div>
@@ -241,7 +241,7 @@ const StartingPointView = ({
                             )}
                           </div>
                         </div>
-                        <ArrowRight
+                        <IoArrowForwardOutline
                           className={`h-4 w-4 transition-transform ${activeIndex === index ? "text-green-600 translate-x-0.5" : "text-gray-300"}`}
                         />
                       </button>
@@ -250,7 +250,7 @@ const StartingPointView = ({
                 </div>
               ) : (
                 <div className="p-8 text-center">
-                  <AlertCircle className="h-8 w-8 text-gray-300 mx-auto mb-2" />
+                  <IoAlertCircleOutline className="h-8 w-8 text-gray-300 mx-auto mb-2" />
                   <p className="text-gray-500 text-sm">No stages found</p>
                 </div>
               )}
@@ -260,7 +260,7 @@ const StartingPointView = ({
           {!searchQuery && popularHubs.length > 0 && (
             <div className="mt-5">
               <div className="flex items-center gap-2 mb-3">
-                <Zap className="h-3.5 w-3.5 text-green-600" />
+                <IoFlashOutline className="h-3.5 w-3.5 text-green-600" />
                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
                   {copy.hubsLabel}
                 </span>
@@ -272,7 +272,7 @@ const StartingPointView = ({
                     onClick={() => handlePointSelect(h)}
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors"
                   >
-                    <MapPin className="h-3 w-3 text-green-600 flex-shrink-0" />
+                    <IoLocationOutline className="h-3 w-3 text-green-600 flex-shrink-0" />
                     {h.name}
                     {h.landmark && (
                       <span className="text-gray-400 font-normal text-xs ml-0.5">

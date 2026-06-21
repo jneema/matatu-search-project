@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-  Route,
-  PlusCircle,
-  Bookmark,
-  UserRound,
-  LogIn,
-  UserPlus,
-  LogOut,
-  ChevronDown,
-} from "lucide-react";
+  IoBusOutline,
+  IoAddCircleOutline,
+  IoBookmarkOutline,
+  IoPersonOutline,
+  IoLogInOutline,
+  IoPersonAddOutline,
+  IoLogOutOutline,
+  IoChevronDownOutline,
+} from "react-icons/io5";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import useAuth from "../hooks/useAuth";
@@ -52,7 +52,7 @@ const Header = ({ currentView, setCurrentView }) => {
       <div className="max-w-6xl mx-auto px-4 py-3 md:py-4">
         <div className="flex items-center justify-between mb-3 md:mb-4">
           <div className="flex items-center space-x-2">
-            <Route className="h-6 w-6 md:h-8 md:w-8 text-green-600 shrink-0" />
+            <IoBusOutline className="h-6 w-6 md:h-8 md:w-8 text-green-600 shrink-0" />
             <h1 className="hidden xs:block text-base md:text-xl font-bold text-gray-800 sm:block">
               Matatu Finder
             </h1>
@@ -64,7 +64,7 @@ const Header = ({ currentView, setCurrentView }) => {
               className="p-1.5 md:p-2 rounded-lg hover:bg-gray-100 transition-colors relative cursor-pointer"
               title="Saved Routes"
             >
-              <Bookmark className="h-5 w-5 text-gray-600" />
+              <IoBookmarkOutline className="h-5 w-5 text-gray-600" />
               {savedRoutes.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center leading-none">
                   {savedRoutes.length}
@@ -76,7 +76,7 @@ const Header = ({ currentView, setCurrentView }) => {
               className="p-1.5 md:p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
               title="Contribute"
             >
-              <PlusCircle className="h-5 w-5 text-gray-600" />
+              <IoAddCircleOutline className="h-5 w-5 text-gray-600" />
             </button>
             <div className="relative" ref={dropdownRef}>
               <button
@@ -94,14 +94,14 @@ const Header = ({ currentView, setCurrentView }) => {
                     <span className="hidden sm:block text-sm font-medium text-gray-700 max-w-[80px] truncate">
                       {user.name.split(" ")[0]}
                     </span>
-                    <ChevronDown
+                    <IoChevronDownOutline
                       className={`h-3.5 w-3.5 text-gray-500 transition-transform duration-200 ${
                         dropdownOpen ? "rotate-180" : ""
                       }`}
                     />
                   </div>
                 ) : (
-                  <UserRound className="h-5 w-5 text-gray-600" />
+                  <IoPersonOutline className="h-5 w-5 text-gray-600" />
                 )}
               </button>
 
@@ -121,7 +121,7 @@ const Header = ({ currentView, setCurrentView }) => {
                         onClick={handleSignOut}
                         className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
                       >
-                        <LogOut className="h-4 w-4 shrink-0" />
+                        <IoLogOutOutline className="h-4 w-4 shrink-0" />
                         Sign out
                       </button>
                     </>
@@ -134,7 +134,7 @@ const Header = ({ currentView, setCurrentView }) => {
                         }}
                         className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
                       >
-                        <LogIn className="h-4 w-4 shrink-0" />
+                        <IoLogInOutline className="h-4 w-4 shrink-0" />
                         Sign in
                       </button>
                       <button
@@ -144,7 +144,7 @@ const Header = ({ currentView, setCurrentView }) => {
                         }}
                         className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
                       >
-                        <UserPlus className="h-4 w-4 shrink-0" />
+                        <IoPersonAddOutline className="h-4 w-4 shrink-0" />
                         Create account
                       </button>
                     </>

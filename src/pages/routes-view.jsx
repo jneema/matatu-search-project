@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {
-  Clock,
-  ArrowRight,
-  ChevronRight,
-  BookmarkPlus,
-  BookmarkCheck,
-  SearchX,
-  Bus,
-  AlertTriangle,
-  Home,
-  Star,
-  Zap,
-  ChevronDown,
-  ChevronUp,
-  Users,
-  MapPin,
-} from "lucide-react";
+  IoTimeOutline,
+  IoArrowForwardOutline,
+  IoChevronForwardOutline,
+  IoBookmarkOutline,
+  IoBookmark,
+  IoSearchOutline,
+  IoBusOutline,
+  IoWarningOutline,
+  IoHomeOutline,
+  IoStarOutline,
+  IoFlashOutline,
+  IoChevronDownOutline,
+  IoChevronUpOutline,
+  IoPeopleOutline,
+  IoLocationOutline,
+} from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { removeRoute, saveRoute } from "../store/saved-routes";
 import { getRoutes } from "../services/routes";
@@ -99,7 +99,7 @@ const RoutesView = ({
     const list =
       activeTab === "ALL" ? allOptions : (scenarios[activeTab] ?? []);
 
-    const map = new Map();
+    const map = new IoMapOutline();
 
     list.forEach((opt) => {
       map.set(opt.route_id, opt);
@@ -121,30 +121,30 @@ const RoutesView = ({
             onClick={() => setCurrentView("landing")}
             className="hover:text-green-600 transition-colors flex items-center gap-1"
           >
-            <Home className="h-3 w-3" /> Home
+            <IoHomeOutline className="h-3 w-3" /> IoHomeOutline
           </button>
-          <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <IoChevronForwardOutline className="h-3 w-3 flex-shrink-0" />
           <button
             onClick={() => setCurrentView("direction")}
             className="hover:text-green-600 transition-colors"
           >
             {selectedDirection === "outbound" ? "Out of CBD" : "Into CBD"}
           </button>
-          <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <IoChevronForwardOutline className="h-3 w-3 flex-shrink-0" />
           <button
             onClick={() => setCurrentView("starting-point")}
             className="hover:text-green-600 transition-colors"
           >
             {selectedStartingPoint?.name ?? "Start"}
           </button>
-          <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <IoChevronForwardOutline className="h-3 w-3 flex-shrink-0" />
           <button
             onClick={() => setCurrentView("destination")}
             className="hover:text-green-600 transition-colors"
           >
             {selectedDestination?.name ?? "Destination"}
           </button>
-          <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <IoChevronForwardOutline className="h-3 w-3 flex-shrink-0" />
           <span className="text-green-600">Routes</span>
         </nav>
 
@@ -209,7 +209,7 @@ const RoutesView = ({
             </div>
           ) : error ? (
             <div className="text-center py-14 bg-white border border-dashed border-red-200 rounded-xl px-6">
-              <AlertTriangle className="h-8 w-8 text-red-200 mx-auto mb-3" />
+              <IoWarningOutline className="h-8 w-8 text-red-200 mx-auto mb-3" />
               <p className="text-red-500 font-bold text-sm mb-1">
                 Couldn't load routes
               </p>
@@ -246,7 +246,7 @@ const RoutesView = ({
             })
           ) : (
             <div className="text-center py-14 bg-white border border-dashed border-gray-200 rounded-xl px-6">
-              <SearchX className="h-8 w-8 text-gray-200 mx-auto mb-3" />
+              <IoSearchOutline className="h-8 w-8 text-gray-200 mx-auto mb-3" />
               <p className="text-gray-700 font-bold text-sm mb-1">
                 No routes found
               </p>
@@ -267,7 +267,7 @@ const RoutesView = ({
                   onClick={() => setCurrentView("landing")}
                   className="px-4 py-2 bg-gray-100 text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2 mx-auto"
                 >
-                  <Home className="h-3.5 w-3.5" /> Go Home
+                  <IoHomeOutline className="h-3.5 w-3.5" /> Go IoHomeOutline
                 </button>
               )}
             </div>

@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import {
-  CheckCircle,
-  XCircle,
-  RefreshCw,
-  MapPin,
-  Bus,
-  Route,
-  X,
-  Shield,
-} from "lucide-react";
+  IoCheckmarkCircleOutline,
+  IoCloseCircleOutline,
+  IoRefreshOutline,
+  IoLocationOutline,
+  IoBusOutline,
+  IoMapOutline,
+  IoCloseOutline,
+  IoShieldOutline,
+} from "react-icons/io5";
 import { get, post } from "../../api/crud";
 import Table from "../../components/table";
 import ApproveBtn from "../../components/approve-button";
@@ -21,9 +21,9 @@ import { useNavigate } from "react-router";
 const TABS = ["pending", "all"];
 
 const SECTIONS = [
-  { key: "stages", label: "Stages", icon: MapPin, Component: StagesTable },
-  { key: "saccos", label: "Saccos", icon: Bus, Component: SaccosTable },
-  { key: "routes", label: "Routes", icon: Route, Component: RoutesTable },
+  { key: "stages", label: "Stages", icon: IoLocationOutline, Component: StagesTable },
+  { key: "saccos", label: "Saccos", icon: IoBusOutline, Component: SaccosTable },
+  { key: "routes", label: "Routes", icon: IoMapOutline, Component: RoutesTable },
 ];
 
 const Admin = () => {
@@ -37,7 +37,7 @@ const Admin = () => {
     <div className="min-h-screen bg-gray-50 font-sans">
       <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Shield className="h-6 w-6 text-green-600" />
+          <IoShieldOutline className="h-6 w-6 text-green-600" />
 
           <div>
             <h1 className="text-lg font-extrabold text-gray-900 leading-none">
@@ -52,7 +52,7 @@ const Admin = () => {
           className="p-2 rounded-md hover:bg-gray-100 transition-colors"
           title="Back to home"
         >
-          <X className="h-5 w-5 text-gray-500" />
+          <IoCloseOutline className="h-5 w-5 text-gray-500" />
         </button>
       </div>
 

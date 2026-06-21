@@ -1,12 +1,12 @@
 import { useState } from "react";
 import {
-  Route,
-  Eye,
-  EyeOff,
-  ArrowRight,
-  Loader2,
-  CheckCircle2,
-} from "lucide-react";
+  IoMapOutline,
+  IoEyeOutline,
+  IoEyeOffOutline,
+  IoArrowForwardOutline,
+  IoRefreshOutline,
+  IoCheckmarkCircleOutline,
+} from "react-icons/io5";
 import { useNavigate, Link } from "react-router";
 
 const requirements = [
@@ -81,7 +81,7 @@ const SignUp = () => {
           onClick={() => navigate("/")}
           className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
         >
-          <Route className="h-5 w-5 text-green-600" />
+          <IoMapOutline className="h-5 w-5 text-green-600" />
           <span className="font-bold text-sm">Matatu Finder</span>
         </button>
       </div>
@@ -160,9 +160,9 @@ const SignUp = () => {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
+                      <IoEyeOffOutline className="h-4 w-4" />
                     ) : (
-                      <Eye className="h-4 w-4" />
+                      <IoEyeOutline className="h-4 w-4" />
                     )}
                   </button>
                 </div>
@@ -173,7 +173,7 @@ const SignUp = () => {
                   <div className="mt-2 space-y-1">
                     {requirements.map(({ label, test }) => (
                       <div key={label} className="flex items-center gap-1.5">
-                        <CheckCircle2
+                        <IoCheckmarkCircleOutline
                           className={`h-3.5 w-3.5 flex-shrink-0 ${
                             test(form.password)
                               ? "text-green-600"
@@ -216,9 +216,9 @@ const SignUp = () => {
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
                     {showConfirm ? (
-                      <EyeOff className="h-4 w-4" />
+                      <IoEyeOffOutline className="h-4 w-4" />
                     ) : (
-                      <Eye className="h-4 w-4" />
+                      <IoEyeOutline className="h-4 w-4" />
                     )}
                   </button>
                 </div>
@@ -233,10 +233,10 @@ const SignUp = () => {
                 className="w-full flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-2"
               >
                 {loading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <IoRefreshOutline className="h-4 w-4 animate-spin" />
                 ) : (
                   <>
-                    Create account <ArrowRight className="h-4 w-4" />
+                    Create account <IoArrowForwardOutline className="h-4 w-4" />
                   </>
                 )}
               </button>

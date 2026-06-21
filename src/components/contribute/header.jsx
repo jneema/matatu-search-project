@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, CheckCircle, ArrowLeft, X } from "lucide-react";
+import { IoMapOutline, IoCheckmarkCircleOutline, IoArrowBackOutline, IoCloseOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
 
 function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
@@ -20,7 +20,7 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
             onClick={() => navigate("/")}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            <Route className="h-6 w-6 md:h-8 md:w-8 text-green-600" />
+            <IoMapOutline className="h-6 w-6 md:h-8 md:w-8 text-green-600" />
             <div>
               <h1 className="text-lg md:text-xl font-bold text-gray-800 leading-none">
                 Contribute
@@ -37,7 +37,7 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
               className="p-2 hover:bg-gray-100 rounded-md transition-colors"
               title={mode && !submitted ? "Back to mode select" : "Back to app"}
             >
-              <X className="h-5 w-5 text-gray-500" />
+              <IoCloseOutline className="h-5 w-5 text-gray-500" />
             </button>
           </div>
         </div>
@@ -57,7 +57,7 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
                             : "bg-gray-200 text-gray-500"
                       }`}
                     >
-                      {step > s.id ? <CheckCircle className="h-4 w-4" /> : s.id}
+                      {step > s.id ? <IoCheckmarkCircleOutline className="h-4 w-4" /> : s.id}
                     </div>
                     <span
                       className={`font-medium text-sm transition-colors ${
@@ -92,7 +92,7 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
                           : "bg-gray-100 text-gray-400"
                     }`}
                   >
-                    {step > s.id ? <CheckCircle className="h-4 w-4" /> : s.id}
+                    {step > s.id ? <IoCheckmarkCircleOutline className="h-4 w-4" /> : s.id}
                   </div>
                   {i < STEPS.length - 1 && (
                     <div
