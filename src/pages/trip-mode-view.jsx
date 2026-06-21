@@ -8,9 +8,9 @@ import {
   IoWarningOutline,
   IoFlashOutline,
   IoBusOutline,
-  IoCardOutline,
   IoNavigateOutline,
   IoFlaskOutline,
+  IoChevronDownOutline,
 } from "react-icons/io5";
 import TripMap from "../components/trip-map";
 import LiveTripMap from "../components/live-trip-map";
@@ -31,6 +31,7 @@ const TripModeView = ({
   const [secondsLeft, setSecondsLeft] = useState(null);
   const [boardedAt, setBoardedAt] = useState(null);
   const [demoMode, setDemoMode] = useState(false);
+  const [routeInfoOpen, setRouteInfoOpen] = useState(false);
 
   const {
     sacco,
@@ -46,7 +47,6 @@ const TripModeView = ({
     active_alerts = [],
     tags = [],
   } = selectedRoute || {};
-  console.log(selectedRoute);
 
   const sanitizeCoord = (val) => {
     if (val === undefined || val === null) return null;
@@ -184,14 +184,14 @@ const TripModeView = ({
               }}
               className="w-full bg-green-600 text-white py-4 rounded-2xl font-extrabold text-base hover:bg-green-700 active:scale-[0.98] transition-all shadow-lg shadow-green-200"
             >
-              Find Another IoMapOutline
+              Find Another Route
             </button>
 
             <button
               onClick={() => setCurrentView("landing")}
               className="w-full bg-gray-100 text-gray-600 py-3.5 rounded-2xl font-bold hover:bg-gray-200 transition-colors text-center"
             >
-              Go IoHomeOutline
+              Go Home
             </button>
           </div>
         </div>
@@ -440,63 +440,43 @@ const TripModeView = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
-            {[
-              { icon: IoTimeOutline, label: "Journey", value: `${duration_mins} min` },
-              { icon: IoTimeOutline, label: "Wait", value: `~${wait_mins_est} min` },
-              { icon: IoWalletOutline, label: "Fare", value: `KES ${fare}` },
-            ].map(({ icon: Icon, label, value }) => (
-              <div
-                key={label}
-                className="bg-white border border-gray-100 rounded-2xl p-3 text-center shadow-sm"
-              >
-                <Icon className="h-4 w-4 mx-auto mb-1.5 text-gray-400" />
-                <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-0.5">
-                  {label}
-                </p>
-                <p className="text-xs font-black text-gray-900">{value}</p>
+          <div className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
+            <button
+              onClick={() => setRouteInfoOpen((o) => !o)}
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+            >
+              <div className="w-7 h-7 bg-gray-900 rounded-lg flex items-center justify-center shrink-0">
+                <IoBusOutline className="h-3.5 w-3.5 text-white" />
               </div>
-            ))}
-          </div>
+              <div className="flex flex-1 items-center gap-4 min-w-0">
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Journey</span>
+                <span className="text-xs font-black text-gray-900">{duration_mins} min</span>
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Wait</span>
+                <span className="text-xs font-black text-gray-900">~{wait_mins_est} min</span>
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Fare</span>
+                <span className="text-xs font-black text-gray-900">KES {fare}</span>
+              </div>
+              <IoChevronDownOutline
+                className={`h-4 w-4 text-gray-400 shrink-0 transition-transform duration-200 ${routeInfoOpen ? "rotate-180" : ""}`}
+              />
+            </button>
 
-          <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm flex items-center gap-3">
-            <div className="w-11 h-11 bg-gray-900 rounded-xl flex items-center justify-center shrink-0">
-              <IoBusOutline className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="font-extrabold text-gray-900">{sacco}</p>
-              <p className="text-xs text-gray-400 mt-0.5">
-                {via}
-                {vehicle_type ? ` · ${vehicle_type.replace(/_/g, " ")}` : ""}
-              </p>
-            </div>
-            {tags.includes("express") && (
-              <span className="text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-lg shrink-0">
-                Express
-              </span>
-            )}
-          </div>
-
-          {/* Payment */}
-          <div className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm flex items-center gap-3">
-            <div className="w-11 h-11 bg-gray-50 border border-gray-200 rounded-xl flex items-center justify-center shrink-0">
-              <IoCardOutline className="h-5 w-5 text-gray-500" />
-            </div>
-            <div>
-              <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-0.5">
-                Payment accepted
-              </p>
-              <p className="text-sm font-bold text-gray-900">
-                {payment_methods.length > 0
-                  ? payment_methods.join(" · ")
-                  : "Cash"}
-              </p>
-              {fare_type_now && (
-                <p className="text-xs text-gray-400 mt-0.5">
-                  {fare_type_now} rate
+            {routeInfoOpen && (
+              <div className="px-4 pb-3 border-t border-gray-100">
+                <p className="text-xs text-gray-500 mt-2.5">
+                  {via}{vehicle_type ? ` · ${vehicle_type.replace(/_/g, " ")}` : ""}
                 </p>
-              )}
-            </div>
+                <p className="text-xs text-gray-400 mt-1">
+                  {payment_methods.length > 0 ? payment_methods.join(" · ") : "Cash"}
+                  {fare_type_now ? ` · ${fare_type_now} rate` : ""}
+                </p>
+                {tags.includes("express") && (
+                  <span className="inline-block mt-2 text-[9px] font-black uppercase tracking-widest px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 rounded-lg">
+                    Express
+                  </span>
+                )}
+              </div>
+            )}
           </div>
 
           {origin?.latitude && origin?.longitude && (
