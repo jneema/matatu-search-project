@@ -119,28 +119,28 @@ const RoutesView = ({
         <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-5 overflow-x-auto whitespace-nowrap no-scrollbar">
           <button
             onClick={() => setCurrentView("landing")}
-            className="hover:text-green-600 transition-colors flex items-center gap-1"
+            className="hover:text-green-600 transition-colors flex items-center gap-1 cursor-pointer"
           >
             <IoHomeOutline className="h-3 w-3" /> Home
           </button>
           <IoChevronForwardOutline className="h-3 w-3 flex-shrink-0" />
           <button
             onClick={() => setCurrentView("direction")}
-            className="hover:text-green-600 transition-colors"
+            className="hover:text-green-600 transition-colors cursor-pointer"
           >
             {selectedDirection === "outbound" ? "Out of CBD" : "Into CBD"}
           </button>
           <IoChevronForwardOutline className="h-3 w-3 flex-shrink-0" />
           <button
             onClick={() => setCurrentView("starting-point")}
-            className="hover:text-green-600 transition-colors"
+            className="hover:text-green-600 transition-colors cursor-pointer"
           >
             {selectedStartingPoint?.name ?? "Start"}
           </button>
           <IoChevronForwardOutline className="h-3 w-3 flex-shrink-0" />
           <button
             onClick={() => setCurrentView("destination")}
-            className="hover:text-green-600 transition-colors"
+            className="hover:text-green-600 transition-colors cursor-pointer"
           >
             {selectedDestination?.name ?? "Destination"}
           </button>
@@ -180,9 +180,9 @@ const RoutesView = ({
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`shrink-0 px-3 py-1 rounded-md text-xs font-bold border transition-colors ${
+                  className={`shrink-0 px-3 py-1 rounded-md text-xs font-bold border transition-colors cursor-pointer ${
                     activeTab === tab.key
-                      ? "bg-gray-900 text-white border-gray-900"
+                      ? "bg-gray-900 text-white border-gray-900 hover:bg-black"
                       : "bg-white text-gray-500 border-gray-200 hover:border-gray-400"
                   }`}
                 >
@@ -218,7 +218,7 @@ const RoutesView = ({
               </p>
               <button
                 onClick={fetchRoutes}
-                className="px-4 py-2 bg-gray-900 text-white text-xs font-bold rounded-lg hover:bg-gray-700 transition-colors"
+                className="px-4 py-2 bg-gray-900 text-white text-xs font-bold rounded-lg hover:bg-gray-700 transition-colors cursor-pointer"
               >
                 Try again
               </button>
@@ -258,14 +258,14 @@ const RoutesView = ({
               {activeTab !== "ALL" ? (
                 <button
                   onClick={() => setActiveTab("ALL")}
-                  className="px-4 py-2 bg-green-600 text-white text-xs font-bold rounded-lg hover:bg-green-700 transition-colors"
+                  className="px-4 py-2 bg-green-600 text-white text-xs font-bold rounded-lg hover:bg-green-700 transition-colors cursor-pointer"
                 >
                   Show all routes
                 </button>
               ) : (
                 <button
                   onClick={() => setCurrentView("landing")}
-                  className="px-4 py-2 bg-gray-100 text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2 mx-auto"
+                  className="px-4 py-2 bg-gray-100 text-gray-700 text-xs font-bold rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2 mx-auto cursor-pointer"
                 >
                   <IoHomeOutline className="h-3.5 w-3.5" /> Go Home
                 </button>

@@ -35,7 +35,7 @@ const ModeSelector = ({ onSelect }) => (
         <button
           key={id}
           onClick={() => onSelect(id)}
-          className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg text-left hover:border-green-600 hover:bg-green-50 transition-colors"
+          className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg text-left hover:border-green-600 hover:bg-green-50 transition-colors cursor-pointer"
         >
           <div className="w-9 h-9 rounded-md bg-green-600 flex items-center justify-center flex-shrink-0">
             <Icon className="h-4 w-4 text-white" />

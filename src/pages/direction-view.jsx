@@ -20,7 +20,7 @@ const DirectionView = ({
         <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-6">
           <button
             onClick={() => setCurrentView("landing")}
-            className="hover:text-green-600 transition-colors"
+            className="hover:text-green-600 transition-colors cursor-pointer"
           >
             Home
           </button>
@@ -42,7 +42,7 @@ const DirectionView = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
           <button
             onClick={() => handleSelect("inbound")}
-            className="group p-6 md:p-8 bg-white border-2 border-gray-200 rounded-xl hover:border-green-600 hover:shadow-sm transition-all text-left"
+            className="group p-6 md:p-8 bg-white border-2 border-gray-200 rounded-xl hover:border-green-600 hover:shadow-sm transition-all text-left cursor-pointer hover:bg-gray-100"
           >
             <div className="flex items-center gap-3 mb-5">
               <div className="w-12 h-12 bg-green-600 group-hover:bg-green-700 rounded-lg flex items-center justify-center transition-colors shrink-0">
@@ -60,7 +60,7 @@ const DirectionView = ({
 
           <button
             onClick={() => handleSelect("outbound")}
-            className="group p-6 md:p-8 bg-white border-2 border-gray-200 rounded-xl hover:border-black hover:shadow-sm transition-all text-left"
+            className="group p-6 md:p-8 bg-white border-2 border-gray-200 rounded-xl hover:border-black hover:shadow-sm transition-all text-left cursor-pointer hover:bg-gray-100"
           >
             <div className="flex items-center justify-between mb-5">
               <h3 className="text-lg font-extrabold text-gray-900">

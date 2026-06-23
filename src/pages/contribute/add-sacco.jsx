@@ -115,14 +115,14 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
             onClick={() => onAddStages?.(createdSacco)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black"
+            className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black cursor-pointer"
           >
             <IoAddCircleOutline className="h-4 w-4" /> Add stages for{" "}
             {createdSacco.name}
           </button>
           <button
             onClick={onSuccess}
-            className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md text-sm font-semibold text-gray-600 hover:bg-gray-50"
+            className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md text-sm font-semibold text-gray-600 hover:bg-gray-50 cursor-pointer"
           >
             <IoArrowBackOutline className="h-4 w-4" /> No, I'm done
           </button>
@@ -250,7 +250,7 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
         <button
           onClick={handleSubmit}
           disabled={submitting}
-          className="flex items-center justify-center gap-1.5 w-full sm:w-auto px-10 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-1.5 w-full sm:w-auto px-10 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
           {submitting ? "Submitting…" : "Submit"}{" "}
           <IoCheckmarkCircleOutline className="h-4 w-4" />

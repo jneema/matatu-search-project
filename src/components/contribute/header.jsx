@@ -23,7 +23,7 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
           <div className="flex flex-col">
             <button
               onClick={() => navigate("/")}
-              className="flex items-start gap-2 hover:opacity-80 transition-opacity"
+              className="flex items-start gap-2 hover:opacity-80 transition-opacity cursor-pointer"
             >
               <IoBusOutline className="h-6 w-6 md:h-8 md:w-8 text-green-600 shrink-0" />
               <h1 className="text-lg md:text-xl font-bold text-gray-800 leading-none">
@@ -38,7 +38,7 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
           <div className="flex items-center gap-1">
             <button
               onClick={mode && !submitted ? onBack : () => navigate("/")}
-              className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
               title={mode && !submitted ? "Back to mode select" : "Back to app"}
             >
               <IoCloseOutline className="h-5 w-5 text-gray-500" />

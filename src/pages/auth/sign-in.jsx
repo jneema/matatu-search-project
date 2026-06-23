@@ -44,7 +44,7 @@ const SignIn = () => {
       <div className="px-6 py-4 flex items-center justify-between">
         <button
           onClick={() => navigate("/")}
-          className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
+          className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors cursor-pointer hover:bg-gray-100"
         >
           <IoMapOutline className="h-5 w-5 text-green-600" />
           <span className="font-bold text-sm">Matatu Finder</span>
@@ -113,7 +113,7 @@ const SignIn = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword((p) => !p)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer hover:bg-gray-100"
                   >
                     {showPassword ? (
                       <IoEyeOffOutline className="h-4 w-4" />
@@ -130,7 +130,7 @@ const SignIn = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-2"
+                className="w-full flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer mt-2"
               >
                 {loading ? (
                   <IoRefreshOutline className="h-4 w-4 animate-spin" />

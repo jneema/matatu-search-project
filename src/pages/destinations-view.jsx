@@ -212,7 +212,7 @@ const DestinationsView = ({
                   setActiveIndex(-1);
                   setDestinations(allDestinationsRef.current);
                 }}
-                className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                className="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer hover:bg-gray-100"
               >
                 <IoCloseOutline className="h-5 w-5 text-gray-400 hover:text-gray-600" />
               </button>
@@ -237,7 +237,7 @@ const DestinationsView = ({
                         key={dest.id}
                         onClick={() => handleDestinationSelect(dest)}
                         onMouseEnter={() => setActiveIndex(index)}
-                        className={`w-full flex items-center justify-between px-4 py-3.5 transition-colors ${
+                        className={`w-full flex items-center justify-between px-4 py-3.5 transition-colors cursor-pointer ${
                           activeIndex === index
                             ? "bg-green-50"
                             : "hover:bg-gray-50"
@@ -310,7 +310,7 @@ const DestinationsView = ({
                   <button
                     key={dest.id}
                     onClick={() => handleDestinationSelect(dest)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-xs font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-xs font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors cursor-pointer"
                   >
                     <IoLocationOutline className="h-3 w-3 text-green-600 flex-shrink-0" />
                     {dest.name}

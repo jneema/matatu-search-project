@@ -225,7 +225,7 @@ const TripModeView = ({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentView("landing")}
-              className="px-4 py-3 text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors rounded-2xl border border-gray-200 hover:border-gray-300 whitespace-nowrap"
+              className="px-4 py-3 text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors rounded-2xl border border-gray-200 hover:border-gray-300 whitespace-nowrap cursor-pointer hover:bg-gray-100"
             >
               Go Home
             </button>
@@ -234,7 +234,7 @@ const TripModeView = ({
                 if (setSelectedRoute) setSelectedRoute(null);
                 setCurrentView("routes");
               }}
-              className="flex-1 bg-gray-900 text-white py-3 rounded-2xl font-extrabold text-sm active:scale-[0.98] transition-all"
+              className="flex-1 bg-gray-900 text-white py-3 rounded-2xl font-extrabold text-sm active:scale-[0.98] transition-all hover:bg-black cursor-pointer"
             >
               Find Another Route
             </button>
@@ -355,13 +355,13 @@ const TripModeView = ({
           <div className="flex items-center gap-2">
             <button
               onClick={() => setStep(STEPS.WAITING)}
-              className="px-4 py-3 text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors rounded-2xl border border-gray-200 hover:border-gray-300 whitespace-nowrap"
+              className="px-4 py-3 text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors rounded-2xl border border-gray-200 hover:border-gray-300 whitespace-nowrap cursor-pointer hover:bg-gray-100"
             >
               ← Back
             </button>
             <button
               onClick={() => setStep(STEPS.ARRIVED)}
-              className="flex-1 bg-green-600 text-white py-3 rounded-2xl font-extrabold text-sm hover:bg-green-700 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5"
+              className="flex-1 bg-green-600 text-white py-3 rounded-2xl font-extrabold text-sm hover:bg-green-700 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <IoCheckmarkCircleOutline className="h-4 w-4" />
               I've Arrived
@@ -379,7 +379,7 @@ const TripModeView = ({
           <div className="flex items-center justify-between">
             <button
               onClick={() => setCurrentView("routes")}
-              className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-xl transition-colors cursor-pointer"
               aria-label="Back to routes"
             >
               <IoArrowBackOutline className="h-5 w-5 text-gray-600" />
@@ -464,7 +464,7 @@ const TripModeView = ({
           <div className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
             <button
               onClick={() => setRouteInfoOpen((o) => !o)}
-              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer"
             >
               <div className="w-7 h-7 bg-gray-900 rounded-lg flex items-center justify-center shrink-0">
                 <IoBusOutline className="h-3.5 w-3.5 text-white" />
@@ -528,7 +528,7 @@ const TripModeView = ({
                         setWalkQuery("");
                         setWalkSuggestions([]);
                       }}
-                      className="flex items-center gap-1 text-[10px] text-blue-600 font-bold mt-1"
+                      className="flex items-center gap-1 text-[10px] text-blue-600 font-bold mt-1 cursor-pointer hover:bg-gray-100"
                     >
                       <IoLocationOutline className="h-3 w-3" />
                       {walkFromOverride.name}
@@ -543,10 +543,10 @@ const TripModeView = ({
                       ? "Demo mode on — simulated GPS"
                       : "Enable demo mode with simulated GPS"
                   }
-                  className={`flex items-center gap-1 text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg border transition-colors shrink-0 ${
+                  className={`flex items-center gap-1 text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg border transition-colors shrink-0 cursor-pointer ${
                     demoMode
-                      ? "bg-orange-500 text-white border-orange-500"
-                      : "bg-gray-100 text-gray-400 border-gray-200 hover:border-gray-300"
+                      ? "bg-orange-500 text-white border-orange-500 hover:opacity-80"
+                      : "bg-gray-100 text-gray-400 border-gray-200 hover:border-gray-300 hover:bg-gray-200"
                   }`}
                 >
                   <IoFlaskOutline className="h-3 w-3" />
@@ -571,7 +571,7 @@ const TripModeView = ({
                             setWalkQuery("");
                             setWalkSuggestions([]);
                           }}
-                          className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-semibold bg-white border border-gray-200 rounded-full text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors"
+                          className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-semibold bg-white border border-gray-200 rounded-full text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors cursor-pointer"
                         >
                           <IoLocationOutline className="h-2.5 w-2.5 text-blue-400 shrink-0" />
                           {spot.name}
@@ -615,7 +615,7 @@ const TripModeView = ({
                             setShowWalkFromSearch(false);
                             setWalkSuggestions([]);
                           }}
-                          className="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 border-b border-gray-50 last:border-0 flex items-center gap-2"
+                          className="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 border-b border-gray-50 last:border-0 flex items-center gap-2 cursor-pointer"
                         >
                           <IoLocationOutline className="h-3 w-3 text-blue-500 shrink-0" />
                           {s.name}
@@ -641,7 +641,7 @@ const TripModeView = ({
 
           <button
             onClick={handleBoard}
-            className="w-full bg-green-600 text-white py-3 rounded-2xl font-extrabold text-sm hover:bg-green-700 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-green-200"
+            className="w-full bg-green-600 text-white py-3 rounded-2xl font-extrabold text-sm hover:bg-green-700 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-green-200 cursor-pointer"
           >
             <IoCheckmarkCircleOutline className="h-5 w-5" />
             I've Boarded

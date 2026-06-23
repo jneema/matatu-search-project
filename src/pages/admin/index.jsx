@@ -64,7 +64,7 @@ const Admin = () => {
 
         <button
           onClick={() => navigate("/")}
-          className="p-2 rounded-md hover:bg-gray-100 transition-colors"
+          className="p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
           title="Back to home"
         >
           <IoCloseOutline className="h-5 w-5 text-gray-500" />
@@ -80,9 +80,9 @@ const Admin = () => {
                 setSection(key);
                 setTab("pending");
               }}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-semibold transition-colors ${
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-semibold transition-colors cursor-pointer ${
                 section === key
-                  ? "bg-gray-900 text-white"
+                  ? "bg-gray-900 text-white hover:bg-black"
                   : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
               }`}
             >
@@ -96,7 +96,7 @@ const Admin = () => {
             <button
               key={t}
               onClick={() => setTab(t)}
-              className={`pb-2 text-sm font-semibold capitalize transition-colors border-b-2 ${
+              className={`pb-2 text-sm font-semibold capitalize transition-colors border-b-2 cursor-pointer ${
                 tab === t
                   ? "border-gray-900 text-gray-900"
                   : "border-transparent text-gray-400 hover:text-gray-600"

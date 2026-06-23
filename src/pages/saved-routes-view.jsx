@@ -40,7 +40,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
           </div>
           <button
             onClick={() => (setCurrentView ? setCurrentView("landing") : navigate("/"))}
-            className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
             title="Back to app"
           >
             <IoCloseOutline className="h-5 w-5 text-gray-500" />
@@ -72,7 +72,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
               </div>
               <button
                 onClick={() => (setCurrentView ? setCurrentView("landing") : navigate("/"))}
-                className="px-5 py-2.5 bg-green-600 text-white text-sm font-semibold rounded-xl hover:bg-green-700 transition-colors"
+                className="px-5 py-2.5 bg-green-600 text-white text-sm font-semibold rounded-xl hover:bg-green-700 transition-colors cursor-pointer"
               >
                 Find Routes
               </button>
@@ -109,7 +109,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
                         </div>
                         <button
                           onClick={() => dispatch(removeRoute(route.id))}
-                          className="p-1.5 rounded-lg border border-gray-200 text-gray-300 hover:border-red-200 hover:text-red-400 hover:bg-red-50 transition-colors shrink-0"
+                          className="p-1.5 rounded-lg border border-gray-200 text-gray-300 hover:border-red-200 hover:text-red-400 hover:bg-red-50 transition-colors shrink-0 cursor-pointer"
                         >
                           <IoTrashOutline className="h-3.5 w-3.5" />
                         </button>
@@ -164,7 +164,7 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
 
                       <button
                         onClick={() => handleStartTrip(route)}
-                        className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 bg-gray-900 text-white text-sm font-bold rounded-xl hover:bg-black active:scale-[0.98] transition-all"
+                        className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 bg-gray-900 text-white text-sm font-bold rounded-xl hover:bg-black active:scale-[0.98] transition-all cursor-pointer"
                       >
                         Start Trip
                         <IoArrowForwardOutline className="h-3.5 w-3.5" />

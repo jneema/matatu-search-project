@@ -80,7 +80,7 @@ const Contribute = () => {
                     addAnother();
                     setLastSubmittedName(null);
                   }}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black"
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black cursor-pointer"
                 >
                   <IoAddCircleOutline className="h-4 w-4" /> {config.cta}
                 </button>
@@ -89,7 +89,7 @@ const Contribute = () => {
                     reset();
                     setLastSubmittedName(null);
                   }}
-                  className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md text-sm font-semibold text-gray-600 hover:bg-gray-50"
+                  className="flex items-center gap-2 px-5 py-2.5 border border-gray-200 rounded-md text-sm font-semibold text-gray-600 hover:bg-gray-50 cursor-pointer"
                 >
                   <IoArrowBackOutline className="h-4 w-4" /> Back to menu
                 </button>

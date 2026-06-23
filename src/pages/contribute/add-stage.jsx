@@ -284,7 +284,7 @@ const AddStage = ({ onSuccess }) => {
         <button
           onClick={handleSubmit}
           disabled={submitting}
-          className="flex items-center justify-center gap-1.5 w-full sm:w-auto px-10 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-1.5 w-full sm:w-auto px-10 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
           {submitting ? "Submitting…" : "Submit"}{" "}
           <IoCheckmarkCircleOutline className="h-4 w-4" />

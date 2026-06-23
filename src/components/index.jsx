@@ -206,7 +206,7 @@ const Header = ({ currentView, setCurrentView }) => {
                   disabled={currentStep < step.id}
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold shrink-0 transition-colors ${
                     currentStep >= step.id
-                      ? "bg-green-600 text-white cursor-pointer"
+                      ? "bg-green-600 text-white cursor-pointer hover:bg-green-700"
                       : "bg-gray-200 text-gray-400 cursor-not-allowed"
                   }`}
                 >

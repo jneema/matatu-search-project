@@ -69,9 +69,9 @@ export const RouteCard = ({
           <button
             onClick={onToggleSave}
             aria-label={isSaved ? "Remove saved route" : "Save route"}
-            className={`p-1.5 rounded-lg border transition-colors shrink-0 ${
+            className={`p-1.5 rounded-lg border transition-colors shrink-0 cursor-pointer ${
               isSaved
-                ? "bg-green-600 border-green-600 text-white"
+                ? "bg-green-600 border-green-600 text-white hover:bg-green-700"
                 : "bg-white border-gray-200 text-gray-300 hover:border-green-400 hover:text-green-500"
             }`}
           >
@@ -171,7 +171,7 @@ export const RouteCard = ({
         <div className="flex items-center justify-between pt-2.5 border-t border-gray-100">
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-gray-600 transition-colors"
+            className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
           >
             {expanded ? (
               <IoChevronUpOutline className="h-3 w-3" />
@@ -182,7 +182,7 @@ export const RouteCard = ({
           </button>
           <button
             onClick={onStartTrip}
-            className="flex items-center gap-1 px-3 py-1.5 border border-green-600 text-green-700 text-xs font-bold rounded-lg hover:bg-green-600 hover:text-white transition-colors group"
+            className="flex items-center gap-1 px-3 py-1.5 border border-green-600 text-green-700 text-xs font-bold rounded-lg hover:bg-green-600 hover:text-white transition-colors group cursor-pointer"
           >
             Start Trip
             <IoArrowForwardOutline className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
