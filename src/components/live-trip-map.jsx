@@ -39,6 +39,16 @@ const greenIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
+const blueIcon = new L.Icon({
+  iconUrl:
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 const orangeIcon = new L.Icon({
   iconUrl:
     "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png",
@@ -50,15 +60,24 @@ const orangeIcon = new L.Icon({
 });
 
 // Follows the user only while `follow` is true. When false, only sets the
-// initial view once — avoids jitter from GPS micro-updates in real mode.
-function NavigationController({ userPos, zoom, follow }) {
+// initial view once. Pass `fitBoundsTo` (array of extra positions) to use
+// fitBounds on the first fix instead of setView — useful to show user + stage.
+function NavigationController({ userPos, zoom, follow, fitBoundsTo }) {
   const map = useMap();
   const initialised = useRef(false);
 
   useEffect(() => {
     if (!userPos) return;
     if (!initialised.current) {
-      map.setView(userPos, zoom);
+      if (fitBoundsTo?.length) {
+        map.fitBounds(L.latLngBounds([userPos, ...fitBoundsTo]), {
+          padding: [60, 60],
+          maxZoom: 16,
+          animate: true,
+        });
+      } else {
+        map.setView(userPos, zoom);
+      }
       initialised.current = true;
       return;
     }
@@ -94,12 +113,16 @@ async function fetchRoadRoute(startLat, startLng, endLat, endLng, mode = "drivin
   }
 }
 
+const FAR_THRESHOLD_M = 1500;
+
 const LiveTripMap = ({
   originStage,
   destStage,
   demoMode = false,
   simulationPhase = "boarded",
   onLocationUpdate,
+  walkFromOverride = null,
+  onFarFromStage,
 }) => {
   const [userPos, setUserPos] = useState(null);
   const [trailPositions, setTrailPositions] = useState([]);
@@ -109,6 +132,7 @@ const LiveTripMap = ({
   const demoRef = useRef(null);
   const lastRouteFetchPos = useRef(null);
   const demoStartPos = useRef(null);
+  const lastRealGPSPos = useRef(null);
 
   const NAV_ZOOM = simulationPhase === "walking" ? 18 : 16;
   const routeColor = simulationPhase === "walking" ? "#2563eb" : "#16a34a";
@@ -145,8 +169,23 @@ const LiveTripMap = ({
       let startLat, startLng, endLat, endLng, routeMode;
 
       if (simulationPhase === "walking") {
-        startLat = originStage.latitude + 0.004;
-        startLng = originStage.longitude + 0.003;
+        // Priority: manual override → last real GPS → destStage → fallback offset
+        if (walkFromOverride?.lat && walkFromOverride?.lng) {
+          startLat = walkFromOverride.lat;
+          startLng = walkFromOverride.lng;
+        } else {
+          const gps = lastRealGPSPos.current;
+          if (gps) {
+            startLat = gps[0];
+            startLng = gps[1];
+          } else if (destStage?.latitude && destStage?.longitude) {
+            startLat = destStage.latitude + 0.001;
+            startLng = destStage.longitude + 0.001;
+          } else {
+            startLat = originStage.latitude + 0.004;
+            startLng = originStage.longitude + 0.003;
+          }
+        }
         endLat = originStage.latitude;
         endLng = originStage.longitude;
         routeMode = "walking";
@@ -196,6 +235,13 @@ const LiveTripMap = ({
         });
       }
 
+      // If override is set, pin the marker there immediately (don't wait for GPS)
+      if (simulationPhase === "walking" && walkFromOverride?.lat) {
+        setUserPos([walkFromOverride.lat, walkFromOverride.lng]);
+        fetchRoadRoute(walkFromOverride.lat, walkFromOverride.lng, originStage.latitude, originStage.longitude, "walking")
+          .then((coords) => { if (coords) setRouteCoords(coords); });
+      }
+
       if (!navigator.geolocation) {
         console.warn("[LiveTripMap] geolocation not available");
         return;
@@ -205,21 +251,31 @@ const LiveTripMap = ({
         (pos) => {
           const p = [pos.coords.latitude, pos.coords.longitude];
           console.log("[LiveTripMap] GPS fix:", p, "accuracy:", pos.coords.accuracy, "m");
-          setUserPos(p);
-          setTrailPositions((prev) => [...prev.slice(-50), p]);
-          onLocationUpdate?.(p);
+          lastRealGPSPos.current = p;
+          // Don't overwrite userPos with GPS when override is active in walking mode
+          if (!(simulationPhase === "walking" && walkFromOverride?.lat)) {
+            setUserPos(p);
+            setTrailPositions((prev) => [...prev.slice(-50), p]);
+            onLocationUpdate?.(p);
+          }
 
           if (simulationPhase === "walking" && originStage?.latitude) {
+            // Fire onFarFromStage once if user is more than threshold away
+            const distToStage = metersBetween(p, [originStage.latitude, originStage.longitude]);
+            if (distToStage > FAR_THRESHOLD_M) onFarFromStage?.();
+
+            // Use walk override or real GPS as route start
+            const routeStart = walkFromOverride?.lat
+              ? [walkFromOverride.lat, walkFromOverride.lng]
+              : p;
+
             const last = lastRouteFetchPos.current;
-            const dist = last ? metersBetween(last, p) : null;
+            const dist = last ? metersBetween(last, routeStart) : null;
             const shouldFetch = !last || dist > 30;
-            console.log("[LiveTripMap] walking route check — dist:", dist, "shouldFetch:", shouldFetch);
             if (shouldFetch) {
-              lastRouteFetchPos.current = p;
-              console.log("[LiveTripMap] fetching walk route:", p, "→", [originStage.latitude, originStage.longitude]);
-              fetchRoadRoute(p[0], p[1], originStage.latitude, originStage.longitude, "walking")
+              lastRouteFetchPos.current = routeStart;
+              fetchRoadRoute(routeStart[0], routeStart[1], originStage.latitude, originStage.longitude, "walking")
                 .then((coords) => {
-                  console.log("[LiveTripMap] walk route result:", coords ? `${coords.length} points` : "null");
                   if (coords) setRouteCoords(coords);
                 });
             }
@@ -234,7 +290,7 @@ const LiveTripMap = ({
       if (demoRef.current) clearInterval(demoRef.current);
       if (watchRef.current) navigator.geolocation?.clearWatch(watchRef.current);
     };
-  }, [demoMode, simulationPhase]);
+  }, [demoMode, simulationPhase, walkFromOverride]);
 
   if (!originStage?.latitude || !originStage?.longitude) return null;
 
@@ -287,7 +343,7 @@ const LiveTripMap = ({
         center={userPos || originPos}
         zoom={NAV_ZOOM}
         style={{ height: "100%", width: "100%" }}
-        zoomControl={false}
+        zoomControl={true}
         scrollWheelZoom={false}
         dragging={true}
       >
@@ -297,14 +353,41 @@ const LiveTripMap = ({
           maxZoom={19}
         />
 
-        {/* Follow user during demo; only set initial view for real GPS */}
-        {userPos && !demoArrived && (
-          <NavigationController userPos={userPos} zoom={NAV_ZOOM} follow={demoMode} />
+        {/* NavigationController stays mounted so initialised persists across override changes */}
+        {!demoArrived && (
+          <NavigationController
+            userPos={userPos}
+            zoom={NAV_ZOOM}
+            follow={demoMode}
+            fitBoundsTo={
+              !demoMode && simulationPhase === "walking" && !walkFromOverride
+                ? [originPos]
+                : !demoMode && simulationPhase === "boarded" && destPos
+                ? [destPos]
+                : undefined
+            }
+          />
+        )}
+
+        {/* When override is set, zoom to fit override → stage (separate from NavigationController) */}
+        {walkFromOverride?.lat && !demoArrived && (
+          <FitBoundsController
+            key={walkFromOverride.name}
+            bounds={L.latLngBounds([[walkFromOverride.lat, walkFromOverride.lng], originPos])}
+          />
         )}
 
         {/* On demo arrival: zoom to show full walk from start to stage */}
         {demoArrived && arrivalBounds && (
           <FitBoundsController bounds={arrivalBounds} />
+        )}
+
+        {/* Boarded real mode: fit origin → destination on mount so both markers are visible */}
+        {!demoMode && simulationPhase === "boarded" && destPos && (
+          <FitBoundsController
+            key="boarded-origin-dest"
+            bounds={L.latLngBounds([originPos, destPos])}
+          />
         )}
 
         {/* Full planned route (faint) */}
@@ -337,7 +420,23 @@ const LiveTripMap = ({
           />
         )}
 
-        {/* User position dot — always visible while moving or stationary */}
+        {/* Position marker: override location when set, otherwise real GPS */}
+        {walkFromOverride?.lat ? (
+          <Marker position={[walkFromOverride.lat, walkFromOverride.lng]} icon={blueIcon}>
+            <Popup>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>Walk from here</p>
+              <p style={{ fontSize: 11, color: "#6b7280" }}>{walkFromOverride.name}</p>
+            </Popup>
+          </Marker>
+        ) : userPos && (
+          <Marker position={userPos} icon={blueIcon}>
+            <Popup>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>You are here</p>
+            </Popup>
+          </Marker>
+        )}
+
+        {/* Accuracy ring — always at real GPS position */}
         {userPos && (
           <>
             <Circle
@@ -348,16 +447,6 @@ const LiveTripMap = ({
                 fillColor: routeColor,
                 fillOpacity: 0.15,
                 weight: 1.5,
-              }}
-            />
-            <Circle
-              center={userPos}
-              radius={6}
-              pathOptions={{
-                color: "#ffffff",
-                fillColor: routeColor,
-                fillOpacity: 1,
-                weight: 2.5,
               }}
             />
           </>
@@ -381,6 +470,19 @@ const LiveTripMap = ({
           <Marker position={demoStartPos.current} icon={orangeIcon}>
             <Popup>
               <p style={{ fontWeight: "bold", fontSize: 13 }}>You started here</p>
+            </Popup>
+          </Marker>
+        )}
+
+        {/* Boarded phase: origin (boarding) marker */}
+        {simulationPhase === "boarded" && (
+          <Marker position={originPos} icon={greenIcon}>
+            <Popup>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>{originStage.name}</p>
+              {originStage.landmark && (
+                <p style={{ fontSize: 11, color: "#6b7280" }}>{originStage.landmark}</p>
+              )}
+              <p style={{ fontSize: 11, color: "#16a34a", marginTop: 4 }}>Boarded here</p>
             </Popup>
           </Marker>
         )}
