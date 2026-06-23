@@ -15,10 +15,7 @@ export default defineConfig([
       "react-refresh": reactRefresh,
     },
 
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs["recommended-latest"],
-    ],
+    extends: [js.configs.recommended, reactHooks.configs["recommended-latest"]],
 
     settings: {
       "import/resolver": {

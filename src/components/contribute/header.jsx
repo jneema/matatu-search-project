@@ -1,5 +1,10 @@
 import React from "react";
-import { IoMapOutline, IoCheckmarkCircleOutline, IoArrowBackOutline, IoCloseOutline } from "react-icons/io5";
+import {
+  IoMapOutline,
+  IoCheckmarkCircleOutline,
+  IoArrowBackOutline,
+  IoCloseOutline,
+} from "react-icons/io5";
 import { useNavigate } from "react-router";
 
 function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
@@ -8,13 +13,12 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
   const subtitle = {
     route: "Full route",
     sacco: "Sacco",
-    stages: "Stages"
+    stages: "Stages",
   };
 
   return (
     <header className="bg-white border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-4 py-4">
-        {/* Top row */}
         <div className="flex items-center justify-between mb-4">
           <button
             onClick={() => navigate("/")}
@@ -57,7 +61,11 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
                             : "bg-gray-200 text-gray-500"
                       }`}
                     >
-                      {step > s.id ? <IoCheckmarkCircleOutline className="h-4 w-4" /> : s.id}
+                      {step > s.id ? (
+                        <IoCheckmarkCircleOutline className="h-4 w-4" />
+                      ) : (
+                        s.id
+                      )}
                     </div>
                     <span
                       className={`font-medium text-sm transition-colors ${
@@ -92,7 +100,11 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
                           : "bg-gray-100 text-gray-400"
                     }`}
                   >
-                    {step > s.id ? <IoCheckmarkCircleOutline className="h-4 w-4" /> : s.id}
+                    {step > s.id ? (
+                      <IoCheckmarkCircleOutline className="h-4 w-4" />
+                    ) : (
+                      s.id
+                    )}
                   </div>
                   {i < STEPS.length - 1 && (
                     <div

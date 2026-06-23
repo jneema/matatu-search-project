@@ -48,24 +48,23 @@ const DestinationsView = ({
 
   const copy = DIRECTION_COPY[selectedDirection ?? "inbound"];
 
-const fetchDestinations = async () => {
-  setLoading(true);
-  try {
-    const filteredData = await getDestinationStages(
-      selectedDirection ?? "inbound",
-      selectedStartingPoint?.id
-    );
-    setDestinations(filteredData);
-    allDestinationsRef.current = filteredData;
-    setPopularDestinations(filteredData);
-  } catch (error) {
-    console.error("Error fetching filtered destinations:", error);
-    setDestinations([]);
-  } finally {
-    setLoading(false);
-  }
-};
-  
+  const fetchDestinations = async () => {
+    setLoading(true);
+    try {
+      const filteredData = await getDestinationStages(
+        selectedDirection ?? "inbound",
+        selectedStartingPoint?.id,
+      );
+      setDestinations(filteredData);
+      allDestinationsRef.current = filteredData;
+      setPopularDestinations(filteredData);
+    } catch (error) {
+      console.error("Error fetching filtered destinations:", error);
+      setDestinations([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchDestinations();
@@ -171,7 +170,6 @@ const fetchDestinations = async () => {
           </span>
         </div>
 
-        {/* Header */}
         <div className="text-center mb-8 md:mb-10">
           <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
             {selectedStartingPoint
@@ -293,7 +291,9 @@ const fetchDestinations = async () => {
           {loading && !isOpen && (
             <div className="mt-5 flex items-center gap-2">
               <div className="w-4 h-4 border-2 border-gray-200 border-t-green-600 rounded-full animate-spin" />
-              <span className="text-xs text-gray-400">Loading destinations…</span>
+              <span className="text-xs text-gray-400">
+                Loading destinations…
+              </span>
             </div>
           )}
 

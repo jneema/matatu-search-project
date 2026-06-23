@@ -86,11 +86,9 @@ const SignUp = () => {
         </button>
       </div>
 
-      {/* card */}
       <div className="flex-grow flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
-            {/* heading */}
             <div className="mb-8">
               <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">
                 Create an account
@@ -101,7 +99,6 @@ const SignUp = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* name */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="block text-sm font-medium text-gray-700">

@@ -14,14 +14,14 @@ A web app for finding matatu (public minibus) routes, comparing fares, and navig
 
 ## Tech Stack
 
-| Layer | Tools |
-|---|---|
+| Layer     | Tools          |
+| --------- | -------------- |
 | Framework | React 19, Vite |
-| Routing | React Router 7 |
-| State | Redux Toolkit |
-| Styling | Tailwind CSS 4 |
-| Maps | React Leaflet |
-| HTTP | Axios |
+| Routing   | React Router 7 |
+| State     | Redux Toolkit  |
+| Styling   | Tailwind CSS 4 |
+| Maps      | React Leaflet  |
+| HTTP      | Axios          |
 
 ## Getting Started
 
@@ -77,15 +77,15 @@ src/
 
 ## Routes
 
-| Path | Page |
-|---|---|
-| `/` | Landing / route search |
-| `/contribute` | Community contribution form |
-| `/saved-routes` | Saved routes list |
-| `/sign-in` | Sign in |
-| `/sign-up` | Sign up |
-| `/forgot-password` | Password reset |
-| `/admin` | Admin review panel |
+| Path               | Page                        |
+| ------------------ | --------------------------- |
+| `/`                | Landing / route search      |
+| `/contribute`      | Community contribution form |
+| `/saved-routes`    | Saved routes list           |
+| `/sign-in`         | Sign in                     |
+| `/sign-up`         | Sign up                     |
+| `/forgot-password` | Password reset              |
+| `/admin`           | Admin review panel          |
 
 ## Contributing Data
 

@@ -3,7 +3,11 @@ import Field from "../../components/field";
 import inputClass from "../../components/input-class";
 import { addSacco } from "../../services/destinations";
 import { uploadFile } from "../../services/upload";
-import { IoCheckmarkCircleOutline, IoAddCircleOutline, IoArrowBackOutline } from "react-icons/io5";
+import {
+  IoCheckmarkCircleOutline,
+  IoAddCircleOutline,
+  IoArrowBackOutline,
+} from "react-icons/io5";
 
 const VEHICLE_TYPE_OPTIONS = ["14-seater", "33-seater", "bus"];
 const RATING_OPTIONS = [1, 2, 3, 4, 5];
@@ -24,7 +28,7 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
   const [formData, setFormData] = useState({ ...EMPTY });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
-  const [createdSacco, setCreatedSacco] = useState(null); 
+  const [createdSacco, setCreatedSacco] = useState(null);
 
   const onChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -49,7 +53,8 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
   function validate() {
     const errs = {};
     if (!formData.name?.trim()) errs.name = "Sacco name is required";
-    if (!formData.terminus_area?.trim()) errs.terminus_area = "Terminus area is required";
+    if (!formData.terminus_area?.trim())
+      errs.terminus_area = "Terminus area is required";
     setErrors(errs);
     return Object.keys(errs).length === 0;
   }
@@ -72,7 +77,10 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
       setCreatedSacco(created); // show prompt instead of navigating away
     } catch (err) {
       console.error("Submission failed", err);
-      setErrors((prev) => ({ ...prev, submit: "Submission failed — please try again" }));
+      setErrors((prev) => ({
+        ...prev,
+        submit: "Submission failed — please try again",
+      }));
     } finally {
       setSubmitting(false);
     }
@@ -85,14 +93,23 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
           <div className="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center">
             <IoCheckmarkCircleOutline className="w-7 h-7 text-green-600" />
           </div>
-          <h2 className="text-2xl font-extrabold text-gray-900">Sacco added!</h2>
+          <h2 className="text-2xl font-extrabold text-gray-900">
+            Sacco added!
+          </h2>
           <p className="text-gray-500 text-sm">
-            <span className="font-semibold text-gray-700">{createdSacco.name}</span> has been submitted for review.
+            <span className="font-semibold text-gray-700">
+              {createdSacco.name}
+            </span>{" "}
+            has been submitted for review.
           </p>
         </div>
 
         <p className="text-gray-600 text-sm">
-          Do you know any stages for <span className="font-semibold text-gray-800">{createdSacco.name}</span>? Help us map them.
+          Do you know any stages for{" "}
+          <span className="font-semibold text-gray-800">
+            {createdSacco.name}
+          </span>
+          ? Help us map them.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -100,7 +117,8 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
             onClick={() => onAddStages?.(createdSacco)}
             className="flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black"
           >
-            <IoAddCircleOutline className="h-4 w-4" /> Add stages for {createdSacco.name}
+            <IoAddCircleOutline className="h-4 w-4" /> Add stages for{" "}
+            {createdSacco.name}
           </button>
           <button
             onClick={onSuccess}
@@ -153,7 +171,9 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
             className={inputClass(errors.vehicle_type)}
           >
             {VEHICLE_TYPE_OPTIONS.map((opt) => (
-              <option key={opt} value={opt}>{opt}</option>
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
             ))}
           </select>
         </Field>
@@ -167,7 +187,8 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
           >
             {RATING_OPTIONS.map((n) => (
               <option key={n} value={n}>
-                {"★".repeat(n)}{"☆".repeat(5 - n)} ({n}/5)
+                {"★".repeat(n)}
+                {"☆".repeat(5 - n)} ({n}/5)
               </option>
             ))}
           </select>
@@ -182,7 +203,8 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
           >
             {RATING_OPTIONS.map((n) => (
               <option key={n} value={n}>
-                {"★".repeat(n)}{"☆".repeat(5 - n)} ({n}/5)
+                {"★".repeat(n)}
+                {"☆".repeat(5 - n)} ({n}/5)
               </option>
             ))}
           </select>
@@ -230,7 +252,8 @@ const AddSacco = ({ onSuccess, onAddStages }) => {
           disabled={submitting}
           className="flex items-center gap-1.5 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {submitting ? "Submitting…" : "Submit"} <IoCheckmarkCircleOutline className="h-4 w-4" />
+          {submitting ? "Submitting…" : "Submit"}{" "}
+          <IoCheckmarkCircleOutline className="h-4 w-4" />
         </button>
       </div>
     </div>

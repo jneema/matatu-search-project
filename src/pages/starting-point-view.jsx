@@ -163,7 +163,6 @@ const StartingPointView = ({
           </span>
         </div>
 
-        {/* Header */}
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3 md:mb-4 tracking-tight">
             {copy.heading}

@@ -18,21 +18,21 @@ import TripMap from "../components/trip-map";
 import LiveTripMap from "../components/live-trip-map";
 
 const CBD_SPOTS = [
-  { name: "Kencom",            lat: -1.2856, lng: 36.8250 },
-  { name: "Archives",          lat: -1.2850, lng: 36.8259 },
-  { name: "Koja",              lat: -1.2811, lng: 36.8228 },
-  { name: "OTC / Odeon",       lat: -1.2833, lng: 36.8251 },
-  { name: "GPO",               lat: -1.2861, lng: 36.8192 },
-  { name: "Aga Khan Walk",     lat: -1.2871, lng: 36.8250 },
-  { name: "Luthuli Ave",       lat: -1.2839, lng: 36.8284 },
-  { name: "River Road",        lat: -1.2814, lng: 36.8244 },
-  { name: "Ronald Ngala St",   lat: -1.2857, lng: 36.8279 },
-  { name: "Moi Avenue",        lat: -1.2902, lng: 36.8278 },
-  { name: "Mfangano St",       lat: -1.2880, lng: 36.8287 },
-  { name: "University Way",    lat: -1.2819, lng: 36.8145 },
-  { name: "City Market",       lat: -1.2837, lng: 36.8195 },
+  { name: "Kencom", lat: -1.2856, lng: 36.825 },
+  { name: "Archives", lat: -1.285, lng: 36.8259 },
+  { name: "Koja", lat: -1.2811, lng: 36.8228 },
+  { name: "OTC / Odeon", lat: -1.2833, lng: 36.8251 },
+  { name: "GPO", lat: -1.2861, lng: 36.8192 },
+  { name: "Aga Khan Walk", lat: -1.2871, lng: 36.825 },
+  { name: "Luthuli Ave", lat: -1.2839, lng: 36.8284 },
+  { name: "River Road", lat: -1.2814, lng: 36.8244 },
+  { name: "Ronald Ngala St", lat: -1.2857, lng: 36.8279 },
+  { name: "Moi Avenue", lat: -1.2902, lng: 36.8278 },
+  { name: "Mfangano St", lat: -1.288, lng: 36.8287 },
+  { name: "University Way", lat: -1.2819, lng: 36.8145 },
+  { name: "City Market", lat: -1.2837, lng: 36.8195 },
   { name: "Jeevanjee Gardens", lat: -1.2813, lng: 36.8197 },
-  { name: "Railway Station",   lat: -1.2916, lng: 36.8286 },
+  { name: "Railway Station", lat: -1.2916, lng: 36.8286 },
 ];
 
 const STEPS = {
@@ -78,15 +78,22 @@ const TripModeView = ({
   }, []);
 
   const searchWalkFrom = useCallback(async (q) => {
-    if (!q.trim()) { setWalkSuggestions([]); return; }
+    if (!q.trim()) {
+      setWalkSuggestions([]);
+      return;
+    }
     setWalkSearching(true);
     try {
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q + " Nairobi")}&format=json&limit=5&countrycodes=ke`
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q + " Nairobi")}&format=json&limit=5&countrycodes=ke`,
       );
       const data = await res.json();
       setWalkSuggestions(
-        data.map((r) => ({ name: r.display_name.split(",").slice(0, 2).join(", "), lat: parseFloat(r.lat), lng: parseFloat(r.lon) }))
+        data.map((r) => ({
+          name: r.display_name.split(",").slice(0, 2).join(", "),
+          lat: parseFloat(r.lat),
+          lng: parseFloat(r.lon),
+        })),
       );
     } catch {
       setWalkSuggestions([]);
@@ -179,7 +186,10 @@ const TripModeView = ({
 
   if (step === STEPS.ARRIVED) {
     return (
-      <div className="bg-white font-sans flex flex-col" style={{ height: "calc(100vh - 108px)" }}>
+      <div
+        className="bg-white font-sans flex flex-col"
+        style={{ height: "calc(100vh - 108px)" }}
+      >
         <div className="relative flex-1 min-h-0">
           <TripMap
             originStage={origin}
@@ -191,10 +201,16 @@ const TripModeView = ({
         <div className="bg-white px-5 pt-4 pb-6 flex flex-col gap-4">
           <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto" />
           <div className="text-left">
-            <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-0.5">Alighted at</p>
-            <p className="text-base font-extrabold text-gray-900 leading-tight">{destination?.name}</p>
+            <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-0.5">
+              Alighted at
+            </p>
+            <p className="text-base font-extrabold text-gray-900 leading-tight">
+              {destination?.name}
+            </p>
             {destination?.landmark && (
-              <p className="text-xs text-gray-500 mt-0.5">{destination.landmark}</p>
+              <p className="text-xs text-gray-500 mt-0.5">
+                {destination.landmark}
+              </p>
             )}
           </div>
           <div className="flex items-center gap-2">
@@ -221,10 +237,11 @@ const TripModeView = ({
 
   if (step === STEPS.BOARDED) {
     return (
-      <div className="bg-white font-sans flex flex-col" style={{ height: "calc(100vh - 108px)" }}>
-        <div
-          className="relative flex-1 min-h-0"
-        >
+      <div
+        className="bg-white font-sans flex flex-col"
+        style={{ height: "calc(100vh - 108px)" }}
+      >
+        <div className="relative flex-1 min-h-0">
           <LiveTripMap
             originStage={origin}
             destStage={destination}
@@ -288,16 +305,30 @@ const TripModeView = ({
                 {destination?.name}
               </p>
               {destination?.landmark && (
-                <p className="text-xs text-gray-500 mt-0.5">{destination.landmark}</p>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  {destination.landmark}
+                </p>
               )}
             </div>
             <div className="border-t border-gray-100 flex items-center gap-4 px-4 py-3">
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Journey</span>
-              <span className="text-xs font-black text-gray-900">{duration_mins} min</span>
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Via</span>
-              <span className="text-xs font-black text-gray-900 truncate">{via?.split(" ").slice(-1)[0] ?? "—"}</span>
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Fare</span>
-              <span className="text-xs font-black text-gray-900">KES {fare}</span>
+              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
+                Journey
+              </span>
+              <span className="text-xs font-black text-gray-900">
+                {duration_mins} min
+              </span>
+              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
+                Via
+              </span>
+              <span className="text-xs font-black text-gray-900 truncate">
+                {via?.split(" ").slice(-1)[0] ?? "—"}
+              </span>
+              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
+                Fare
+              </span>
+              <span className="text-xs font-black text-gray-900">
+                KES {fare}
+              </span>
             </div>
           </div>
 
@@ -429,12 +460,24 @@ const TripModeView = ({
                 <IoBusOutline className="h-3.5 w-3.5 text-white" />
               </div>
               <div className="flex flex-1 items-center gap-4 min-w-0">
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Journey</span>
-                <span className="text-xs font-black text-gray-900">{duration_mins} min</span>
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Wait</span>
-                <span className="text-xs font-black text-gray-900">~{wait_mins_est} min</span>
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">Fare</span>
-                <span className="text-xs font-black text-gray-900">KES {fare}</span>
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
+                  Journey
+                </span>
+                <span className="text-xs font-black text-gray-900">
+                  {duration_mins} min
+                </span>
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
+                  Wait
+                </span>
+                <span className="text-xs font-black text-gray-900">
+                  ~{wait_mins_est} min
+                </span>
+                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
+                  Fare
+                </span>
+                <span className="text-xs font-black text-gray-900">
+                  KES {fare}
+                </span>
               </div>
               <IoChevronDownOutline
                 className={`h-4 w-4 text-gray-400 shrink-0 transition-transform duration-200 ${routeInfoOpen ? "rotate-180" : ""}`}
@@ -444,10 +487,13 @@ const TripModeView = ({
             {routeInfoOpen && (
               <div className="px-4 pb-3 border-t border-gray-100">
                 <p className="text-xs text-gray-500 mt-2.5">
-                  {via}{vehicle_type ? ` · ${vehicle_type.replace(/_/g, " ")}` : ""}
+                  {via}
+                  {vehicle_type ? ` · ${vehicle_type.replace(/_/g, " ")}` : ""}
                 </p>
                 <p className="text-xs text-gray-400 mt-1">
-                  {payment_methods.length > 0 ? payment_methods.join(" · ") : "Cash"}
+                  {payment_methods.length > 0
+                    ? payment_methods.join(" · ")
+                    : "Cash"}
                   {fare_type_now ? ` · ${fare_type_now} rate` : ""}
                 </p>
                 {tags.includes("express") && (
@@ -463,11 +509,17 @@ const TripModeView = ({
             <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
               <div className="px-4 pt-3 flex items-center justify-between gap-2">
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                  {demoMode ? "Simulating walk to stage" : "Walk to boarding stage"}
+                  {demoMode
+                    ? "Simulating walk to stage"
+                    : "Walk to boarding stage"}
                 </p>
                 <button
                   onClick={() => setDemoMode((d) => !d)}
-                  title={demoMode ? "Demo mode on — simulated GPS" : "Enable demo mode with simulated GPS"}
+                  title={
+                    demoMode
+                      ? "Demo mode on — simulated GPS"
+                      : "Enable demo mode with simulated GPS"
+                  }
                   className={`flex items-center gap-1 text-[9px] font-black uppercase tracking-widest px-2.5 py-1.5 rounded-lg border transition-colors shrink-0 ${
                     demoMode
                       ? "bg-orange-500 text-white border-orange-500"
@@ -479,12 +531,16 @@ const TripModeView = ({
                 </button>
               </div>
               <div className="px-4 pb-6 text-left">
-                <p className="text-sm font-bold text-gray-700">
-                  {origin.name}
-                </p>
+                <p className="text-sm font-bold text-gray-700">{origin.name}</p>
                 {walkFromOverride && (
                   <button
-                    onClick={() => { setWalkFromOverride(null); setDemoMode(false); setShowWalkFromSearch(false); setWalkQuery(""); setWalkSuggestions([]); }}
+                    onClick={() => {
+                      setWalkFromOverride(null);
+                      setDemoMode(false);
+                      setShowWalkFromSearch(false);
+                      setWalkQuery("");
+                      setWalkSuggestions([]);
+                    }}
                     className="flex items-center gap-1 text-[10px] text-blue-600 font-bold mt-1"
                   >
                     <IoLocationOutline className="h-3 w-3" />
@@ -505,7 +561,12 @@ const TripModeView = ({
                       {CBD_SPOTS.map((spot) => (
                         <button
                           key={spot.name}
-                          onClick={() => { setWalkFromOverride(spot); setShowWalkFromSearch(false); setWalkQuery(""); setWalkSuggestions([]); }}
+                          onClick={() => {
+                            setWalkFromOverride(spot);
+                            setShowWalkFromSearch(false);
+                            setWalkQuery("");
+                            setWalkSuggestions([]);
+                          }}
                           className="flex items-center gap-1 px-2.5 py-1 text-[10px] font-semibold bg-white border border-gray-200 rounded-full text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors"
                         >
                           <IoLocationOutline className="h-2.5 w-2.5 text-blue-400 shrink-0" />
@@ -520,15 +581,24 @@ const TripModeView = ({
                     <input
                       type="text"
                       value={walkQuery}
-                      onChange={(e) => { setWalkQuery(e.target.value); searchWalkFrom(e.target.value); }}
-                      placeholder={selectedDirection === "outbound" ? "e.g. Zimmerman, Kasarani…" : "or search another spot…"}
+                      onChange={(e) => {
+                        setWalkQuery(e.target.value);
+                        searchWalkFrom(e.target.value);
+                      }}
+                      placeholder={
+                        selectedDirection === "outbound"
+                          ? "e.g. Zimmerman, Kasarani…"
+                          : "or search another spot…"
+                      }
                       className="w-full pl-8 pr-3 py-2 text-xs border border-gray-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-400"
                     />
                   </div>
                   {walkSearching && (
                     <div className="flex items-center gap-2 mt-2">
                       <div className="w-3 h-3 border border-gray-300 border-t-blue-500 rounded-full animate-spin" />
-                      <span className="text-[10px] text-gray-400">Searching…</span>
+                      <span className="text-[10px] text-gray-400">
+                        Searching…
+                      </span>
                     </div>
                   )}
                   {walkSuggestions.length > 0 && (
@@ -536,7 +606,11 @@ const TripModeView = ({
                       {walkSuggestions.map((s, i) => (
                         <button
                           key={i}
-                          onClick={() => { setWalkFromOverride(s); setShowWalkFromSearch(false); setWalkSuggestions([]); }}
+                          onClick={() => {
+                            setWalkFromOverride(s);
+                            setShowWalkFromSearch(false);
+                            setWalkSuggestions([]);
+                          }}
                           className="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 border-b border-gray-50 last:border-0 flex items-center gap-2"
                         >
                           <IoLocationOutline className="h-3 w-3 text-blue-500 shrink-0" />

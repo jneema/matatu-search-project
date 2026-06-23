@@ -7,7 +7,11 @@ import { ROUTE_STEPS } from "../../constants";
 import AddStage from "./add-stage";
 import AddSacco from "./add-sacco";
 import AddRoute from "./add-route";
-import { IoCheckmarkCircleOutline, IoAddCircleOutline, IoArrowBackOutline } from "react-icons/io5";
+import {
+  IoCheckmarkCircleOutline,
+  IoAddCircleOutline,
+  IoArrowBackOutline,
+} from "react-icons/io5";
 
 const SUCCESS_CONFIG = {
   stage: {

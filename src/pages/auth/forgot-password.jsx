@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { IoMapOutline, IoArrowForwardOutline, IoArrowBackOutline, IoRefreshOutline, IoMailOpenOutline } from "react-icons/io5";
+import {
+  IoMapOutline,
+  IoArrowForwardOutline,
+  IoArrowBackOutline,
+  IoRefreshOutline,
+  IoMailOpenOutline,
+} from "react-icons/io5";
 import { useNavigate, Link } from "react-router";
 
 const ForgotPassword = () => {
@@ -85,7 +91,8 @@ const ForgotPassword = () => {
                       <IoRefreshOutline className="h-4 w-4 animate-spin" />
                     ) : (
                       <>
-                        Send reset link <IoArrowForwardOutline className="h-4 w-4" />
+                        Send reset link{" "}
+                        <IoArrowForwardOutline className="h-4 w-4" />
                       </>
                     )}
                   </button>
@@ -96,7 +103,8 @@ const ForgotPassword = () => {
                     to="/sign-in"
                     className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-800 transition-colors"
                   >
-                    <IoArrowBackOutline className="h-3.5 w-3.5" /> Back to sign in
+                    <IoArrowBackOutline className="h-3.5 w-3.5" /> Back to sign
+                    in
                   </Link>
                 </div>
               </>

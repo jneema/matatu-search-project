@@ -1,5 +1,8 @@
 import React from "react";
-import { IoArrowForwardOutline, IoChevronForwardOutline } from "react-icons/io5";
+import {
+  IoArrowForwardOutline,
+  IoChevronForwardOutline,
+} from "react-icons/io5";
 
 const DirectionView = ({
   setCurrentView,

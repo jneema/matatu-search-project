@@ -125,7 +125,7 @@ const TripMap = ({
               </p>
             </Popup>
           </Marker>
-          {/* Walking line */}
+
           {userPos && (
             <Polyline
               positions={[userPos, originPos]}

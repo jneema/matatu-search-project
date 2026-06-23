@@ -196,15 +196,6 @@ export const RouteCard = ({
             <DetailRow label="Vehicle Type" value={vehicleLabel} />
             <DetailRow label="Terminus" value={option.terminus_area} />
             <DetailRow label="Via" value={option.via} />
-            {/* <DetailRow
-              label="Fare type"
-              value={
-                option.fare_type_now === "STANDARD"
-                  ? "Standard"
-                  : option.fare_type_now?.charAt(0) +
-                    option.fare_type_now?.slice(1).toLowerCase()
-              }
-            /> */}
             <DetailRow
               label="Off-peak fare"
               value={

@@ -31,12 +31,16 @@ const AddRoute = ({ onSuccess }) => {
   useEffect(() => {
     getSaccos()
       .then((data) => setSaccos(data))
-      .catch(() => setErrors((p) => ({ ...p, _saccos: "Failed to load saccos" })))
+      .catch(() =>
+        setErrors((p) => ({ ...p, _saccos: "Failed to load saccos" })),
+      )
       .finally(() => setLoading((p) => ({ ...p, saccos: false })));
 
     getStages()
       .then((data) => setStages(data))
-      .catch(() => setErrors((p) => ({ ...p, _stages: "Failed to load stages" })))
+      .catch(() =>
+        setErrors((p) => ({ ...p, _stages: "Failed to load stages" })),
+      )
       .finally(() => setLoading((p) => ({ ...p, stages: false })));
   }, []);
 
@@ -52,9 +56,14 @@ const AddRoute = ({ onSuccess }) => {
   function validate() {
     const errs = {};
     if (!formData.sacco_id) errs.sacco_id = "Sacco is required";
-    if (!formData.origin_stage_id) errs.origin_stage_id = "Origin stage is required";
-    if (!formData.dest_stage_id) errs.dest_stage_id = "Destination stage is required";
-    if (formData.origin_stage_id && formData.origin_stage_id === formData.dest_stage_id)
+    if (!formData.origin_stage_id)
+      errs.origin_stage_id = "Origin stage is required";
+    if (!formData.dest_stage_id)
+      errs.dest_stage_id = "Destination stage is required";
+    if (
+      formData.origin_stage_id &&
+      formData.origin_stage_id === formData.dest_stage_id
+    )
       errs.dest_stage_id = "Origin and destination cannot be the same";
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -71,7 +80,9 @@ const AddRoute = ({ onSuccess }) => {
         dest_stage_id: formData.dest_stage_id,
         via_description: formData.via_description.trim(),
         via_description_sw: formData.via_description_sw.trim(),
-        distance_km: formData.distance_km ? parseFloat(formData.distance_km) : null,
+        distance_km: formData.distance_km
+          ? parseFloat(formData.distance_km)
+          : null,
         is_express: formData.is_express,
         route_status: "active",
         departure_frequency_mins: formData.departure_frequency_mins
@@ -87,7 +98,10 @@ const AddRoute = ({ onSuccess }) => {
       onSuccess?.();
     } catch (err) {
       console.error("Submission failed", err);
-      setErrors((prev) => ({ ...prev, submit: "Submission failed — please try again" }));
+      setErrors((prev) => ({
+        ...prev,
+        submit: "Submission failed — please try again",
+      }));
     } finally {
       setSubmitting(false);
     }
@@ -98,7 +112,9 @@ const AddRoute = ({ onSuccess }) => {
   return (
     <div className="space-y-4">
       <div className="mb-6">
-        <h2 className="text-2xl font-extrabold text-gray-900">Add IoMapOutline</h2>
+        <h2 className="text-2xl font-extrabold text-gray-900">
+          Add IoMapOutline
+        </h2>
         <p className="text-sm text-gray-500 mt-1">
           Link a sacco to its origin and destination stages.
         </p>
@@ -112,9 +128,11 @@ const AddRoute = ({ onSuccess }) => {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-        {/* Sacco */}
-        <Field label="Sacco *" error={errors.sacco_id} className="md:col-span-2">
+        <Field
+          label="Sacco *"
+          error={errors.sacco_id}
+          className="md:col-span-2"
+        >
           <select
             name="sacco_id"
             value={formData.sacco_id}
@@ -133,7 +151,6 @@ const AddRoute = ({ onSuccess }) => {
           </select>
         </Field>
 
-        {/* Origin stage */}
         <Field label="Origin Stage *" error={errors.origin_stage_id}>
           <select
             name="origin_stage_id"
@@ -153,7 +170,6 @@ const AddRoute = ({ onSuccess }) => {
           </select>
         </Field>
 
-        {/* Destination stage */}
         <Field label="Destination Stage *" error={errors.dest_stage_id}>
           <select
             name="dest_stage_id"
@@ -175,7 +191,6 @@ const AddRoute = ({ onSuccess }) => {
           </select>
         </Field>
 
-        {/* Via description */}
         <Field label="Via (English)" error={errors.via_description}>
           <input
             type="text"
@@ -198,7 +213,6 @@ const AddRoute = ({ onSuccess }) => {
           />
         </Field>
 
-        {/* Numeric fields */}
         <Field label="Distance (km)" error={errors.distance_km}>
           <input
             type="number"
@@ -212,7 +226,10 @@ const AddRoute = ({ onSuccess }) => {
           />
         </Field>
 
-        <Field label="Departure Frequency (mins)" error={errors.departure_frequency_mins}>
+        <Field
+          label="Departure Frequency (mins)"
+          error={errors.departure_frequency_mins}
+        >
           <input
             type="number"
             name="departure_frequency_mins"
@@ -248,7 +265,6 @@ const AddRoute = ({ onSuccess }) => {
           />
         </Field>
 
-        {/* Express toggle */}
         <Field label="Express Route">
           <label className="flex items-center gap-2 mt-1 cursor-pointer">
             <input
@@ -275,7 +291,8 @@ const AddRoute = ({ onSuccess }) => {
           disabled={submitting || stagesLoading}
           className="flex items-center gap-1.5 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {submitting ? "Submitting…" : "Submit"} <IoCheckmarkCircleOutline className="h-4 w-4" />
+          {submitting ? "Submitting…" : "Submit"}{" "}
+          <IoCheckmarkCircleOutline className="h-4 w-4" />
         </button>
       </div>
     </div>

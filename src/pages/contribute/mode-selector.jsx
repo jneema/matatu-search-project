@@ -1,4 +1,8 @@
-import { IoBusOutline, IoNavigateOutline, IoLocationOutline } from "react-icons/io5";
+import {
+  IoBusOutline,
+  IoNavigateOutline,
+  IoLocationOutline,
+} from "react-icons/io5";
 
 const modes = [
   {

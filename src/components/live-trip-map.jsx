@@ -99,7 +99,13 @@ function FitBoundsController({ bounds }) {
   return null;
 }
 
-async function fetchRoadRoute(startLat, startLng, endLat, endLng, mode = "driving") {
+async function fetchRoadRoute(
+  startLat,
+  startLng,
+  endLat,
+  endLng,
+  mode = "driving",
+) {
   const profile = mode === "walking" ? "foot" : "driving";
   const url = `https://router.project-osrm.org/route/v1/${profile}/${startLng},${startLat};${endLng},${endLat}?overview=full&geometries=geojson`;
   try {
@@ -159,7 +165,12 @@ const LiveTripMap = ({
     lastRouteFetchPos.current = null;
     demoStartPos.current = null;
 
-    console.log("[LiveTripMap] init — demoMode:", demoMode, "phase:", simulationPhase);
+    console.log(
+      "[LiveTripMap] init — demoMode:",
+      demoMode,
+      "phase:",
+      simulationPhase,
+    );
     console.log("[LiveTripMap] originStage:", originStage);
     console.log("[LiveTripMap] destStage:", destStage);
 
@@ -198,37 +209,48 @@ const LiveTripMap = ({
         routeMode = "driving";
       }
 
-      fetchRoadRoute(startLat, startLng, endLat, endLng, routeMode).then((coords) => {
-        const path = coords ?? [[startLat, startLng], [endLat, endLng]];
-        setRouteCoords(path);
+      fetchRoadRoute(startLat, startLng, endLat, endLng, routeMode).then(
+        (coords) => {
+          const path = coords ?? [
+            [startLat, startLng],
+            [endLat, endLng],
+          ];
+          setRouteCoords(path);
 
-        let currentStep = 0;
-        const steps = path.length - 1;
+          let currentStep = 0;
+          const steps = path.length - 1;
 
-        const initial = path[0];
-        demoStartPos.current = initial;
-        setUserPos(initial);
-        setTrailPositions([initial]);
-        onLocationUpdate?.(initial);
+          const initial = path[0];
+          demoStartPos.current = initial;
+          setUserPos(initial);
+          setTrailPositions([initial]);
+          onLocationUpdate?.(initial);
 
-        demoRef.current = setInterval(() => {
-          currentStep++;
-          if (currentStep > steps) {
-            clearInterval(demoRef.current);
-            setDemoArrived(true);
-            return;
-          }
-          const pos = path[currentStep];
-          setUserPos(pos);
-          setTrailPositions((prev) => [...prev, pos]);
-          onLocationUpdate?.(pos);
-        }, 400);
-      });
+          demoRef.current = setInterval(() => {
+            currentStep++;
+            if (currentStep > steps) {
+              clearInterval(demoRef.current);
+              setDemoArrived(true);
+              return;
+            }
+            const pos = path[currentStep];
+            setUserPos(pos);
+            setTrailPositions((prev) => [...prev, pos]);
+            onLocationUpdate?.(pos);
+          }, 400);
+        },
+      );
     } else {
-      if (simulationPhase === "boarded" && originStage?.latitude && destStage?.latitude) {
+      if (
+        simulationPhase === "boarded" &&
+        originStage?.latitude &&
+        destStage?.latitude
+      ) {
         fetchRoadRoute(
-          originStage.latitude, originStage.longitude,
-          destStage.latitude, destStage.longitude,
+          originStage.latitude,
+          originStage.longitude,
+          destStage.latitude,
+          destStage.longitude,
           "driving",
         ).then((coords) => {
           if (coords) setRouteCoords(coords);
@@ -238,8 +260,15 @@ const LiveTripMap = ({
       // If override is set, pin the marker there immediately (don't wait for GPS)
       if (simulationPhase === "walking" && walkFromOverride?.lat) {
         setUserPos([walkFromOverride.lat, walkFromOverride.lng]);
-        fetchRoadRoute(walkFromOverride.lat, walkFromOverride.lng, originStage.latitude, originStage.longitude, "walking")
-          .then((coords) => { if (coords) setRouteCoords(coords); });
+        fetchRoadRoute(
+          walkFromOverride.lat,
+          walkFromOverride.lng,
+          originStage.latitude,
+          originStage.longitude,
+          "walking",
+        ).then((coords) => {
+          if (coords) setRouteCoords(coords);
+        });
       }
 
       if (!navigator.geolocation) {
@@ -250,7 +279,13 @@ const LiveTripMap = ({
       watchRef.current = navigator.geolocation.watchPosition(
         (pos) => {
           const p = [pos.coords.latitude, pos.coords.longitude];
-          console.log("[LiveTripMap] GPS fix:", p, "accuracy:", pos.coords.accuracy, "m");
+          console.log(
+            "[LiveTripMap] GPS fix:",
+            p,
+            "accuracy:",
+            pos.coords.accuracy,
+            "m",
+          );
           lastRealGPSPos.current = p;
           // Don't overwrite userPos with GPS when override is active in walking mode
           if (!(simulationPhase === "walking" && walkFromOverride?.lat)) {
@@ -261,7 +296,10 @@ const LiveTripMap = ({
 
           if (simulationPhase === "walking" && originStage?.latitude) {
             // Fire onFarFromStage once if user is more than threshold away
-            const distToStage = metersBetween(p, [originStage.latitude, originStage.longitude]);
+            const distToStage = metersBetween(p, [
+              originStage.latitude,
+              originStage.longitude,
+            ]);
             if (distToStage > FAR_THRESHOLD_M) onFarFromStage?.();
 
             // Use walk override or real GPS as route start
@@ -274,14 +312,20 @@ const LiveTripMap = ({
             const shouldFetch = !last || dist > 30;
             if (shouldFetch) {
               lastRouteFetchPos.current = routeStart;
-              fetchRoadRoute(routeStart[0], routeStart[1], originStage.latitude, originStage.longitude, "walking")
-                .then((coords) => {
-                  if (coords) setRouteCoords(coords);
-                });
+              fetchRoadRoute(
+                routeStart[0],
+                routeStart[1],
+                originStage.latitude,
+                originStage.longitude,
+                "walking",
+              ).then((coords) => {
+                if (coords) setRouteCoords(coords);
+              });
             }
           }
         },
-        (err) => console.warn("[LiveTripMap] GPS error:", err.code, err.message),
+        (err) =>
+          console.warn("[LiveTripMap] GPS error:", err.code, err.message),
         { enableHighAccuracy: true, maximumAge: 3000, timeout: 10000 },
       );
     }
@@ -298,7 +342,9 @@ const LiveTripMap = ({
     return (
       <div className="flex flex-col items-center justify-center gap-2 py-8 text-center">
         <div className="w-5 h-5 border-2 border-gray-200 border-t-blue-500 rounded-full animate-spin" />
-        <p className="text-xs text-gray-400 font-medium">Getting your location…</p>
+        <p className="text-xs text-gray-400 font-medium">
+          Getting your location…
+        </p>
       </div>
     );
   }
@@ -363,8 +409,8 @@ const LiveTripMap = ({
               !demoMode && simulationPhase === "walking" && !walkFromOverride
                 ? [originPos]
                 : !demoMode && simulationPhase === "boarded" && destPos
-                ? [destPos]
-                : undefined
+                  ? [destPos]
+                  : undefined
             }
           />
         )}
@@ -373,7 +419,10 @@ const LiveTripMap = ({
         {walkFromOverride?.lat && !demoArrived && (
           <FitBoundsController
             key={walkFromOverride.name}
-            bounds={L.latLngBounds([[walkFromOverride.lat, walkFromOverride.lng], originPos])}
+            bounds={L.latLngBounds([
+              [walkFromOverride.lat, walkFromOverride.lng],
+              originPos,
+            ])}
           />
         )}
 
@@ -422,18 +471,25 @@ const LiveTripMap = ({
 
         {/* Position marker: override location when set, otherwise real GPS */}
         {walkFromOverride?.lat ? (
-          <Marker position={[walkFromOverride.lat, walkFromOverride.lng]} icon={blueIcon}>
+          <Marker
+            position={[walkFromOverride.lat, walkFromOverride.lng]}
+            icon={blueIcon}
+          >
             <Popup>
               <p style={{ fontWeight: "bold", fontSize: 13 }}>Walk from here</p>
-              <p style={{ fontSize: 11, color: "#6b7280" }}>{walkFromOverride.name}</p>
+              <p style={{ fontSize: 11, color: "#6b7280" }}>
+                {walkFromOverride.name}
+              </p>
             </Popup>
           </Marker>
-        ) : userPos && (
-          <Marker position={userPos} icon={blueIcon}>
-            <Popup>
-              <p style={{ fontWeight: "bold", fontSize: 13 }}>You are here</p>
-            </Popup>
-          </Marker>
+        ) : (
+          userPos && (
+            <Marker position={userPos} icon={blueIcon}>
+              <Popup>
+                <p style={{ fontWeight: "bold", fontSize: 13 }}>You are here</p>
+              </Popup>
+            </Marker>
+          )
         )}
 
         {/* Accuracy ring — always at real GPS position */}
@@ -456,33 +512,49 @@ const LiveTripMap = ({
         {simulationPhase === "walking" && (
           <Marker position={originPos} icon={greenIcon}>
             <Popup>
-              <p style={{ fontWeight: "bold", fontSize: 13 }}>{originStage.name}</p>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>
+                {originStage.name}
+              </p>
               {originStage.landmark && (
-                <p style={{ fontSize: 11, color: "#6b7280" }}>{originStage.landmark}</p>
+                <p style={{ fontSize: 11, color: "#6b7280" }}>
+                  {originStage.landmark}
+                </p>
               )}
-              <p style={{ fontSize: 11, color: "#16a34a", marginTop: 4 }}>Board here</p>
+              <p style={{ fontSize: 11, color: "#16a34a", marginTop: 4 }}>
+                Board here
+              </p>
             </Popup>
           </Marker>
         )}
 
         {/* Walking arrival: orange pin where the walk started */}
-        {demoArrived && simulationPhase === "walking" && demoStartPos.current && (
-          <Marker position={demoStartPos.current} icon={orangeIcon}>
-            <Popup>
-              <p style={{ fontWeight: "bold", fontSize: 13 }}>You started here</p>
-            </Popup>
-          </Marker>
-        )}
+        {demoArrived &&
+          simulationPhase === "walking" &&
+          demoStartPos.current && (
+            <Marker position={demoStartPos.current} icon={orangeIcon}>
+              <Popup>
+                <p style={{ fontWeight: "bold", fontSize: 13 }}>
+                  You started here
+                </p>
+              </Popup>
+            </Marker>
+          )}
 
         {/* Boarded phase: origin (boarding) marker */}
         {simulationPhase === "boarded" && (
           <Marker position={originPos} icon={greenIcon}>
             <Popup>
-              <p style={{ fontWeight: "bold", fontSize: 13 }}>{originStage.name}</p>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>
+                {originStage.name}
+              </p>
               {originStage.landmark && (
-                <p style={{ fontSize: 11, color: "#6b7280" }}>{originStage.landmark}</p>
+                <p style={{ fontSize: 11, color: "#6b7280" }}>
+                  {originStage.landmark}
+                </p>
               )}
-              <p style={{ fontSize: 11, color: "#16a34a", marginTop: 4 }}>Boarded here</p>
+              <p style={{ fontSize: 11, color: "#16a34a", marginTop: 4 }}>
+                Boarded here
+              </p>
             </Popup>
           </Marker>
         )}
@@ -491,11 +563,17 @@ const LiveTripMap = ({
         {simulationPhase === "boarded" && destPos && (
           <Marker position={destPos} icon={blackIcon}>
             <Popup>
-              <p style={{ fontWeight: "bold", fontSize: 13 }}>{destStage.name}</p>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>
+                {destStage.name}
+              </p>
               {destStage.landmark && (
-                <p style={{ fontSize: 11, color: "#6b7280" }}>{destStage.landmark}</p>
+                <p style={{ fontSize: 11, color: "#6b7280" }}>
+                  {destStage.landmark}
+                </p>
               )}
-              <p style={{ fontSize: 11, color: "#374151", marginTop: 4 }}>Alight here</p>
+              <p style={{ fontSize: 11, color: "#374151", marginTop: 4 }}>
+                Alight here
+              </p>
             </Popup>
           </Marker>
         )}
@@ -504,11 +582,17 @@ const LiveTripMap = ({
         {demoArrived && simulationPhase === "boarded" && (
           <Marker position={originPos} icon={orangeIcon}>
             <Popup>
-              <p style={{ fontWeight: "bold", fontSize: 13 }}>{originStage.name}</p>
+              <p style={{ fontWeight: "bold", fontSize: 13 }}>
+                {originStage.name}
+              </p>
               {originStage.landmark && (
-                <p style={{ fontSize: 11, color: "#6b7280" }}>{originStage.landmark}</p>
+                <p style={{ fontSize: 11, color: "#6b7280" }}>
+                  {originStage.landmark}
+                </p>
               )}
-              <p style={{ fontSize: 11, color: "#ea580c", marginTop: 4 }}>You boarded here</p>
+              <p style={{ fontSize: 11, color: "#ea580c", marginTop: 4 }}>
+                You boarded here
+              </p>
             </Popup>
           </Marker>
         )}

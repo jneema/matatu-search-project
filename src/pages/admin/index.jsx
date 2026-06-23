@@ -21,9 +21,24 @@ import { useNavigate } from "react-router";
 const TABS = ["pending", "all"];
 
 const SECTIONS = [
-  { key: "stages", label: "Stages", icon: IoLocationOutline, Component: StagesTable },
-  { key: "saccos", label: "Saccos", icon: IoBusOutline, Component: SaccosTable },
-  { key: "routes", label: "Routes", icon: IoMapOutline, Component: RoutesTable },
+  {
+    key: "stages",
+    label: "Stages",
+    icon: IoLocationOutline,
+    Component: StagesTable,
+  },
+  {
+    key: "saccos",
+    label: "Saccos",
+    icon: IoBusOutline,
+    Component: SaccosTable,
+  },
+  {
+    key: "routes",
+    label: "Routes",
+    icon: IoMapOutline,
+    Component: RoutesTable,
+  },
 ];
 
 const Admin = () => {

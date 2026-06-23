@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { IoMapOutline, IoEyeOutline, IoEyeOffOutline, IoArrowForwardOutline, IoRefreshOutline } from "react-icons/io5";
+import {
+  IoMapOutline,
+  IoEyeOutline,
+  IoEyeOffOutline,
+  IoArrowForwardOutline,
+  IoRefreshOutline,
+} from "react-icons/io5";
 import { useNavigate, Link } from "react-router";
 
 const SignIn = () => {
@@ -79,7 +85,6 @@ const SignIn = () => {
                 )}
               </div>
 
-              {/* password */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
                   <label className="block text-sm font-medium text-gray-700">

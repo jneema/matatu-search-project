@@ -1,4 +1,9 @@
-import { IoCheckmarkCircleOutline, IoAddCircleOutline, IoHomeOutline, IoOptionsOutline } from "react-icons/io5";
+import {
+  IoCheckmarkCircleOutline,
+  IoAddCircleOutline,
+  IoHomeOutline,
+  IoOptionsOutline,
+} from "react-icons/io5";
 import { useNavigate } from "react-router";
 import { modeLabels, modeSuccess } from "../constants";
 
@@ -64,7 +69,8 @@ const ContributeSuccess = ({ mode, formData, onAddAnother, onChangeType }) => {
           onClick={onAddAnother}
           className="w-full flex items-center justify-center gap-2 py-2.5 bg-green-600 text-white rounded-md text-sm font-semibold hover:bg-green-700 transition-colors"
         >
-          <IoAddCircleOutline className="h-4 w-4" /> Add Another {modeLabels[mode]}
+          <IoAddCircleOutline className="h-4 w-4" /> Add Another{" "}
+          {modeLabels[mode]}
         </button>
         <button
           onClick={onChangeType}
