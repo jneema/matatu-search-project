@@ -113,7 +113,7 @@ const AddRoute = ({ onSuccess }) => {
     <div className="space-y-4">
       <div className="mb-6">
         <h2 className="text-2xl font-extrabold text-gray-900">
-          Add IoMapOutline
+          Add Route
         </h2>
         <p className="text-sm text-gray-500 mt-1">
           Link a sacco to its origin and destination stages.
@@ -285,11 +285,11 @@ const AddRoute = ({ onSuccess }) => {
         <p className="text-red-500 text-sm text-right">{errors.submit}</p>
       )}
 
-      <div className="flex justify-end pt-5">
+      <div className="flex justify-center pt-5">
         <button
           onClick={handleSubmit}
           disabled={submitting || stagesLoading}
-          className="flex items-center gap-1.5 px-5 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-1.5 w-full sm:w-auto px-10 py-2.5 bg-gray-900 text-white rounded-md text-sm font-semibold hover:bg-black disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {submitting ? "Submitting…" : "Submit"}{" "}
           <IoCheckmarkCircleOutline className="h-4 w-4" />

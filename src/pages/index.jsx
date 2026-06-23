@@ -106,7 +106,7 @@ const LandingView = ({
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans">
+    <div className="min-h-screen bg-white font-sans shadow-lg">
       <div className="max-w-4xl mx-auto px-4 py-8 md:py-16">
         <div className="text-center mb-5 md:mb-12">
           <h2 className="text-xl md:text-4xl font-extrabold text-gray-900 mb-2 md:mb-4 tracking-tight">

@@ -26,7 +26,7 @@ const StepReview = ({ formData }) => (
       <div className="flex items-center gap-2 px-4 py-3 bg-green-600">
         <IoLocationOutline className="h-3.5 w-3.5 text-white" />
         <span className="text-xs font-bold text-white uppercase tracking-wider">
-          IoMapOutline
+          Route
         </span>
       </div>
       <div className="px-4 pt-1 pb-2">

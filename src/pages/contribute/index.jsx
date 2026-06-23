@@ -47,7 +47,7 @@ const Contribute = () => {
   const config = SUCCESS_CONFIG[mode];
 
   return (
-    <div className="min-h-screen bg-white font-sans flex flex-col">
+    <div className="min-h-screen bg-white font-sans flex flex-col shadow-lg">
       <ContributeHeader
         submitted={submitted}
         STEPS={mode === "route" ? ROUTE_STEPS : []}

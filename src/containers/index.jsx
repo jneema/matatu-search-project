@@ -121,7 +121,9 @@ const MatatuRouteFinder = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header currentView={currentView} setCurrentView={setCurrentView} />
+      {currentView !== "saved" && (
+        <Header currentView={currentView} setCurrentView={setCurrentView} />
+      )}
       {renderCurrentView()}
     </div>
   );

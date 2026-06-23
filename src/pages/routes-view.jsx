@@ -114,7 +114,7 @@ const RoutesView = ({
     selectedDirection === "outbound" ? "Out of CBD →" : "← Into CBD";
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans pb-20">
+    <div className="min-h-screen bg-gray-50 font-sans pb-20 shadow-lg">
       <div className="max-w-2xl mx-auto px-4 py-6">
         <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-5 overflow-x-auto whitespace-nowrap no-scrollbar">
           <button

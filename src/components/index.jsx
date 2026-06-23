@@ -155,7 +155,7 @@ const Header = ({ currentView, setCurrentView }) => {
           </div>
         </div>
 
-        <div className="hidden md:flex items-center space-x-1 lg:space-x-4">
+        <div className={`hidden items-center space-x-1 lg:space-x-4 ${currentView !== "saved" ? "md:flex" : ""}`}>
           {steps.map((step, index) => (
             <React.Fragment key={step.id}>
               <div className="flex items-center space-x-1 lg:space-x-2">
@@ -195,7 +195,7 @@ const Header = ({ currentView, setCurrentView }) => {
           ))}
         </div>
 
-        <div className="md:hidden pb-3">
+        <div className={`md:hidden pb-3 ${currentView === "saved" ? "hidden" : ""}`}>
           <div className="flex items-center">
             {steps.map((step, index) => (
               <React.Fragment key={step.id}>

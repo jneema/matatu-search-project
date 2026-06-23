@@ -131,7 +131,7 @@ const DestinationsView = ({
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans">
+    <div className="min-h-screen bg-white font-sans shadow-lg">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <nav className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-6 overflow-x-auto whitespace-nowrap no-scrollbar">
           <button

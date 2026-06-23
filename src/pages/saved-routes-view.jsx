@@ -1,7 +1,6 @@
 import React from "react";
 import {
   IoBookOutline,
-  IoMapOutline,
   IoBusOutline,
   IoArrowForwardOutline,
   IoTrashOutline,
@@ -30,11 +29,11 @@ const SavedRoutesView = ({ setCurrentView, setSelectedRoute }) => {
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans flex flex-col">
+    <div className="min-h-screen bg-white font-sans flex flex-col shadow-lg">
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <IoMapOutline className="h-6 w-6 text-green-600" />
+            <IoBusOutline className="h-6 w-6 text-green-600" />
             <h1 className="text-lg font-bold text-gray-800 leading-none">
               Matatu Finder
             </h1>

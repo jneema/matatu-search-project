@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  IoMapOutline,
+  IoBusOutline,
   IoCheckmarkCircleOutline,
   IoArrowBackOutline,
   IoCloseOutline,
@@ -13,27 +13,27 @@ function ContributeHeader({ submitted, STEPS, step, mode, onBack }) {
   const subtitle = {
     route: "Full route",
     sacco: "Sacco",
-    stages: "Stages",
+    stage: "Stage",
   };
 
   return (
     <header className="bg-white border-b border-gray-200">
       <div className="max-w-6xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between mb-4">
-          <button
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-          >
-            <IoMapOutline className="h-6 w-6 md:h-8 md:w-8 text-green-600" />
-            <div>
+          <div className="flex flex-col">
+            <button
+              onClick={() => navigate("/")}
+              className="flex items-start gap-2 hover:opacity-80 transition-opacity"
+            >
+              <IoBusOutline className="h-6 w-6 md:h-8 md:w-8 text-green-600 shrink-0" />
               <h1 className="text-lg md:text-xl font-bold text-gray-800 leading-none">
                 Contribute
               </h1>
-              <p className="text-xs text-gray-400 mt-0.5 hidden sm:block">
-                {mode ? subtitle[mode] : "Choose what to add"}
-              </p>
-            </div>
-          </button>
+            </button>
+            <p className="text-xs text-gray-400 leading-none pl-8 md:pl-10 -mt-1 md:-mt-2.5">
+              {mode ? subtitle[mode] : "Choose what to add"}
+            </p>
+          </div>
 
           <div className="flex items-center gap-1">
             <button

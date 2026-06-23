@@ -373,7 +373,7 @@ const TripModeView = ({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans pb-10">
+    <div className="min-h-screen bg-gray-50 font-sans pb-10 shadow-lg">
       <div className="max-w-2xl mx-auto">
         <div className="bg-white px-4 pt-6 pb-4 sticky top-0 z-10 border-b border-gray-100">
           <div className="flex items-center justify-between">
