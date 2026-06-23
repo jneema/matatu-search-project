@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LandingView from "../pages/index";
 import RoutesView from "../pages/routes-view";
 import ComparisonView from "../pages/comparison-view";
@@ -21,6 +21,18 @@ const MatatuRouteFinder = () => {
   const [currentLocation, setCurrentLocation] = useState("Nairobi CBD");
   const [selectedStartingPoint, setSelectedStartingPoint] = useState(null);
   const [selectedDirection, setSelectedDirection] = useState(null);
+
+  useEffect(() => {
+    const pending = sessionStorage.getItem("pendingTrip");
+    if (pending) {
+      try {
+        const route = JSON.parse(pending);
+        setSelectedRoute(route);
+        setCurrentView("trip");
+      } catch {}
+      sessionStorage.removeItem("pendingTrip");
+    }
+  }, []);
 
   const renderCurrentView = () => {
     switch (currentView) {
@@ -84,10 +96,16 @@ const MatatuRouteFinder = () => {
             setCurrentView={setCurrentView}
             selectedRoute={selectedRoute}
             selectedDirection={selectedDirection}
+            setSelectedRoute={setSelectedRoute}
           />
         );
       case "saved":
-        return <SavedRoutesView />;
+        return (
+          <SavedRoutesView
+            setCurrentView={setCurrentView}
+            setSelectedRoute={setSelectedRoute}
+          />
+        );
       default:
         return (
           <LandingView

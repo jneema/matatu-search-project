@@ -14,7 +14,7 @@ const savedRoutesSlice = createSlice({
       }
     },
     removeRoute: (state, action) => {
-      state.routes = state.routes.filter((r) => r.id !== action.payload.id);
+      state.routes = state.routes.filter((r) => r.id !== action.payload);
       localStorage.setItem("savedRoutes", JSON.stringify(state.routes));
     },
   },

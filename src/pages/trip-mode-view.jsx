@@ -51,6 +51,15 @@ const TripModeView = ({
   const [secondsLeft, setSecondsLeft] = useState(null);
   const [boardedAt, setBoardedAt] = useState(null);
   const [demoMode, setDemoMode] = useState(false);
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
+
+  useEffect(() => {
+    const on = () => setIsOffline(false);
+    const off = () => setIsOffline(true);
+    window.addEventListener("online", on);
+    window.addEventListener("offline", off);
+    return () => { window.removeEventListener("online", on); window.removeEventListener("offline", off); };
+  }, []);
   const [routeInfoOpen, setRouteInfoOpen] = useState(false);
   const [walkFromOverride, setWalkFromOverride] = useState(null);
   const [showWalkFromSearch, setShowWalkFromSearch] = useState(false);
@@ -386,6 +395,12 @@ const TripModeView = ({
         </div>
 
         <div className="px-4 py-5 space-y-3">
+          {isOffline && (
+            <div className="px-4 py-3 bg-gray-900 text-white rounded-2xl text-sm font-medium flex items-center gap-2">
+              <IoWalletOutline className="h-4 w-4 shrink-0 text-gray-400" />
+              <span>You're offline — route info and map tiles loaded from cache</span>
+            </div>
+          )}
           {surge_active && (
             <div className="px-4 py-3 bg-amber-50 border border-amber-200 rounded-2xl text-sm text-amber-700 font-medium flex items-center gap-2">
               <IoFlashOutline className="h-4 w-4 shrink-0" />

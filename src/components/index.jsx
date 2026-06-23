@@ -60,7 +60,7 @@ const Header = ({ currentView, setCurrentView }) => {
 
           <div className="flex items-center shrink-0">
             <button
-              onClick={() => navigate("/saved-routes")}
+              onClick={() => setCurrentView("saved")}
               className="p-1.5 md:p-2 rounded-lg hover:bg-gray-100 transition-colors relative cursor-pointer"
               title="Saved Routes"
             >
