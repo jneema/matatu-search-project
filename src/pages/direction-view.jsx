@@ -22,7 +22,7 @@ const DirectionView = ({
             onClick={() => setCurrentView("landing")}
             className="hover:text-green-600 transition-colors"
           >
-            IoHomeOutline
+            Home
           </button>
           <IoChevronForwardOutline className="h-3 w-3" />
           <span className="text-gray-400">{selectedTown?.name}</span>

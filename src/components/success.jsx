@@ -82,7 +82,7 @@ const ContributeSuccess = ({ mode, formData, onAddAnother, onChangeType }) => {
           onClick={() => navigate("/")}
           className="w-full flex items-center justify-center gap-2 py-2.5 border border-gray-200 rounded-md text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50 transition-colors"
         >
-          <IoHomeOutline className="h-3.5 w-3.5" /> Go IoHomeOutline
+          <IoHomeOutline className="h-3.5 w-3.5" /> Go Home
         </button>
       </div>
     </div>
