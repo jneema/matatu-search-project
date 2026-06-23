@@ -91,11 +91,11 @@ function NavigationController({ userPos, zoom, follow, fitBoundsTo }) {
 }
 
 // Fires once on mount — used to zoom to the arrival summary bounds.
-function FitBoundsController({ bounds }) {
+function FitBoundsController({ bounds, extraOptions = {} }) {
   const map = useMap();
   useEffect(() => {
     if (!bounds) return;
-    map.fitBounds(bounds, { padding: [60, 60], maxZoom: 17, animate: true });
+    map.fitBounds(bounds, { padding: [60, 60], maxZoom: 17, animate: true, ...extraOptions });
   }, []);
   return null;
 }
@@ -255,7 +255,12 @@ const LiveTripMap = ({
           destStage.longitude,
           "driving",
         ).then((coords) => {
-          if (coords) setRouteCoords(coords);
+          setRouteCoords(
+            coords ?? [
+              [originStage.latitude, originStage.longitude],
+              [destStage.latitude, destStage.longitude],
+            ],
+          );
         });
       }
 
@@ -402,8 +407,8 @@ const LiveTripMap = ({
           maxZoom={19}
         />
 
-        {/* NavigationController stays mounted so initialised persists across override changes */}
-        {!demoArrived && (
+        {/* NavigationController: skip for non-demo boarded — FitBoundsController owns that view */}
+        {!demoArrived && (demoMode || simulationPhase !== "boarded") && (
           <NavigationController
             userPos={userPos}
             zoom={NAV_ZOOM}
@@ -411,7 +416,7 @@ const LiveTripMap = ({
             fitBoundsTo={
               !demoMode && simulationPhase === "walking" && !walkFromOverride
                 ? [originPos]
-                : !demoMode && simulationPhase === "boarded" && destPos
+                : simulationPhase === "boarded" && destPos
                   ? [destPos]
                   : undefined
             }
@@ -434,21 +439,22 @@ const LiveTripMap = ({
           <FitBoundsController bounds={arrivalBounds} />
         )}
 
-        {/* Boarded real mode: fit origin → destination on mount so both markers are visible */}
+        {/* Boarded real mode: fit origin → destination; extra bottom padding for the bottom sheet */}
         {!demoMode && simulationPhase === "boarded" && destPos && (
           <FitBoundsController
             key="boarded-origin-dest"
             bounds={L.latLngBounds([originPos, destPos])}
+            extraOptions={{ paddingTopLeft: [60, 110], paddingBottomRight: [60, 50] }}
           />
         )}
 
-        {/* Full planned route (faint) */}
+        {/* Full planned route — full opacity for non-demo boarded (no navigation trail), faint otherwise */}
         {routeCoords.length > 1 && (
           <Polyline
             positions={routeCoords}
             color={routeColor}
             weight={6}
-            opacity={demoArrived ? 0.7 : 0.15}
+            opacity={demoArrived ? 0.7 : !demoMode && simulationPhase === "boarded" ? 0.6 : 0.15}
           />
         )}
 
@@ -546,7 +552,7 @@ const LiveTripMap = ({
         {/* Boarded phase: origin (boarding) marker */}
         {simulationPhase === "boarded" && (
           <Marker position={originPos} icon={greenIcon}>
-            <Popup>
+            <Popup autoPanPaddingTopLeft={[10, 90]} autoPanPaddingBottomRight={[10, 20]}>
               <p style={{ fontWeight: "bold", fontSize: 13 }}>
                 {originStage.name}
               </p>
@@ -565,7 +571,7 @@ const LiveTripMap = ({
         {/* Boarded phase: destination (alight) marker — always visible */}
         {simulationPhase === "boarded" && destPos && (
           <Marker position={destPos} icon={blackIcon}>
-            <Popup>
+            <Popup autoPanPaddingTopLeft={[10, 90]} autoPanPaddingBottomRight={[10, 20]}>
               <p style={{ fontWeight: "bold", fontSize: 13 }}>
                 {destStage.name}
               </p>
