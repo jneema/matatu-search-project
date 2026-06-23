@@ -39,9 +39,9 @@ export const RouteCard = ({
   return (
     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-gray-300 transition-colors">
       <div className="px-4 py-3.5">
-        <div className="grid grid-cols-[24px_1fr_auto] gap-x-2 items-center mb-2">
-          <div className="flex flex-wrap gap-1">
-            {option.tags?.map((tag) => (
+        {option.tags?.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-2">
+            {option.tags.map((tag) => (
               <span
                 key={tag}
                 className={`text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 border rounded ${TAG_STYLES[tag] ?? "bg-gray-50 text-gray-500 border-gray-200"}`}
@@ -50,12 +50,26 @@ export const RouteCard = ({
               </span>
             ))}
           </div>
-          <div />
+        )}
 
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="w-7 h-7 bg-gray-900 text-white rounded-md flex items-center justify-center shrink-0">
+              <IoBusOutline className="h-3.5 w-3.5" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-extrabold text-gray-900 leading-tight truncate">
+                {option.sacco}
+              </p>
+              <p className="text-sm font-black text-gray-900 leading-tight">
+                KES {option.fare}
+              </p>
+            </div>
+          </div>
           <button
             onClick={onToggleSave}
             aria-label={isSaved ? "Remove saved route" : "Save route"}
-            className={`p-1.5 rounded-lg border transition-colors ${
+            className={`p-1.5 rounded-lg border transition-colors shrink-0 ${
               isSaved
                 ? "bg-green-600 border-green-600 text-white"
                 : "bg-white border-gray-200 text-gray-300 hover:border-green-400 hover:text-green-500"
@@ -69,23 +83,7 @@ export const RouteCard = ({
           </button>
         </div>
 
-        <div className="grid grid-cols-[auto_1fr] gap-x-2 items-center mb-0.5">
-          <div className="flex items-center gap-2 min-w-0">
-            <div className="w-6 h-6 bg-gray-900 text-white rounded-md flex items-center justify-center shrink-0">
-              <IoBusOutline className="h-3 w-3" />
-            </div>
-
-            <p className="text-sm font-extrabold text-gray-900 truncate leading-tight">
-              {option.sacco}
-            </p>
-          </div>
-
-          <p className="text-sm font-black text-gray-900 leading-tight text-right whitespace-nowrap">
-            KES {option.fare}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-[1fr_auto] items-center mb-0.5">
+        <div className="grid grid-cols-[1fr_auto] items-center mb-2">
           <div className="flex items-center gap-1 min-w-0">
             {vehicleLabel && (
               <span className="flex items-center gap-0.5 text-[10px] text-gray-400 leading-tight">
@@ -112,7 +110,7 @@ export const RouteCard = ({
           </div>
         </div>
 
-        <div className="flex items-center flex-wrap gap-x-1 gap-y-0.5 text-xs text-gray-400">
+        <div className="flex items-center flex-wrap gap-x-1 gap-y-0.5 text-xs text-gray-400 mb-2">
           <div className="flex items-center gap-1">
             <IoTimeOutline className="h-3 w-3" />
             <span className="font-semibold text-gray-700">

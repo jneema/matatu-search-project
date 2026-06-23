@@ -86,11 +86,11 @@ const SignUp = () => {
         </button>
       </div>
 
-      <div className="flex-grow flex items-center justify-center px-4 py-12">
+      <div className="flex-grow flex items-center justify-center px-4 py-6 md:py-12">
         <div className="w-full max-w-md">
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
-            <div className="mb-8">
-              <h1 className="text-2xl font-extrabold text-gray-900 tracking-tight">
+          <div className="bg-white border border-gray-200 rounded-2xl p-5 md:p-8 shadow-sm">
+            <div className="mb-6 md:mb-8">
+              <h1 className="text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight">
                 Create an account
               </h1>
               <p className="text-sm text-gray-500 mt-1">

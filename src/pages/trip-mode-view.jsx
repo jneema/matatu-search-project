@@ -247,24 +247,25 @@ const TripModeView = ({
             destStage={destination}
             demoMode={demoMode}
             simulationPhase="boarded"
+            zoomPosition="bottomleft"
           />
 
           <div className="absolute top-0 left-0 right-0 z-[1000]">
-            <div className="bg-white px-4 py-3 shadow-sm flex items-center justify-between">
-              <div className="flex items-center gap-3">
+            <div className="bg-white px-4 py-3 shadow-sm flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3 min-w-0">
                 <div className="w-9 h-9 bg-green-600 rounded-lg flex items-center justify-center shrink-0">
                   <IoBusOutline className="h-4 w-4 text-white" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-0.5">
                     On board
                   </p>
-                  <p className="text-sm font-extrabold text-gray-900 leading-none">
+                  <p className="text-sm font-extrabold text-gray-900 leading-none truncate">
                     {sacco}
                   </p>
                 </div>
               </div>
-              <div className="text-right">
+              <div className="text-right shrink-0">
                 <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest leading-none mb-0.5">
                   Remaining
                 </p>
@@ -284,17 +285,17 @@ const TripModeView = ({
             </div>
           </div>
 
-          {arrivalTimeStr && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[1000]">
-              <div className="bg-gray-950/90 backdrop-blur-sm text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg whitespace-nowrap border border-white/10">
-                Arriving around {arrivalTimeStr}
-              </div>
-            </div>
-          )}
         </div>
 
         <div className="bg-white px-5 pt-4 pb-4 shadow-2xl flex flex-col gap-4">
           <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto" />
+
+          {arrivalTimeStr && (
+            <div className="flex items-center gap-2 px-1">
+              <div className="w-2 h-2 bg-green-500 rounded-full shrink-0 animate-pulse" />
+              <p className="text-xs font-bold text-gray-500">Arriving around <span className="text-gray-900">{arrivalTimeStr}</span></p>
+            </div>
+          )}
 
           <div className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
             <div className="px-4 pt-4 text-left">
@@ -310,25 +311,19 @@ const TripModeView = ({
                 </p>
               )}
             </div>
-            <div className="border-t border-gray-100 flex items-center gap-4 px-4 py-3">
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
-                Journey
-              </span>
-              <span className="text-xs font-black text-gray-900">
-                {duration_mins} min
-              </span>
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
-                Via
-              </span>
-              <span className="text-xs font-black text-gray-900 truncate">
-                {via?.split(" ").slice(-1)[0] ?? "—"}
-              </span>
-              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
-                Fare
-              </span>
-              <span className="text-xs font-black text-gray-900">
-                KES {fare}
-              </span>
+            <div className="border-t border-gray-100 grid grid-cols-3 px-4 py-3 gap-x-2">
+              <div>
+                <p className="text-[9px] font-black text-gray-400 uppercase tracking-wide leading-none mb-0.5">Journey</p>
+                <p className="text-xs font-black text-gray-900">{duration_mins} min</p>
+              </div>
+              <div>
+                <p className="text-[9px] font-black text-gray-400 uppercase tracking-wide leading-none mb-0.5">Via</p>
+                <p className="text-xs font-black text-gray-900 truncate">{via?.split(" ").slice(-1)[0] ?? "—"}</p>
+              </div>
+              <div>
+                <p className="text-[9px] font-black text-gray-400 uppercase tracking-wide leading-none mb-0.5">Fare</p>
+                <p className="text-xs font-black text-gray-900">KES {fare}</p>
+              </div>
             </div>
           </div>
 
@@ -459,25 +454,19 @@ const TripModeView = ({
               <div className="w-7 h-7 bg-gray-900 rounded-lg flex items-center justify-center shrink-0">
                 <IoBusOutline className="h-3.5 w-3.5 text-white" />
               </div>
-              <div className="flex flex-1 items-center gap-4 min-w-0">
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
-                  Journey
-                </span>
-                <span className="text-xs font-black text-gray-900">
-                  {duration_mins} min
-                </span>
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
-                  Wait
-                </span>
-                <span className="text-xs font-black text-gray-900">
-                  ~{wait_mins_est} min
-                </span>
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">
-                  Fare
-                </span>
-                <span className="text-xs font-black text-gray-900">
-                  KES {fare}
-                </span>
+              <div className="grid grid-cols-3 flex-1 min-w-0 gap-x-2">
+                <div>
+                  <p className="text-[9px] font-black text-gray-400 uppercase tracking-wide leading-none mb-0.5">Journey</p>
+                  <p className="text-xs font-black text-gray-900">{duration_mins} min</p>
+                </div>
+                <div>
+                  <p className="text-[9px] font-black text-gray-400 uppercase tracking-wide leading-none mb-0.5">Wait</p>
+                  <p className="text-xs font-black text-gray-900">~{wait_mins_est} min</p>
+                </div>
+                <div>
+                  <p className="text-[9px] font-black text-gray-400 uppercase tracking-wide leading-none mb-0.5">Fare</p>
+                  <p className="text-xs font-black text-gray-900">KES {fare}</p>
+                </div>
               </div>
               <IoChevronDownOutline
                 className={`h-4 w-4 text-gray-400 shrink-0 transition-transform duration-200 ${routeInfoOpen ? "rotate-180" : ""}`}
@@ -507,12 +496,31 @@ const TripModeView = ({
 
           {origin?.latitude && origin?.longitude && (
             <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-              <div className="px-4 pt-3 flex items-center justify-between gap-2">
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                  {demoMode
-                    ? "Simulating walk to stage"
-                    : "Walk to boarding stage"}
-                </p>
+              <div className="px-4 pt-3 pb-4 flex items-start gap-4">
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-wide leading-none mb-1">
+                    {demoMode
+                      ? "Simulating walk to stage"
+                      : "Walk to boarding stage"}
+                  </p>
+                  <p className="text-sm font-bold text-gray-700 truncate">{origin.name}</p>
+                  {walkFromOverride && (
+                    <button
+                      onClick={() => {
+                        setWalkFromOverride(null);
+                        setDemoMode(false);
+                        setShowWalkFromSearch(false);
+                        setWalkQuery("");
+                        setWalkSuggestions([]);
+                      }}
+                      className="flex items-center gap-1 text-[10px] text-blue-600 font-bold mt-1"
+                    >
+                      <IoLocationOutline className="h-3 w-3" />
+                      {walkFromOverride.name}
+                      <IoCloseOutline className="h-3 w-3 text-gray-400" />
+                    </button>
+                  )}
+                </div>
                 <button
                   onClick={() => setDemoMode((d) => !d)}
                   title={
@@ -529,25 +537,6 @@ const TripModeView = ({
                   <IoFlaskOutline className="h-3 w-3" />
                   {demoMode ? "Demo ON" : "Demo"}
                 </button>
-              </div>
-              <div className="px-4 pb-6 text-left">
-                <p className="text-sm font-bold text-gray-700">{origin.name}</p>
-                {walkFromOverride && (
-                  <button
-                    onClick={() => {
-                      setWalkFromOverride(null);
-                      setDemoMode(false);
-                      setShowWalkFromSearch(false);
-                      setWalkQuery("");
-                      setWalkSuggestions([]);
-                    }}
-                    className="flex items-center gap-1 text-[10px] text-blue-600 font-bold mt-1"
-                  >
-                    <IoLocationOutline className="h-3 w-3" />
-                    {walkFromOverride.name}
-                    <IoCloseOutline className="h-3 w-3 text-gray-400" />
-                  </button>
-                )}
               </div>
 
               {showWalkFromSearch && !walkFromOverride && (

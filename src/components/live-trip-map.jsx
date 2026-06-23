@@ -6,6 +6,7 @@ import {
   Popup,
   Polyline,
   Circle,
+  ZoomControl,
   useMap,
 } from "react-leaflet";
 import L from "leaflet";
@@ -129,6 +130,7 @@ const LiveTripMap = ({
   onLocationUpdate,
   walkFromOverride = null,
   onFarFromStage,
+  zoomPosition = "bottomleft",
 }) => {
   const [userPos, setUserPos] = useState(null);
   const [trailPositions, setTrailPositions] = useState([]);
@@ -389,10 +391,11 @@ const LiveTripMap = ({
         center={userPos || originPos}
         zoom={NAV_ZOOM}
         style={{ height: "100%", width: "100%" }}
-        zoomControl={true}
+        zoomControl={false}
         scrollWheelZoom={false}
         dragging={true}
       >
+        <ZoomControl position={zoomPosition} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -163,8 +163,8 @@ const StartingPointView = ({
           </span>
         </div>
 
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3 md:mb-4 tracking-tight">
+        <div className="text-center mb-5 md:mb-12">
+          <h2 className="text-xl md:text-4xl font-extrabold text-gray-900 mb-2 md:mb-4 tracking-tight">
             {copy.heading}
           </h2>
           <p className="text-base md:text-lg text-gray-500 max-w-xl mx-auto">
@@ -192,7 +192,7 @@ const StartingPointView = ({
                   }
                 }
               }}
-              className="w-full pl-12 pr-12 py-4 md:py-5 bg-white text-base md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
+              className="w-full pl-12 pr-12 py-3 md:py-5 bg-white text-sm md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
             />
             {searchQuery && (
               <button
@@ -283,12 +283,12 @@ const StartingPointView = ({
                   <button
                     key={h.id}
                     onClick={() => handlePointSelect(h)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-gray-200 rounded-md text-xs font-medium text-gray-600 hover:border-green-600 hover:text-green-700 transition-colors"
                   >
                     <IoLocationOutline className="h-3 w-3 text-green-600 flex-shrink-0" />
                     {h.name}
                     {h.landmark && (
-                      <span className="text-gray-400 font-normal text-xs ml-0.5">
+                      <span className="hidden sm:inline text-gray-400 font-normal text-xs ml-0.5">
                         · {h.landmark}
                       </span>
                     )}

@@ -108,8 +108,8 @@ const LandingView = ({
   return (
     <div className="min-h-screen bg-white font-sans">
       <div className="max-w-4xl mx-auto px-4 py-8 md:py-16">
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-3 md:mb-4 tracking-tight">
+        <div className="text-center mb-5 md:mb-12">
+          <h2 className="text-xl md:text-4xl font-extrabold text-gray-900 mb-2 md:mb-4 tracking-tight">
             Find Your Perfect Matatu IoMapOutline
           </h2>
           <p className="text-base md:text-lg text-gray-500 max-w-xl mx-auto">
@@ -138,7 +138,7 @@ const LandingView = ({
                   }
                 }
               }}
-              className="w-full pl-12 pr-12 py-4 md:py-5 bg-white text-base md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
+              className="w-full pl-12 pr-12 py-3 md:py-5 bg-white text-sm md:text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-green-600 outline-none transition-all"
             />
             {searchQuery && (
               <button
